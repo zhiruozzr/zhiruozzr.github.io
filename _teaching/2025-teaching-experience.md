@@ -2,7 +2,7 @@
 title: "Teaching Experience"
 collection: teaching
 type: "Undergraduate Courses"
-permalink: /teaching/2025-teaching-experience
+permalink: /_teaching/2025-teaching-experience
 venue: "University of Adelaide, School of Economics and Public Policy"
 date: 2025-01-01
 location: "Adelaide, Australia"
