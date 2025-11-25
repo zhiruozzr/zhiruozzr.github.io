@@ -1,5 +1,5 @@
 ---
-title: "Seminar Presentations"
+title: "Seminar"
 collection: talks
 type: "Seminar"
 permalink: /talks/seminars/
