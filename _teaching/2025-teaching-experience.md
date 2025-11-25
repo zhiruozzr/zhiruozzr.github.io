@@ -1,30 +1,32 @@
 ---
-title: ""
+title: "Teaching Experience"
 collection: teaching
 type: "Undergraduate Courses"
 permalink: /teaching/2025-teaching-experience/
 venue: "University of Adelaide, School of Economics and Public Policy"
-date: 2025-01-01
 location: "Adelaide, Australia"
 ---
 
 Below is a summary of my teaching experience at the University of Adelaide. I have taught a range of undergraduate courses in economics, including econometrics, financial economics, international economics, and mathematical economics.
 
-## Courses Taught
+## <span style="color:#2a6ebb; font-weight:600;">2025 – Present</span>
 
-**2025 – Present**  
-- *ECON 2513 – Global Economic History II*
+- <span style="color:#444;">ECON 2513 – <strong>Global Economic History II</strong></span>
 
-**2024 – Present**  
-- *ECON 1005 – Introduction to Mathematical Economics I*  
-- *ECON 3530 – Applied Econometrics III*  
-- *ECON 3510 – International Finance III*
+## <span style="color:#2a6ebb; font-weight:600;">2024 – Present</span>
 
-**2024 Semester 2**  
-- *ECON 2514 – Managerial Economics II*
+- <span style="color:#444;">ECON 1005 – <strong>Introduction to Mathematical Economics I</strong></span>  
+- <span style="color:#444;">ECON 3530 – <strong>Applied Econometrics III</strong></span>  
+- <span style="color:#444;">ECON 3510 – <strong>International Finance III</strong></span>  
 
-**2024 Semester 1**  
-- *ECON 2508 – Financial Economics II*
+## <span style="color:#2a6ebb; font-weight:600;">2024 – Semester 2</span>
 
-**2023 Semester 2**  
-- *ECON 2515 – Intermediate Applied Econometrics II*
+- <span style="color:#444;">ECON 2514 – <strong>Managerial Economics II</strong></span>
+
+## <span style="color:#2a6ebb; font-weight:600;">2024 – Semester 1</span>
+
+- <span style="color:#444;">ECON 2508 – <strong>Financial Economics II</strong></span>
+
+## <span style="color:#2a6ebb; font-weight:600;">2023 – Semester 2</span>
+
+- <span style="color:#444;">ECON 2515 – <strong>Intermediate Applied Econometrics II</strong></span>
