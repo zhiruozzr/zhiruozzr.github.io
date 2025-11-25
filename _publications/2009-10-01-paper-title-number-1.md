@@ -1,14 +1,7 @@
 ---
-title: "Paper Title Number 1"
+title: "Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs"
 collection: publications
 category: manuscripts
 permalink: /publication/2009-10-01-paper-title-number-1
-excerpt: 'This paper is about the number 1. The number 2 is left for future work.'
-date: 2009-10-01
-venue: 'Journal 1'
-slidesurl: 'http://academicpages.github.io/files/slides1.pdf'
-paperurl: 'http://academicpages.github.io/files/paper1.pdf'
-bibtexurl: 'http://academicpages.github.io/files/bibtex1.bib'
-citation: 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
 ---
-The contents above will be part of a list of publications, if the user clicks the link for the publication than the contents of section will be rendered as a full page, allowing you to provide more information about the paper for the reader. When publications are displayed as a single page, the contents of the above "citation" field will automatically be included below this section in a smaller font.
+This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.
