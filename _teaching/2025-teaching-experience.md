@@ -1,5 +1,5 @@
 ---
-title: "Teaching Experience"
+title: ""
 collection: teaching
 type: "Undergraduate Courses"
 permalink: /teaching/2025-teaching-experience/
