@@ -1,4 +1,4 @@
----
+ ---
 title: "Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs"
 collection: publications
 category: manuscripts
