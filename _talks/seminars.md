@@ -7,9 +7,6 @@ venue: "Various Institutions"
 date: 2024-01-01
 location: ""
 ---
-
-## Seminar Presentations
-
 ### **2024**
 - The University of Adelaide SEPP HDR Internal Seminar
 
