@@ -1,9 +1,10 @@
- ---
+---
 title: "Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs"
 collection: publications
 category: manuscripts
 permalink: /publication/adaptive-bayesian-shrinkage-panel-vars/
-authors: "Zhiruo (Rachel) Zhang, Firmin Doko Tchatoka, and Qazi Haque"
+date:
+authors: "Zhiruo Zhang, Firmin Doko Tchatoka, and Qazi Haque"
 ---
 
 **Zhiruo Zhang**, **Firmin Doko Tchatoka**, and **Qazi Haque**  
