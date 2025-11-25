@@ -7,9 +7,6 @@ venue: "Various Conferences"
 date: 2025-01-01
 location: ""
 ---
-
-## Conference Presentations
-
 ### **2025**
 - World Congress of the Econometric Society 2025
 - 39th Annual Australian PhD Conference in Economics and Business
