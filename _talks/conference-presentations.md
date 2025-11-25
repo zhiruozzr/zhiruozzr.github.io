@@ -1,5 +1,5 @@
 ---
-title: "Conference Presentations"
+title: "Conference"
 collection: talks
 type: "Conference"
 permalink: /talks/conference-presentations/
