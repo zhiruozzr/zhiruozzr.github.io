@@ -3,7 +3,6 @@ title: "Bayesian Network Estimation for High-Dimensional Panel VARs"
 collection: publications
 category: manuscripts
 permalink: /publication/bayesian-network-estimation-panel-vars/
-date: 
 authors: "Zhiruo Zhang, Firmin Doko Tchatoka, and Qazi Haque"
 ---
 
