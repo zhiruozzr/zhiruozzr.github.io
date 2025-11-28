@@ -15,8 +15,7 @@ Hi! I’m <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D.
 
 </div>
 My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, 
-<strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.  
-I am currently on the <strong>2025–2026 economics job market</strong>.
+<strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
 </div>
 
 <div style="background:#f7f7f7; padding:12px 16px; border-left:4px solid #1f628d; margin:18px 0;">
