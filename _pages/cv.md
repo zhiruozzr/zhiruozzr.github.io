@@ -7,7 +7,12 @@ redirect_from:
   - /resume
 ---
 
+<a href="/files/Rachel_Zhang_CV.pdf" class="btn btn--primary btn--small" style="float:right; margin-top:-40px;">
+    <i class="fa fa-download"></i> Download CV (PDF)
+</a>
+
 {% include base_path %}
+
 
 ## Contact
 
