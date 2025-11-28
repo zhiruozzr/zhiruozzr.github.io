@@ -1,6 +1,6 @@
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Zhiruo Zhang (张芷若)"
+title                    : "Zhiruo ZHANG"
 title_separator          : "-"
 name                     : &name "Zhiruo (Rachel) Zhang 张芷若"
 description              : &description "Ph.D. Candidate in Economics and Econometrics at The University of Adelaide"   # Update this with a general description of your site, this is the default if not overridden by a page
