@@ -11,7 +11,9 @@ redirect_from:
 
 Hi! I’m <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
 <strong>The University of Adelaide</strong>.
+</div>
 
+</div>
 My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, 
 <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.  
 I am currently on the <strong>2025–2026 economics job market</strong>.
