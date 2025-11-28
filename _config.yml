@@ -15,7 +15,7 @@ repository               : "zhiruozzr/zhiruozzr.github.io"
 author:
   # Biographic information
   name      : "Zhiruo (Rachel) Zhang 张芷若"
-  avatar    : "images/photo.png"
+  avatar    : "/images/photo.png"
   bio       : "Ph.D. Candidate in Economics and Econometrics at The University of Adelaide"
   location  : "Adelaide, Australia"
   email     : "zhiruo.zhang@adelaide.edu.au"
