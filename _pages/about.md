@@ -26,5 +26,8 @@ I am currently on the <strong>2025–2026 economics job market</strong>.
 ======
 - *2025.11*: 🎉 Ph.D. Conference in Economics at UNSW
 
-<em>“The earth needs talented people.”</em>  
+<div style="text-align:center; margin-top:30px; font-size:1.15rem; color:#444;">
+  <em>“Earth needs talented people.”</em><br>
+  <em>人生到处知何似？应似飞鸿踏雪泥。</em>
+</div>
   
