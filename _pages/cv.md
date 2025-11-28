@@ -7,34 +7,14 @@ redirect_from:
   - /resume
 ---
 
-<a href="/files/zzr_CV.pdf" class="btn btn--primary btn--small" style="float:right; margin-top:-40px;">
-    <i class="fa fa-download"></i> Download CV (PDF)
-</a>
-
 {% include base_path %}
 
+<p style="text-align: right; margin-top: -10px;">
+  <a href="{{ '/files/zzr_CV.pdf' | relative_url }}" class="btn btn--primary btn--small">
+    <i class="fa fa-download"></i> Download CV (PDF)
+  </a>
+</p>
 
-## Contact
-
-**Zhiruo (Rachel) Zhang**  
-School of Economics and Public Policy  
-The University of Adelaide  
-Adelaide, SA 5005, Australia  
-
-- Email: [zhiruo.zhang@adelaide.edu.au](mailto:zhiruo.zhang@adelaide.edu.au)  
-- GitHub: [https://github.com/zhiruozzr](https://github.com/zhiruozzr)  
-- Phone: +61 448 146 347  
-
----
-
-## Office Contact Information
-
-Level 4, Nexus 10 Tower  
-School of Economics and Public Policy  
-The University of Adelaide  
-Adelaide, SA 5005  
-
----
 
 ## Graduate Studies
 
@@ -60,25 +40,6 @@ Expected completion: **June 2026**
 
 - **Primary:** Macroeconometrics, Bayesian Time Series, Panel Data Econometrics  
 - **Secondary:** Machine Learning, Nonlinear Time Series Models  
-
----
-
-## References
-
-**Prof. Firmin Doko Tchatoka**  
-School of Economics and Public Policy, The University of Adelaide  
-Phone: +61 831 31174  
-Email: [firmin.dokotchatoka@adelaide.edu.au](mailto:firmin.dokotchatoka@adelaide.edu.au)  
-
-**Dr. Qazi Haque**  
-School of Economics and Public Policy, The University of Adelaide  
-Phone: +61 831 34927  
-Email: [qazi.haque@adelaide.edu.au](mailto:qazi.haque@adelaide.edu.au)  
-
-**A/Prof. Virginie Masson**  
-School of Economics and Public Policy, The University of Adelaide  
-Phone: +61 831 34926  
-Email: [virginie.masson@adelaide.edu.au](mailto:virginie.masson@adelaide.edu.au)  
 
 ---
 
