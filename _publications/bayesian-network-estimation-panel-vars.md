@@ -4,6 +4,8 @@ collection: publications
 category: manuscripts
 permalink: /publication/bayesian-network-estimation-panel-vars/
 authors: "Zhiruo Zhang, Firmin Doko Tchatoka, and Qazi Haque"
+status: "Working Paper"
+date: 2025-01-01
 ---
 
 **Zhiruo Zhang**, **Firmin Doko Tchatoka**, and **Qazi Haque**  
