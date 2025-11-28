@@ -6,6 +6,7 @@ permalink: /publication/adaptive-bayesian-shrinkage-panel-vars/
 authors: "Zhiruo Zhang, Firmin Doko Tchatoka, and Qazi Haque"
 status: "Working Paper"
 date: 2025-01-01
+venue: ""
 ---
 
 **Zhiruo Zhang**, **Firmin Doko Tchatoka**, and **Qazi Haque** 
