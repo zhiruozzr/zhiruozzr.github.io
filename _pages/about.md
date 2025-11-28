@@ -31,7 +31,7 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 - *2025.11*: 🎉 Ph.D. Conference in Economics at UNSW
 
 <div style="text-align:center; margin-top:30px; font-size:1.15rem; color:#444;">
-  <em>“Earth needs talented people.”</em><br>
+  <em>“Earth Needs Talented People.”</em><br>
   <em>人生到处知何似？应似飞鸿踏雪泥。</em>
 </div>
   
