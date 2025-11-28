@@ -7,13 +7,13 @@ redirect_from:
   - /about.html
 ---
 
-<div style="font-size:1.1rem; line-height:1.6;">
+<div style="font-size:1.1rem; line-height:1.4;">
 
 Hi! I’m <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
 <strong>The University of Adelaide</strong>.
 </div>
 
-</div>
+<div style="font-size:1.1rem; line-height:1.4;">
 My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, 
 <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
 </div>
