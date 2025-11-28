@@ -14,7 +14,7 @@ repository               : "zhiruozzr/zhiruozzr.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  name      : "Zhiruo (Rachel) Zhang 张芷若"
+  name      : "Zhiruo (Rachel) Zhang"
   avatar    : "photo.jpg"
   bio       : "Ph.D. Candidate in Economics and Econometrics at The University of Adelaide"
   location  : "Adelaide, Australia"
