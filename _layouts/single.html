@@ -30,16 +30,46 @@ layout: default
           {% if page.read_time %}
             <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
           {% endif %}
-        {% if page.modified %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
-        {% endif %}
+{% if page.collection == "publications" and page.status %}
+  {%- comment -%}
+    特殊处理 publications：根据 status 显示 Working Paper / Draft 等
+  {%- endcomment -%}
+  {% if page.status == "Working Paper" %}
+    <p class="page__date">
+      <strong><i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>Working Paper</strong>
+      {% if page.date %} ({{ page.date | date: "%Y" }}){% endif %}
+    </p>
+  {% elsif page.status == "Draft" %}
+    <p class="page__date">
+      <strong><i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>Draft – Available Upon Request</strong>
+    </p>
+  {% elsif page.status == "Coming Soon" %}
+    <p class="page__date">
+      <strong><i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>Draft Coming Soon</strong>
+    </p>
+  {% else %}
+    <p class="page__date">
+      <strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>{{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong>
+      {% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>{% endif %}
+    </p>
+  {% endif %}
+
+{% elsif page.modified %}
+  <p class="page__date">
+    <strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong>
+    <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time>
+  </p>
+
+{% elsif page.date %}
+  <p class="page__date">
+    <strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>{{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong>
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+  </p>
+{% endif %}
+
         
         {% if page.collection == 'teaching' %}
           <p> {{ page.type }}, <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
-        {% elsif page.venue and page.date %}
-          <p>Published in <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
-        {% elsif page.date %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
         {% endif %}    
         </header>
       {% endunless %}
