@@ -14,4 +14,4 @@ location: ""
 
 ## <span style="color:#2a6ebb;">2023</span>
 
-- **School of Economics and Public Policy “Brainbag” Workshop**, University of Adelaide, Adelaide, Australia  
+- **School of Economics and Public Policy Brown Bag Workshop**, University of Adelaide, Adelaide, Australia  
