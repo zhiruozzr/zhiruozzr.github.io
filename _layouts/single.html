@@ -31,13 +31,9 @@ layout: default
             <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
           {% endif %}
 {% if page.collection == "publications" and page.status %}
-  {%- comment -%}
-    特殊处理 publications：根据 status 显示 Working Paper / Draft 等
-  {%- endcomment -%}
   {% if page.status == "Working Paper" %}
     <p class="page__date">
-      <strong><i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>Working Paper</strong>
-      {% if page.date %} ({{ page.date | date: "%Y" }}){% endif %}
+      <strong><i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>Work in Progress</strong>
     </p>
   {% elsif page.status == "Draft" %}
     <p class="page__date">
