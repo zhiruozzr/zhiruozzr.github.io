@@ -121,7 +121,7 @@ With Firmin Doko Tchatoka and Qazi Haque.
 ### Seminar Presentations
 
 - **2024** – The University of Adelaide SEPP HDR Internal Seminar  
-- **2023** – School of Economics and Public Policy “Brainbag” Workshop, The University of Adelaide  
+- **2023** – School of Economics and Public Policy Brown Bag Workshop, The University of Adelaide  
 
 ---
 
