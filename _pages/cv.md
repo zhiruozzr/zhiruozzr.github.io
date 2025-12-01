@@ -29,7 +29,6 @@ Expected completion: **June 2026**
 **Monash University, Australia**  *(July 2016 – July 2021)*  
 - **Master of Applied Econometrics**  
   - Dissertation: *Empirical Analysis of a Time-varying Vector Autoregression Model*  
-  - Supervisor: Prof. Jiti Gao  
 - **Bachelor of Business**  
   - Major: Finance  
   - Minor: Business Statistics  
