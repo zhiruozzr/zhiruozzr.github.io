@@ -1,4 +1,3 @@
----
 permalink: /
 title: "About"
 author_profile: true
@@ -7,31 +6,38 @@ redirect_from:
   - /about.html
 ---
 
-<div style="font-size:1.1rem; line-height:1.6;">
+<div style="font-size:1.15rem; line-height:1.65;">
 
 Hi! I’m <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
-<strong>The University of Adelaide</strong>.
+<strong>The University of Adelaide</strong>. I work at the intersection of <strong>Bayesian econometrics</strong>, 
+<strong>time-series analysis</strong>, <strong>panel data methods</strong>, and <strong>machine learning</strong>—tools that help us better understand how economies evolve, adapt, and surprise us.
+
 </div>
 
+<div style="font-size:1.15rem; line-height:1.65; margin-top:14px;">
+I am supervised by:
+<ul>
+  <li><a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank"><strong>Prof. Firmin Doko Tchatoka</strong></a></li>
+  <li><a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank"><strong>Dr. Qazi Haque</strong></a></li>
+</ul>
+</div>
 
-<div style="font-size:1.1rem; line-height:1.6;">
+<div style="font-size:1.15rem; line-height:1.65; margin-top:14px;">
 My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, 
 <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
 </div>
-
-
-<div style="background:#f7f7f7; padding:12px 16px; border-left:4px solid #1f628d; margin:18px 0;">
-  <strong>Job Market Status:</strong> Available for interviews in 2025–2026.  
-  <em>Materials and working papers are available under the “Working Papers” and “CV” tabs.</em>
 </div>
 
+<div style="background:#f7f7f7; padding:14px 18px; border-left:4px solid #1f628d; margin:22px 0; font-size:1.1rem;">
+  <strong>Job Market Status:</strong> Available for interviews in 2025–2026.<br>
+  <em>CV, research statements, and working papers can be found in the menu above.</em>
+</div>
 
-🔥 News
-======
-- *2025.11*: 🎉 Ph.D. Conference in Economics at UNSW
+## 🔥 News
 
-<div style="text-align:center; margin-top:30px; font-size:1.15rem; color:#444;">
+- <em>2025.11</em>: 🎉 Presented at the Ph.D. Conference in Economics at UNSW.
+
+<div style="text-align:center; margin-top:36px; font-size:1.2rem; color:#444;">
   <em>“Earth Needs Talented People.”</em><br>
   <em>人生到处知何似？应似飞鸿踏雪泥。</em>
 </div>
-  
