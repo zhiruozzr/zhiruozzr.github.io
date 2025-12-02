@@ -31,11 +31,12 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 
 <div style="text-align:center; margin-top:36px; font-size:1.2rem; color:#444;">
   <em>
-    <span style="color:#1f628d; font-weight:600;">E</span>arth 
-    <span style="color:#1f628d; font-weight:600;">N</span>eeds 
-    <span style="color:#1f628d; font-weight:600;">T</span>alented 
-    <span style="color:#1f628d; font-weight:600;">P</span>eople.
+    <span style="color:#c8a951; font-weight:650;">E</span>arth 
+    <span style="color:#c8a951; font-weight:650;">N</span>eeds 
+    <span style="color:#c8a951; font-weight:650;">T</span>alented 
+    <span style="color:#c8a951; font-weight:650;">P</span>eople.
   </em><br>
   <em>人生到处知何似？应似飞鸿踏雪泥。</em>
 </div>
+
 
