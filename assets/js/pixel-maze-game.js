@@ -1,5 +1,5 @@
 // ============================================================
-// PIXEL MAZE ADVENTURE - Enhanced Edition
+// PIXEL MAZE ADVENTURE - Full Revised Version
 // ============================================================
 
 const canvas = document.getElementById("game");
@@ -13,64 +13,73 @@ const COLS = 15;
 // PROCEDURAL LEVEL GENERATOR
 // ============================================================
 
-function generateMaze(seed) {
-  // Initialize grid with walls
-  const maze = Array(ROWS).fill(null).map(() => Array(COLS).fill('#'));
-  
-  // Recursive backtracking algorithm
+function generateMaze(difficulty) {
+  // Start from all walls
+  const maze = Array(ROWS)
+    .fill(null)
+    .map(() => Array(COLS).fill("#"));
+
   function carve(row, col) {
-    maze[row][col] = '.';
-    
-    // Randomize directions
+    maze[row][col] = ".";
+
     const dirs = [
-      [-2, 0], [2, 0], [0, -2], [0, 2]
+      [-2, 0],
+      [2, 0],
+      [0, -2],
+      [0, 2],
     ].sort(() => Math.random() - 0.5);
-    
+
     for (const [dr, dc] of dirs) {
       const newRow = row + dr;
       const newCol = col + dc;
-      
-      if (newRow > 0 && newRow < ROWS - 1 && 
-          newCol > 0 && newCol < COLS - 1 && 
-          maze[newRow][newCol] === '#') {
-        maze[row + dr/2][col + dc/2] = '.';
+
+      if (
+        newRow > 0 &&
+        newRow < ROWS - 1 &&
+        newCol > 0 &&
+        newCol < COLS - 1 &&
+        maze[newRow][newCol] === "#"
+      ) {
+        maze[row + dr / 2][col + dc / 2] = ".";
         carve(newRow, newCol);
       }
     }
   }
-  
-  // Start carving from (1,1)
+
   carve(1, 1);
-  
-  // Place player start
-  maze[1][1] = 'P';
-  
-  // Place exit (far from start)
-  maze[ROWS - 2][COLS - 2] = 'E';
-  
-  // Add cracked walls (breakable)
+
+  // Player start
+  maze[1][1] = "P";
+
+  // Exit (bottom right-ish)
+  maze[ROWS - 2][COLS - 2] = "E";
+
+  // Cracked walls
   for (let r = 1; r < ROWS - 1; r++) {
     for (let c = 1; c < COLS - 1; c++) {
-      if (maze[r][c] === '#' && Math.random() < 0.15) {
-        maze[r][c] = '*';
+      if (maze[r][c] === "#" && Math.random() < 0.18) {
+        maze[r][c] = "*";
       }
     }
   }
-  
-  // Add traps
-  const trapCount = 8 + Math.floor(seed / 3);
+
+  // Traps
+  const trapCount = 6 + Math.floor(difficulty / 2);
   let placed = 0;
   while (placed < trapCount) {
     const r = 2 + Math.floor(Math.random() * (ROWS - 4));
     const c = 2 + Math.floor(Math.random() * (COLS - 4));
-    if (maze[r][c] === '.' && Math.abs(r - 1) + Math.abs(c - 1) > 4) {
-      maze[r][c] = 'X';
+    if (
+      maze[r][c] === "." &&
+      !(r === 1 && c === 1) &&
+      !(r === ROWS - 2 && c === COLS - 2)
+    ) {
+      maze[r][c] = "X";
       placed++;
     }
   }
-  
-  // Convert to string array
-  return maze.map(row => row.join(''));
+
+  return maze.map((row) => row.join(""));
 }
 
 // ============================================================
@@ -84,13 +93,13 @@ const player = {
   row: 0,
   col: 0,
   facingRow: 0,
-  facingCol: 1
+  facingCol: 1,
 };
 
 let exitCell = { row: 0, col: 0 };
 let traps = [];
 let discovered = [];
-let gameState = "playing";
+let gameState = "playing"; // "playing" | "dead" | "levelComplete"
 let message = "";
 
 let bombs = [];
@@ -102,6 +111,9 @@ let levelStartTime = null;
 let elapsedSeconds = 0;
 let steps = 0;
 
+const VISION_RADIUS = 4;
+const SCORE_KEY = "pixel_maze_scores";
+
 // ============================================================
 // PARTICLE SYSTEM
 // ============================================================
@@ -109,11 +121,11 @@ let steps = 0;
 function createExplosionParticles(row, col, count = 30) {
   const cx = (col + 0.5) * TILE_SIZE;
   const cy = (row + 0.5) * TILE_SIZE;
-  
+
   for (let i = 0; i < count; i++) {
     const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5);
     const speed = 2 + Math.random() * 3;
-    
+
     particles.push({
       x: cx,
       y: cy,
@@ -122,24 +134,26 @@ function createExplosionParticles(row, col, count = 30) {
       life: 30 + Math.random() * 20,
       maxLife: 30 + Math.random() * 20,
       size: 2 + Math.random() * 3,
-      color: ['#ff6b35', '#f7931e', '#ffd700', '#ff4d4d'][Math.floor(Math.random() * 4)]
+      color: ["#ff6b35", "#f7931e", "#ffd700", "#ff4d4d"][
+        Math.floor(Math.random() * 4)
+      ],
     });
   }
 }
 
 function updateParticles() {
-  particles.forEach(p => {
+  particles.forEach((p) => {
     p.x += p.vx;
     p.y += p.vy;
-    p.vy += 0.15; // gravity
+    p.vy += 0.15;
     p.life--;
   });
-  
-  particles = particles.filter(p => p.life > 0);
+
+  particles = particles.filter((p) => p.life > 0);
 }
 
 function drawParticles() {
-  particles.forEach(p => {
+  particles.forEach((p) => {
     const alpha = p.life / p.maxLife;
     ctx.globalAlpha = alpha;
     ctx.fillStyle = p.color;
@@ -149,12 +163,70 @@ function drawParticles() {
 }
 
 // ============================================================
+// SCORE STORAGE + UI
+// ============================================================
+
+function getScores() {
+  if (typeof localStorage === "undefined") return [];
+  try {
+    return JSON.parse(localStorage.getItem(SCORE_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveScore(level, time, steps) {
+  if (typeof localStorage === "undefined") return;
+  const scores = getScores();
+  scores.push({ level, time, steps, date: Date.now() });
+  localStorage.setItem(SCORE_KEY, JSON.stringify(scores));
+}
+
+function updateUI() {
+  const levelEl = document.getElementById("level-display");
+  const timeEl = document.getElementById("time-display");
+  const stepsEl = document.getElementById("steps-display");
+
+  if (levelEl) levelEl.textContent = currentLevel;
+  if (timeEl) timeEl.textContent = `${elapsedSeconds}s`;
+  if (stepsEl) stepsEl.textContent = steps;
+}
+
+function renderScoreboard() {
+  const box = document.getElementById("scoreboard");
+  if (!box) return;
+
+  const scores = getScores()
+    .filter((s) => s.level === currentLevel)
+    .sort((a, b) => {
+      if (a.time !== b.time) return a.time - b.time;
+      return a.steps - b.steps;
+    });
+
+  box.innerHTML = "<h3>Best Records for This Level</h3>";
+
+  if (scores.length === 0) {
+    box.innerHTML += "<p>No records yet. Play a round!</p>";
+    return;
+  }
+
+  const top = scores.slice(0, 5);
+  const ol = document.createElement("ol");
+  top.forEach((s) => {
+    const li = document.createElement("li");
+    li.textContent = `${s.time}s · ${s.steps} steps`;
+    ol.appendChild(li);
+  });
+  box.appendChild(ol);
+}
+
+// ============================================================
 // LEVEL MANAGEMENT
 // ============================================================
 
 function loadLevel(level) {
   levelMap = generateMaze(level);
-  
+
   traps = [];
   discovered = [];
   bombs = [];
@@ -169,7 +241,6 @@ function loadLevel(level) {
     for (let c = 0; c < COLS; c++) {
       discovered[r][c] = false;
       const ch = levelMap[r][c];
-      
       if (ch === "P") {
         player.row = r;
         player.col = c;
@@ -183,17 +254,11 @@ function loadLevel(level) {
       }
     }
   }
-  
+
   gameState = "playing";
   message = "";
-  
   updateUI();
-}
-
-function updateUI() {
-  document.getElementById('level-display').textContent = currentLevel;
-  document.getElementById('time-display').textContent = elapsedSeconds + 's';
-  document.getElementById('steps-display').textContent = steps;
+  renderScoreboard();
 }
 
 // ============================================================
@@ -201,7 +266,7 @@ function updateUI() {
 // ============================================================
 
 function isWall(row, col) {
-  const ch = levelMap[row][c];
+  const ch = levelMap[row][col];
   return ch === "#" || ch === "*";
 }
 
@@ -227,7 +292,23 @@ function breakWall(row, col) {
 // ============================================================
 
 window.addEventListener("keydown", (e) => {
-  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "w", "a", "s", "d"].includes(e.key)) {
+  if (
+    [
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      " ",
+      "w",
+      "a",
+      "s",
+      "d",
+      "W",
+      "A",
+      "S",
+      "D",
+    ].includes(e.key)
+  ) {
     e.preventDefault();
   }
 
@@ -236,6 +317,8 @@ window.addEventListener("keydown", (e) => {
       shootBomb();
     } else if (gameState === "dead") {
       loadLevel(currentLevel);
+    } else if (gameState === "levelComplete") {
+      // ignore here, we go to next level via button
     }
     return;
   }
@@ -246,7 +329,8 @@ window.addEventListener("keydown", (e) => {
 function handleMoveInput(key) {
   if (gameState !== "playing") return;
 
-  let dRow = 0, dCol = 0;
+  let dRow = 0,
+    dCol = 0;
   if (key === "ArrowUp" || key === "w" || key === "W") dRow = -1;
   if (key === "ArrowDown" || key === "s" || key === "S") dRow = 1;
   if (key === "ArrowLeft" || key === "a" || key === "A") dCol = -1;
@@ -258,6 +342,7 @@ function handleMoveInput(key) {
   const newCol = player.col + dCol;
 
   if (newRow < 0 || newRow >= ROWS || newCol < 0 || newCol >= COLS) return;
+
   if (isWall(newRow, newCol)) {
     player.facingRow = dRow;
     player.facingCol = dCol;
@@ -275,8 +360,12 @@ function handleMoveInput(key) {
     message = "💀 TRAPPED! Press Space to retry.";
   } else if (isExit(newRow, newCol)) {
     gameState = "levelComplete";
+    saveScore(currentLevel, elapsedSeconds, steps);
+    renderScoreboard();
     showLeaderboard();
   }
+
+  updateUI();
 }
 
 // ============================================================
@@ -290,7 +379,7 @@ function shootBomb() {
   }
 
   const exists = bombs.some(
-    b => b.row === player.row && b.col === player.col && b.active
+    (b) => b.row === player.row && b.col === player.col && b.active
   );
   if (exists) return;
 
@@ -300,7 +389,7 @@ function shootBomb() {
     dRow: player.facingRow,
     dCol: player.facingCol,
     active: true,
-    spawnFrame: frameCount
+    spawnFrame: frameCount,
   });
 }
 
@@ -308,12 +397,11 @@ function spawnExplosion(row, col) {
   explosions.push({
     row,
     col,
-    life: 15
+    life: 15,
   });
-  
+
   createExplosionParticles(row, col, 40);
-  
-  // 3×3 blast area
+
   for (let dr = -1; dr <= 1; dr++) {
     for (let dc = -1; dc <= 1; dc++) {
       const rr = row + dr;
@@ -327,7 +415,7 @@ function spawnExplosion(row, col) {
 }
 
 function updateBombs() {
-  bombs.forEach(b => {
+  bombs.forEach((b) => {
     if (!b.active) return;
 
     const newRow = b.row + b.dRow;
@@ -353,16 +441,16 @@ function updateBombs() {
     }
   });
 
-  bombs = bombs.filter(b => b.active);
+  bombs = bombs.filter((b) => b.active);
 }
 
 function updateExplosions() {
-  explosions.forEach(ex => ex.life--);
-  explosions = explosions.filter(ex => ex.life > 0);
+  explosions.forEach((ex) => ex.life--);
+  explosions = explosions.filter((ex) => ex.life > 0);
 }
 
 // ============================================================
-// RENDERING - MARIO-STYLE PIXELS
+// RENDERING
 // ============================================================
 
 function drawTile(row, col, visible, seenBefore) {
@@ -370,28 +458,23 @@ function drawTile(row, col, visible, seenBefore) {
   const x = col * TILE_SIZE;
   const y = row * TILE_SIZE;
 
-  // Background
-  if (visible) {
-    ctx.fillStyle = "#1c2430";
-  } else {
-    ctx.fillStyle = "#0a0e14";
-  }
+  // background
+  ctx.fillStyle = visible ? "#1c2430" : "#0a0e14";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-  // Solid wall (brick pattern)
+  // solid wall
   if (ch === "#") {
     ctx.fillStyle = visible ? "#8B4513" : "#3d2210";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-    
-    // Brick texture
+
     ctx.fillStyle = "rgba(0,0,0,0.3)";
     ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-    
+
     ctx.fillStyle = visible ? "#A0522D" : "#4a2915";
     ctx.fillRect(x + 4, y + 4, 8, 8);
     ctx.fillRect(x + 14, y + 4, 8, 8);
     ctx.fillRect(x + 24, y + 4, 4, 8);
-    
+
     ctx.fillRect(x + 9, y + 14, 8, 8);
     ctx.fillRect(x + 19, y + 14, 8, 8);
     ctx.fillRect(x + 4, y + 24, 8, 4);
@@ -399,15 +482,14 @@ function drawTile(row, col, visible, seenBefore) {
     ctx.fillRect(x + 24, y + 24, 4, 4);
   }
 
-  // Cracked wall
+  // cracked wall
   if (ch === "*") {
     ctx.fillStyle = visible ? "#CD853F" : "#5a3d1f";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-    
+
     ctx.fillStyle = "rgba(0,0,0,0.3)";
     ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-    
-    // Cracks
+
     ctx.strokeStyle = visible ? "#8B4513" : "#3d2210";
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -419,20 +501,18 @@ function drawTile(row, col, visible, seenBefore) {
     ctx.stroke();
   }
 
-  // Trap (skull)
+  // trap
   if (ch === "X" && (visible || seenBefore)) {
     const color = visible ? "#ff0000" : "#5a0000";
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x + TILE_SIZE / 2, y + TILE_SIZE / 2, 10, 0, Math.PI * 2);
     ctx.fill();
-    
-    // Skull eyes
+
     ctx.fillStyle = "#000";
     ctx.fillRect(x + 12, y + 12, 3, 4);
     ctx.fillRect(x + 18, y + 12, 3, 4);
-    
-    // Crossbones
+
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -443,15 +523,14 @@ function drawTile(row, col, visible, seenBefore) {
     ctx.stroke();
   }
 
-  // Exit (golden door)
+  // exit
   if (ch === "E" && (visible || seenBefore)) {
     ctx.fillStyle = visible ? "#FFD700" : "#5a4810";
     ctx.fillRect(x + 6, y + 4, TILE_SIZE - 12, TILE_SIZE - 8);
-    
+
     ctx.fillStyle = visible ? "#FFA500" : "#3d2e08";
     ctx.fillRect(x + 8, y + 6, TILE_SIZE - 16, TILE_SIZE - 12);
-    
-    // Door handle
+
     ctx.fillStyle = "#8B4513";
     ctx.fillRect(x + 20, y + 16, 3, 6);
   }
@@ -461,38 +540,30 @@ function drawPlayer() {
   const x = player.col * TILE_SIZE;
   const y = player.row * TILE_SIZE;
 
-  // Shadow
   ctx.fillStyle = "rgba(0,0,0,0.3)";
   ctx.fillRect(x + 6, y + 28, 20, 3);
 
-  // Legs (blue)
   ctx.fillStyle = "#1E88E5";
   ctx.fillRect(x + 9, y + 18, 6, 10);
   ctx.fillRect(x + 17, y + 18, 6, 10);
 
-  // Body (red)
   ctx.fillStyle = "#E53935";
   ctx.fillRect(x + 8, y + 10, 16, 10);
 
-  // Arms
   ctx.fillStyle = "#FFAB91";
   ctx.fillRect(x + 5, y + 12, 4, 8);
   ctx.fillRect(x + 23, y + 12, 4, 8);
 
-  // Head
   ctx.fillStyle = "#FFCC80";
   ctx.fillRect(x + 10, y + 2, 12, 10);
 
-  // Cap
   ctx.fillStyle = "#D32F2F";
   ctx.fillRect(x + 8, y + 0, 16, 4);
 
-  // Eyes
   ctx.fillStyle = "#000";
   ctx.fillRect(x + 12, y + 5, 2, 2);
   ctx.fillRect(x + 18, y + 5, 2, 2);
 
-  // Smile
   ctx.strokeStyle = "#000";
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -508,7 +579,6 @@ function drawBomb(bomb) {
   const phase = age % 20;
   const radius = 8 + Math.sin(phase / 3) * 2;
 
-  // Outer glow
   const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius + 6);
   gradient.addColorStop(0, "rgba(100, 200, 255, 0.8)");
   gradient.addColorStop(1, "rgba(0, 150, 255, 0.2)");
@@ -517,13 +587,11 @@ function drawBomb(bomb) {
   ctx.arc(x, y, radius + 6, 0, Math.PI * 2);
   ctx.fill();
 
-  // Bubble
   ctx.fillStyle = phase < 10 ? "#80DEEA" : "#4DD0E1";
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.fill();
 
-  // Highlight
   ctx.fillStyle = "rgba(255,255,255,0.7)";
   ctx.beginPath();
   ctx.arc(x - 3, y - 3, radius / 3, 0, Math.PI * 2);
@@ -537,7 +605,6 @@ function drawExplosion(ex) {
   const maxRadius = TILE_SIZE * 2.5;
   const radius = maxRadius * progress;
 
-  // Fire gradient
   const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
   gradient.addColorStop(0, "rgba(255, 255, 200, 0.9)");
   gradient.addColorStop(0.3, "rgba(255, 150, 50, 0.8)");
@@ -548,8 +615,7 @@ function drawExplosion(ex) {
   ctx.beginPath();
   ctx.arc(cx, cy, radius, 0, Math.PI * 2);
   ctx.fill();
-  
-  // Ring effect
+
   ctx.strokeStyle = `rgba(255, 200, 0, ${1 - progress})`;
   ctx.lineWidth = 3;
   ctx.beginPath();
@@ -558,10 +624,87 @@ function drawExplosion(ex) {
 }
 
 // ============================================================
-// MAIN GAME LOOP
+// LEADERBOARD MODAL
 // ============================================================
 
-const VISION_RADIUS = 4;
+function showLeaderboard() {
+  const modal = document.getElementById("leaderboard-modal");
+  const list = document.getElementById("leaderboard-list");
+  if (!modal || !list) return;
+
+  const scores = getScores()
+    .filter((s) => s.level === currentLevel)
+    .sort((a, b) => {
+      if (a.time !== b.time) return a.time - b.time;
+      return a.steps - b.steps;
+    });
+
+  const currentScore = { level: currentLevel, time: elapsedSeconds, steps };
+  const currentIndex = scores.findIndex(
+    (s) => s.time === currentScore.time && s.steps === currentScore.steps
+  );
+  const currentRank = currentIndex >= 0 ? currentIndex + 1 : null;
+
+  list.innerHTML = "";
+
+  const top = scores.slice(0, 3);
+  const rankClasses = ["gold", "silver", "bronze"];
+  const rankEmojis = ["🥇", "🥈", "🥉"];
+
+  top.forEach((s, i) => {
+    const isCurrent =
+      s.time === currentScore.time && s.steps === currentScore.steps;
+    const li = document.createElement("li");
+    li.className = "leaderboard-item" + (isCurrent ? " current" : "");
+
+    const rankDiv = document.createElement("div");
+    rankDiv.className = "leaderboard-rank " + rankClasses[i];
+    rankDiv.textContent = rankEmojis[i];
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.className = "leaderboard-score";
+    scoreDiv.innerHTML = `<span>${s.time}s</span><span>${s.steps} steps</span>${
+      isCurrent ? ' <span class="leaderboard-you">(You)</span>' : ""
+    }`;
+
+    li.appendChild(rankDiv);
+    li.appendChild(scoreDiv);
+    list.appendChild(li);
+  });
+
+  if (currentRank && currentRank > 3) {
+    const li = document.createElement("li");
+    li.className = "leaderboard-item current";
+
+    const rankDiv = document.createElement("div");
+    rankDiv.className = "leaderboard-rank";
+    rankDiv.textContent = `#${currentRank}`;
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.className = "leaderboard-score";
+    scoreDiv.innerHTML = `<span>${currentScore.time}s</span><span>${currentScore.steps} steps</span> <span class="leaderboard-you">(You)</span>`;
+
+    li.appendChild(rankDiv);
+    li.appendChild(scoreDiv);
+    list.appendChild(li);
+  }
+
+  modal.classList.add("show");
+}
+
+function closeLeaderboard() {
+  const modal = document.getElementById("leaderboard-modal");
+  if (modal) modal.classList.remove("show");
+  currentLevel++;
+  loadLevel(currentLevel);
+}
+
+// 把 closeLeaderboard 暴露到全局（给 HTML onclick 用）
+window.closeLeaderboard = closeLeaderboard;
+
+// ============================================================
+// MAIN LOOP
+// ============================================================
 
 function gameLoop() {
   frameCount++;
@@ -573,15 +716,15 @@ function gameLoop() {
 function update() {
   if (gameState === "playing") {
     if (levelStartTime != null) {
-      elapsedSeconds = Math.floor((performance.now() - levelStartTime) / 1000);
+      elapsedSeconds = Math.floor(
+        (performance.now() - levelStartTime) / 1000
+      );
       updateUI();
     }
-    
     if (frameCount % 5 === 0) {
       updateBombs();
     }
   }
-  
   updateExplosions();
   updateParticles();
 }
@@ -589,17 +732,16 @@ function update() {
 function drawScene() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw tiles
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const dx = c - player.col;
       const dy = r - player.row;
       const dist = Math.sqrt(dx * dx + dy * dy);
       const visible = dist <= VISION_RADIUS;
-      
+
       if (visible) discovered[r][c] = true;
       const seenBefore = discovered[r][c];
-      
+
       drawTile(r, c, visible, seenBefore);
     }
   }
@@ -609,12 +751,18 @@ function drawScene() {
   explosions.forEach(drawExplosion);
   drawParticles();
 
-  // Spotlight fog
   const cx = (player.col + 0.5) * TILE_SIZE;
   const cy = (player.row + 0.5) * TILE_SIZE;
   const maxR = TILE_SIZE * (VISION_RADIUS + 2);
 
-  const fogGradient = ctx.createRadialGradient(cx, cy, TILE_SIZE * 2, cx, cy, maxR);
+  const fogGradient = ctx.createRadialGradient(
+    cx,
+    cy,
+    TILE_SIZE * 2,
+    cx,
+    cy,
+    maxR
+  );
   fogGradient.addColorStop(0, "rgba(0,0,0,0)");
   fogGradient.addColorStop(0.5, "rgba(0,0,0,0.5)");
   fogGradient.addColorStop(1, "rgba(0,0,0,0.95)");
@@ -622,97 +770,19 @@ function drawScene() {
   ctx.fillStyle = fogGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Death message
   if (gameState === "dead" && message) {
     ctx.fillStyle = "rgba(0,0,0,0.8)";
     ctx.fillRect(50, 200, 380, 80);
-    
+
     ctx.fillStyle = "#ff0000";
-    ctx.font = "16px 'Press Start 2P', monospace";
+    ctx.font = "16px sans-serif";
     ctx.textAlign = "center";
     ctx.fillText(message, 240, 235);
-    
+
     ctx.fillStyle = "#fff";
-    ctx.font = "10px 'Press Start 2P', monospace";
+    ctx.font = "12px sans-serif";
     ctx.fillText("Press SPACE to retry", 240, 260);
   }
-}
-
-// ============================================================
-// LEADERBOARD
-// ============================================================
-
-const SCORE_KEY = "pixel_maze_scores";
-
-function getScores() {
-  try {
-    return JSON.parse(localStorage.getItem(SCORE_KEY) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveScore(level, time, steps) {
-  const scores = getScores();
-  scores.push({ level, time, steps, date: Date.now() });
-  localStorage.setItem(SCORE_KEY, JSON.stringify(scores));
-}
-
-function showLeaderboard() {
-  saveScore(currentLevel, elapsedSeconds, steps);
-  
-  const scores = getScores()
-    .filter(s => s.level === currentLevel)
-    .sort((a, b) => {
-      if (a.time !== b.time) return a.time - b.time;
-      return a.steps - b.steps;
-    });
-
-  const currentScore = { level: currentLevel, time: elapsedSeconds, steps };
-  const currentRank = scores.findIndex(s => 
-    s.time === currentScore.time && s.steps === currentScore.steps
-  ) + 1;
-
-  const list = document.getElementById('leaderboard-list');
-  list.innerHTML = '';
-
-  // Top 3
-  const top3 = scores.slice(0, 3);
-  top3.forEach((s, i) => {
-    const isCurrent = s.time === currentScore.time && s.steps === currentScore.steps;
-    const li = document.createElement('li');
-    li.className = 'leaderboard-item' + (isCurrent ? ' current' : '');
-    
-    const rankColors = ['gold', 'silver', 'bronze'];
-    li.innerHTML = `
-      <div class="rank ${rankColors[i]}">${['🥇', '🥈', '🥉'][i]}</div>
-      <div class="score-details">
-        ${s.time}s · ${s.steps} steps
-      </div>
-    `;
-    list.appendChild(li);
-  });
-
-  // Current rank if not in top 3
-  if (currentRank > 3) {
-    const li = document.createElement('li');
-    li.className = 'leaderboard-item current';
-    li.innerHTML = `
-      <div class="rank">#${currentRank}</div>
-      <div class="score-details">
-        ${currentScore.time}s · ${currentScore.steps} steps (You)
-      </div>
-    `;
-    list.appendChild(li);
-  }
-
-  document.getElementById('leaderboard-modal').classList.add('show');
-}
-
-function closeLeaderboard() {
-  document.getElementById('leaderboard-modal').classList.remove('show');
-  currentLevel++;
-  loadLevel(currentLevel);
 }
 
 // ============================================================
