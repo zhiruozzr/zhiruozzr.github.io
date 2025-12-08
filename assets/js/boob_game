@@ -1,0 +1,667 @@
+---
+layout: default
+title: "TIME TO RELAX"
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>像素迷宫小游戏 · 泡泡炸弹 PRO</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #111;
+      color: #eee;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .panel {
+      max-width: 320px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .tip {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #333;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+
+    canvas {
+      image-rendering: pixelated; /* 像素感 */
+      border-radius: 8px;
+      box-shadow: 0 0 18px rgba(0,0,0,0.8);
+      background: #000;
+    }
+
+    .scoreboard {
+      margin-top: 16px;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+    }
+
+    .scoreboard h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    .scoreboard ol {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .scoreboard li {
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>🎮 TIME TO RELAX · 像素迷宫 PRO</h1>
+    <p class="tip">
+      操作：
+      <br>⬆ ⬇ ⬅ ⮕ 或 WASD：移动
+      <br><b>Space 空格：</b> 正常状态 = 发射泡泡炸弹（朝当前面向方向）
+      <br>带裂纹的墙（<span style="color:#d7ccc8;">*</span>）可被炸弹炸掉，爆炸范围为 <b>3×3</b>
+      <br>不要踩到 ❌ 陷阱
+      <br>走到 🚪 出口通过本关
+      <br>死亡 / 通关后，再按 <b>Space</b> 重开 / 下一关
+    </p>
+    <div>
+      <span class="tag">像素风</span>
+      <span class="tag">迷宫</span>
+      <span class="tag">迷雾视野</span>
+      <span class="tag">泡泡炸弹</span>
+      <span class="tag">计时 & 计步</span>
+    </div>
+
+    <div id="scoreboard" class="scoreboard">
+      <h3>本关最佳记录</h3>
+      <p>暂无记录，先来一把 😉</p>
+    </div>
+  </div>
+
+  <canvas id="game" width="480" height="480"></canvas>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    const TILE_SIZE = 32;
+    const ROWS = 15;
+    const COLS = 15;
+
+    // 地图符号说明：
+    // # = 固体墙（炸不掉）
+    // * = 带裂纹的可炸墙
+    // . = 空地
+    // P = 玩家起点
+    // E = 出口
+    // X = 陷阱
+    const levels = [
+      [
+        "###############",
+        "#P....#....*..#",
+        "###.#.#.#####.#",
+        "#...#.#.....#.#",
+        "#.###.###.#.#.#",
+        "#.....#...#.#.#",
+        "#####.#.###.#.#",
+        "#.....#...#.#.#",
+        "#.###.###.#.#.#",
+        "#.#...#.*.#.#.#",
+        "#.#.###.###.#.#",
+        "#.#.....#...#.#",
+        "#.#####.#.###.#",
+        "#.....X...E...#",
+        "###############",
+      ],
+      [
+        "###############",
+        "#P....#...X..*#",
+        "#.###.#.#####.#",
+        "#...#.#.....#.#",
+        "###.#.###.#.#.#",
+        "#...#.....#.#.#",
+        "#.#.#####.#.#.#",
+        "#.#..*..#.#...#",
+        "#.#.###.#.###.#",
+        "#.#.#...#...#.#",
+        "#.#.#.#####.#.#",
+        "#.#.#.....#.#.#",
+        "#.#.#####.#.#.#",
+        "#...X...E.*...#",
+        "###############",
+      ]
+    ];
+
+    let currentLevelIndex = 0;
+
+    const player = {
+      row: 0,
+      col: 0,
+      facingRow: 0, // 面向方向（行）
+      facingCol: 1  // 面向方向（列），默认向右
+    };
+
+    let exitCell = { row: 0, col: 0 };
+    let traps = []; // {row, col}
+    const VISION_RADIUS = 3; // 视野半径（格子）
+
+    let discovered = []; // 已经见过的格子
+    let gameState = "playing"; // "playing" | "dead" | "levelComplete" | "allComplete"
+    let message = "";
+    let bombs = []; // 泡泡炸弹列表
+    let frameCount = 0;
+
+    // 计时 & 计步
+    let levelStartTime = null; // performance.now()
+    let elapsedSeconds = 0;
+    let steps = 0;
+
+    // ---------- 本地排行榜（localStorage） ----------
+    const SCORE_KEY = "pixel_maze_scores";
+
+    function getScoreData() {
+      if (typeof localStorage === "undefined") return [];
+      try {
+        const raw = localStorage.getItem(SCORE_KEY);
+        if (!raw) return [];
+        return JSON.parse(raw);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveScoreData(data) {
+      if (typeof localStorage === "undefined") return;
+      localStorage.setItem(SCORE_KEY, JSON.stringify(data));
+    }
+
+    function recordRun(levelNumber, timeSec, stepCount) {
+      const data = getScoreData();
+      data.push({
+        level: levelNumber,
+        time: timeSec,
+        steps: stepCount
+      });
+      saveScoreData(data);
+      renderScoreboard();
+    }
+
+    function renderScoreboard() {
+      const box = document.getElementById("scoreboard");
+      if (!box) return;
+
+      const levelNumber = currentLevelIndex + 1;
+      const data = getScoreData().filter(r => r.level === levelNumber);
+
+      box.innerHTML = "<h3>本关最佳记录</h3>";
+
+      if (data.length === 0) {
+        box.innerHTML += "<p>暂无记录，先来一把 😉</p>";
+        return;
+      }
+
+      // 优先按时间排，再按步数
+      data.sort((a, b) => {
+        if (a.time !== b.time) return a.time - b.time;
+        return a.steps - b.steps;
+      });
+
+      const top = data.slice(0, 5);
+      const list = document.createElement("ol");
+      top.forEach((r, idx) => {
+        const li = document.createElement("li");
+        li.textContent = `${r.time}s · ${r.steps} 步`;
+        list.appendChild(li);
+      });
+
+      box.appendChild(list);
+    }
+
+    // ---------- 关卡初始化 ----------
+    function loadLevel(index) {
+      const map = levels[index];
+      traps = [];
+      discovered = [];
+      bombs = [];
+      steps = 0;
+      elapsedSeconds = 0;
+      levelStartTime = performance.now();
+
+      for (let r = 0; r < ROWS; r++) {
+        discovered[r] = [];
+        for (let c = 0; c < COLS; c++) {
+          discovered[r][c] = false;
+          const ch = map[r][c];
+          if (ch === "P") {
+            player.row = r;
+            player.col = c;
+            player.facingRow = 0;
+            player.facingCol = 1; // 默认向右
+          } else if (ch === "E") {
+            exitCell.row = r;
+            exitCell.col = c;
+          } else if (ch === "X") {
+            traps.push({ row: r, col: c });
+          }
+        }
+      }
+      gameState = "playing";
+      message = `第 ${index + 1} 关`;
+      renderScoreboard();
+    }
+
+    // ---------- 地图工具函数 ----------
+    function isWall(row, col) {
+      const map = levels[currentLevelIndex];
+      const ch = map[row][col];
+      return ch === "#" || ch === "*";
+    }
+
+    function isTrap(row, col) {
+      const map = levels[currentLevelIndex];
+      const ch = map[row][col];
+      return ch === "X";
+    }
+
+    function isExit(row, col) {
+      return row === exitCell.row && col === exitCell.col;
+    }
+
+    function isBreakableWall(row, col) {
+      const map = levels[currentLevelIndex];
+      return map[row][col] === "*";
+    }
+
+    function breakWall(row, col) {
+      const map = levels[currentLevelIndex];
+      const rowStr = map[row];
+      levels[currentLevelIndex][row] =
+        rowStr.substring(0, col) + "." + rowStr.substring(col + 1);
+    }
+
+    // ---------- 键盘控制 ----------
+    const keyState = {};
+    window.addEventListener("keydown", (e) => {
+      if (
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key) ||
+        ["w","a","s","d","W","A","S","D"].includes(e.key)
+      ) {
+        e.preventDefault(); // 防止页面滚动
+      }
+
+      if (e.code === "Space") {
+        // Space 键：玩的时候发射泡泡炸弹，其它状态下重开/下一关
+        if (gameState === "playing") {
+          shootBomb();
+        } else if (gameState === "dead" || gameState === "levelComplete") {
+          goNext();
+        } else if (gameState === "allComplete") {
+          currentLevelIndex = 0;
+          loadLevel(currentLevelIndex);
+        }
+        return;
+      }
+
+      keyState[e.key] = true;
+      handleMoveInput(e.key);
+    });
+
+    window.addEventListener("keyup", (e) => {
+      keyState[e.key] = false;
+    });
+
+    function handleMoveInput(key) {
+      if (gameState !== "playing") return;
+
+      let dRow = 0, dCol = 0;
+      if (key === "ArrowUp" || key === "w" || key === "W") dRow = -1;
+      if (key === "ArrowDown" || key === "s" || key === "S") dRow = 1;
+      if (key === "ArrowLeft" || key === "a" || key === "A") dCol = -1;
+      if (key === "ArrowRight" || key === "d" || key === "D") dCol = 1;
+
+      if (dRow === 0 && dCol === 0) return;
+
+      const newRow = player.row + dRow;
+      const newCol = player.col + dCol;
+
+      if (
+        newRow < 0 || newRow >= ROWS ||
+        newCol < 0 || newCol >= COLS
+      ) {
+        return;
+      }
+
+      if (isWall(newRow, newCol)) {
+        // 撞墙不动，但更新面朝方向
+        player.facingRow = dRow;
+        player.facingCol = dCol;
+        return;
+      }
+
+      // 可以移动
+      player.row = newRow;
+      player.col = newCol;
+      player.facingRow = dRow;
+      player.facingCol = dCol;
+      steps++;
+
+      if (isTrap(newRow, newCol)) {
+        gameState = "dead";
+        message = "💀 踩到陷阱了！Space 重来。";
+      } else if (isExit(newRow, newCol)) {
+        const levelNumber = currentLevelIndex + 1;
+        // 完成关卡时记录用时 & 步数
+        recordRun(levelNumber, elapsedSeconds, steps);
+
+        if (currentLevelIndex < levels.length - 1) {
+          gameState = "levelComplete";
+          message = "✅ 本关通过！Space 进下一关。";
+        } else {
+          gameState = "allComplete";
+          message = "🏆 全部通关！Space 重新开始。";
+        }
+      }
+    }
+
+    function goNext() {
+      if (gameState === "dead") {
+        // 同一关重新开始
+        loadLevel(currentLevelIndex);
+      } else if (gameState === "levelComplete") {
+        currentLevelIndex++;
+        if (currentLevelIndex >= levels.length) {
+          gameState = "allComplete";
+          message = "🏆 全部通关！";
+        } else {
+          loadLevel(currentLevelIndex);
+        }
+      }
+    }
+
+    // ---------- 泡泡炸弹 ----------
+    function shootBomb() {
+      // 没有面向方向时默认向右
+      if (player.facingRow === 0 && player.facingCol === 0) {
+        player.facingRow = 0;
+        player.facingCol = 1;
+      }
+
+      // 同一格最多放一个炸弹
+      const exists = bombs.some(
+        b => b.row === player.row && b.col === player.col && b.active
+      );
+      if (exists) return;
+
+      bombs.push({
+        row: player.row,
+        col: player.col,
+        dRow: player.facingRow,
+        dCol: player.facingCol,
+        active: true,
+        spawnFrame: frameCount
+      });
+    }
+
+    function explode(row, col) {
+      // 真·爆炸范围：以 (row,col) 为中心的 3×3
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          const rr = row + dr;
+          const cc = col + dc;
+          if (rr < 0 || rr >= ROWS || cc < 0 || cc >= COLS) continue;
+          if (isBreakableWall(rr, cc)) {
+            breakWall(rr, cc);
+          }
+        }
+      }
+    }
+
+    function updateBombs() {
+      bombs.forEach(b => {
+        if (!b.active) return;
+
+        const newRow = b.row + b.dRow;
+        const newCol = b.col + b.dCol;
+
+        if (
+          newRow < 0 || newRow >= ROWS ||
+          newCol < 0 || newCol >= COLS
+        ) {
+          b.active = false;
+          return;
+        }
+
+        const map = levels[currentLevelIndex];
+        const ch = map[newRow][newCol];
+
+        if (ch === "#") {
+          // 硬墙：撞上就消失
+          b.active = false;
+          return;
+        } else if (ch === "*") {
+          // 可炸墙：先爆炸 3×3，再消失
+          explode(newRow, newCol);
+          b.active = false;
+          return;
+        } else {
+          // 其它格子：继续飞
+          b.row = newRow;
+          b.col = newCol;
+        }
+      });
+
+      bombs = bombs.filter(b => b.active);
+    }
+
+    // ---------- 绘制 ----------
+    function drawTile(row, col, visible, seenBefore) {
+      const map = levels[currentLevelIndex];
+      const ch = map[row][col];
+      const x = col * TILE_SIZE;
+      const y = row * TILE_SIZE;
+
+      if (!visible && !seenBefore) {
+        ctx.fillStyle = "#02030a";
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        return;
+      }
+
+      if (visible) {
+        ctx.fillStyle = "#1d1d24";
+      } else {
+        ctx.fillStyle = "#111116";
+      }
+      ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+
+      // 普通墙
+      if (ch === "#") {
+        ctx.fillStyle = visible ? "#555b77" : "#2a2f40";
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.fillRect(x + 4, y + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+      }
+
+      // 可炸墙
+      if (ch === "*") {
+        ctx.fillStyle = visible ? "#786c4f" : "#3a3424";
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.fillRect(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6);
+        ctx.strokeStyle = visible ? "#d7ccc8" : "#6d4c41";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + 6, y + 8);
+        ctx.lineTo(x + TILE_SIZE - 6, y + TILE_SIZE - 10);
+        ctx.moveTo(x + 12, y + TILE_SIZE - 6);
+        ctx.lineTo(x + TILE_SIZE - 10, y + 10);
+        ctx.stroke();
+      }
+
+      // 陷阱
+      if (ch === "X") {
+        if (visible || seenBefore) {
+          ctx.fillStyle = visible ? "#d32f2f" : "#5b1d1d";
+          ctx.beginPath();
+          ctx.arc(x + TILE_SIZE/2, y + TILE_SIZE/2, TILE_SIZE/3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(0,0,0,0.6)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x+8, y+8);
+          ctx.lineTo(x+TILE_SIZE-8, y+TILE_SIZE-8);
+          ctx.moveTo(x+TILE_SIZE-8, y+8);
+          ctx.lineTo(x+8, y+TILE_SIZE-8);
+          ctx.stroke();
+        }
+      }
+
+      // 出口
+      if (ch === "E") {
+        if (visible || seenBefore) {
+          ctx.fillStyle = visible ? "#ffeb3b" : "#5a5220";
+          ctx.fillRect(x + 6, y + 6, TILE_SIZE - 12, TILE_SIZE - 12);
+          ctx.fillStyle = visible ? "#333" : "#111";
+          ctx.fillRect(x + 10, y + 10, TILE_SIZE - 20, TILE_SIZE - 20);
+        }
+      }
+    }
+
+    function drawPlayer() {
+      const x = player.col * TILE_SIZE;
+      const y = player.row * TILE_SIZE;
+
+      ctx.fillStyle = "#4fc3f7";
+      ctx.fillRect(x + 8, y + 12, TILE_SIZE - 16, TILE_SIZE - 12);
+
+      ctx.fillStyle = "#ffe082";
+      ctx.fillRect(x + 10, y + 2, TILE_SIZE - 20, TILE_SIZE - 16);
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(x + 13, y + 6, 3, 4);
+      ctx.fillRect(x + TILE_SIZE - 16, y + 6, 3, 4);
+
+      ctx.fillStyle = "rgba(0,0,0,0.4)";
+      ctx.fillRect(x + 8, y + TILE_SIZE - 4, TILE_SIZE - 16, 3);
+    }
+
+    // 泡泡飞行时的“闪一下”帧动画
+    function drawBomb(bomb) {
+      const x = bomb.col * TILE_SIZE + TILE_SIZE / 2;
+      const y = bomb.row * TILE_SIZE + TILE_SIZE / 2;
+
+      const age = frameCount - bomb.spawnFrame;
+      const phase = age % 20; // 一个简单周期
+      const radiusBase = TILE_SIZE / 4;
+      const radius = radiusBase + (phase < 10 ? 2 : -2);
+
+      // 外圈轻微闪动
+      ctx.beginPath();
+      ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
+      ctx.fillStyle = phase < 10 ? "rgba(129,212,250,0.35)" : "rgba(0,150,136,0.4)";
+      ctx.fill();
+
+      // 内圈主体
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = phase < 10 ? "#80deea" : "#b3e5fc";
+      ctx.fill();
+
+      // 高光
+      ctx.beginPath();
+      ctx.arc(x - 4, y - 4, radius / 3, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fill();
+    }
+
+    // ---------- 主循环 ----------
+    function gameLoop() {
+      frameCount++;
+      update();
+      drawScene();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function update() {
+      if (gameState === "playing") {
+        if (levelStartTime != null) {
+          elapsedSeconds = Math.floor((performance.now() - levelStartTime) / 1000);
+        }
+        // 控制炸弹移动速度：每 6 帧移动一格
+        if (frameCount % 6 === 0) {
+          updateBombs();
+        }
+      }
+    }
+
+    function drawScene() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 迷雾 & 地图
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const dx = c - player.col;
+          const dy = r - player.row;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const visible = dist <= VISION_RADIUS;
+          if (visible) discovered[r][c] = true;
+          const seenBefore = discovered[r][c];
+
+          drawTile(r, c, visible, seenBefore);
+        }
+      }
+
+      // 玩家
+      drawPlayer();
+
+      // 泡泡炸弹
+      bombs.forEach(drawBomb);
+
+      // 顶部信息栏
+      ctx.fillStyle = "rgba(0,0,0,0.7)";
+      ctx.fillRect(0, 0, canvas.width, 40);
+      ctx.fillStyle = "#fff";
+      ctx.font = "14px sans-serif";
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      ctx.fillText(`关卡: ${currentLevelIndex + 1}/${levels.length}`, 12, 12);
+      ctx.fillText(`时间: ${elapsedSeconds}s`, 150, 12);
+      ctx.fillText(`步数: ${steps}`, 270, 12);
+
+      if (message) {
+        ctx.textAlign = "right";
+        ctx.fillText(message, canvas.width - 12, 12);
+        ctx.textAlign = "left";
+      }
+    }
+
+    // 启动游戏
+    loadLevel(currentLevelIndex);
+    gameLoop();
+  </script>
+</body>
+</html>
