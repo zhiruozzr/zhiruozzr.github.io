@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Maze Adventure 🎮</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .game-container {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+      text-shadow: 3px 3px 0 #ff006e;
+      letter-spacing: 2px;
+    }
+
+    .controls-info {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .controls-info strong {
+      color: #ffd700;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 16px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .stat-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      min-width: 100px;
+    }
+
+    .stat-value {
+      color: #ffd700;
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    /* Leaderboard Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      padding: 32px;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 20px;
+      color: #ffd700;
+    }
+
+    .leaderboard-list {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+
+    .leaderboard-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .leaderboard-item.current {
+      background: rgba(255, 215, 0, 0.3);
+      border: 2px solid #ffd700;
+    }
+
+    .rank {
+      font-size: 18px;
+      width: 40px;
+      text-align: center;
+    }
+
+    .rank.gold { color: #ffd700; }
+    .rank.silver { color: #c0c0c0; }
+    .rank.bronze { color: #cd7f32; }
+
+    .score-details {
+      flex: 1;
+      margin-left: 12px;
+    }
+
+    .continue-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #ff006e 0%, #ff4d94 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .continue-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .continue-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-container">
+  <h1>🎮 PIXEL MAZE</h1>
+  
+  <div class="controls-info">
+    <strong>🕹️ Controls:</strong><br>
+    <strong>WASD / Arrow Keys:</strong> Move<br>
+    <strong>SPACE:</strong> Shoot Bubble Bomb 💣<br>
+    <strong>Goal:</strong> Find the exit! Avoid traps! 💀
+  </div>
+
+  <canvas id="game" width="480" height="480"></canvas>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div>Level</div>
+      <div class="stat-value" id="level-display">1</div>
+    </div>
+    <div class="stat-item">
+      <div>Time</div>
+      <div class="stat-value" id="time-display">0s</div>
+    </div>
+    <div class="stat-item">
+      <div>Steps</div>
+      <div class="stat-value" id="steps-display">0</div>
+    </div>
+  </div>
+</div>
+
+<!-- Leaderboard Modal -->
+<div class="modal" id="leaderboard-modal">
+  <div class="modal-content">
+    <h2>🏆 LEVEL COMPLETE! 🏆</h2>
+    <ul class="leaderboard-list" id="leaderboard-list">
+      <!-- Filled by JS -->
+    </ul>
+    <button class="continue-btn" onclick="closeLeaderboard()">
+      CONTINUE TO NEXT LEVEL
+    </button>
+  </div>
+</div>
+
+<script src="pixel-maze-game.js"></script>
+
+</body>
+</html>
