@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "TIME TO RELAX"
+title: "Pixel Maze Adventure"
 permalink: /relax/
 author_profile: true
 ---
@@ -103,4 +103,4 @@ author_profile: true
   <canvas id="game" width="480" height="480"></canvas>
 </div>
 
-<script src="{{ '/assets/js/relax-game.js' | relative_url }}"></script>
+<script src="/assets/js/pixel-maze-game.js"></script>
