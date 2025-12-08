@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 <div style="font-size:1.15rem; line-height:1.65;">
-Hi! I’m <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
+Hi! I'm <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
 <strong>The University of Adelaide</strong>, supervised by 
 <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank"><strong>Prof. Firmin Doko Tchatoka</strong></a> 
 and 
@@ -43,7 +43,7 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 <hr>
 
 <h2>🎮 A tiny little game</h2>
-<p>Just for fun: press and hold <strong>Space</strong> to charge, release to jump to the next platform. Don’t fall!</p>
+<p>Just for fun: press and hold <strong>Space</strong> to charge, release to jump to the next platform. Don't fall!</p>
 
 <div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
   <canvas id="mini-game" width="400" height="260" style="display:block;margin:0 auto;background:#222;border-radius:8px;"></canvas>
@@ -52,7 +52,7 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 <script>
 (function () {
   const canvas = document.getElementById("mini-game");
-  if (!canvas) return; //
+  if (!canvas) return;
   const ctx = canvas.getContext("2d");
 
   const player = { x: 80, y: 190, size: 20, vy: 0, jumping: false };
@@ -63,8 +63,10 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
   ];
   const gravity = 0.4;
   let charging = false;
-  let chargePower = 0; // 
+  let chargePower = 0;
   let gameOver = false;
+  let score = 0;
+  let cameraX = 0; //
 
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
@@ -83,7 +85,7 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
       e.preventDefault();
       charging = false;
       player.jumping = true;
-      player.vy = -8 - chargePower * 0.25; //
+      player.vy = -8 - chargePower * 0.25;
     }
   });
 
@@ -95,12 +97,34 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
     charging = false;
     chargePower = 0;
     gameOver = false;
+    score = 0;
+    cameraX = 0;
+    platforms = [
+      { x: 50,  y: 210, w: 80, h: 10 },
+      { x: 170, y: 205, w: 80, h: 10 },
+      { x: 290, y: 200, w: 80, h: 10 }
+    ];
+  }
+
+  function generatePlatform() {
+    const lastPlatform = platforms[platforms.length - 1];
+    const distance = 100 + Math.random() * 80; // 
+    const yVariation = (Math.random() - 0.5) * 40; // 
+    const newY = Math.max(150, Math.min(220, lastPlatform.y + yVariation));
+    const newW = 60 + Math.random() * 40; //
+    
+    platforms.push({
+      x: lastPlatform.x + distance,
+      y: newY,
+      w: newW,
+      h: 10
+    });
   }
 
   function update() {
     if (gameOver) return;
 
-    //
+    // 
     if (charging) {
       chargePower += 0.5;
       if (chargePower > 20) chargePower = 20;
@@ -111,17 +135,23 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
       player.x += chargePower * 0.4;
     }
 
-    // 
+    //
     player.vy += gravity;
     player.y += player.vy;
+
+    // 
+    if (player.x > canvas.width * 0.4) {
+      cameraX = player.x - canvas.width * 0.4;
+    }
 
     // 
     if (player.y > canvas.height) {
       gameOver = true;
     }
 
-    // 
-    platforms.forEach(p => {
+    //
+    let landed = false;
+    platforms.forEach((p, index) => {
       const onTop = player.y + player.size >= p.y &&
                     player.y + player.size <= p.y + 10 &&
                     player.x + player.size > p.x &&
@@ -131,8 +161,21 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
         player.y = p.y - player.size;
         player.vy = 0;
         player.jumping = false;
+        landed = true;
+        //
+        if (index > score) {
+          score = index;
+        }
       }
     });
+
+    // 
+    if (platforms[platforms.length - 1].x < cameraX + canvas.width + 200) {
+      generatePlatform();
+    }
+
+    // 
+    platforms = platforms.filter(p => p.x > cameraX - 100);
   }
 
   function draw() {
@@ -141,6 +184,11 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
     // 
     ctx.fillStyle = "#1a1a1a";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 
+    ctx.save();
+    // 
+    ctx.translate(-cameraX, 0);
 
     // 
     ctx.fillStyle = "#4caf50";
@@ -153,11 +201,16 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
     ctx.fillRect(player.x, player.y, player.size, player.size);
 
     // 
+    ctx.restore();
+
+    // 
     if (!gameOver) {
       ctx.fillStyle = "#fff";
       ctx.font = "14px sans-serif";
       ctx.fillText("Hold Space to charge, release to jump.", 10, 20);
+      ctx.fillText("Score: " + score, 10, 250);
 
+      // 
       ctx.strokeStyle = "#fff";
       ctx.strokeRect(10, 30, 100, 10);
       ctx.fillStyle = "#ff9800";
@@ -165,7 +218,9 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
     } else {
       ctx.fillStyle = "#fff";
       ctx.font = "20px sans-serif";
-      ctx.fillText("Game Over – press Space to restart", 15, 140);
+      ctx.fillText("Game Over! Score: " + score, 60, 120);
+      ctx.font = "14px sans-serif";
+      ctx.fillText("Press Space to restart", 110, 150);
     }
   }
 
@@ -178,6 +233,3 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
   loop();
 })();
 </script>
-
-
-
