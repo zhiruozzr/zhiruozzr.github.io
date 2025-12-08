@@ -42,52 +42,10 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 <hr>
 
 <h1>Just a tiny canvas test</h1>
-<p>If you see a blue square moving left and right, the game code is working ✅</p>
+<p>Help the graduation cap jump!</p>
 
 <div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-top:12px;">
   <canvas id="mini-game" width="400" height="260" style="display:block;margin:0 auto;background:#222;border-radius:8px;"></canvas>
 </div>
 
-<script>
-(function () {
-  var canvas = document.getElementById("mini-game");
-  if (!canvas) return;
-  var ctx = canvas.getContext("2d");
-
-  var x = 50;
-  var y = 120;
-  var size = 30;
-  var vx = 2;
-
-  function update() {
-    x += vx;
-    if (x < 10 || x + size > canvas.width - 10) {
-      vx = -vx;
-    }
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // background
-    ctx.fillStyle = "#10121d";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // simple platform
-    ctx.fillStyle = "#4caf50";
-    ctx.fillRect(40, 200, 320, 10);
-
-    // blue square
-    ctx.fillStyle = "#4da3ff";
-    ctx.fillRect(x, y, size, size);
-  }
-
-  function loop() {
-    update();
-    draw();
-    requestAnimationFrame(loop);
-  }
-
-  loop();
-})();
-</script>
+<script src="/assets/js/game.js"></script>
