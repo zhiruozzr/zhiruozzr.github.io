@@ -3,7 +3,7 @@
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
 
-  // ---- 基本参数 ----
+  // 
   const gravity = 0.4;
   const maxCharge = 20;
 
@@ -21,33 +21,42 @@
   let gameOver = false;
   let score = 0;
   let cameraX = 0;
-  let t = 0; // 用来做云朵、唱片微微动
+  let t = 0;             
+  let tipMessage = "";    
+  let tipTimer = 0;       
+  let maxMilestone = 0;  
 
   const platformColors = ["#ffd6a5", "#ffcad4", "#bde0fe", "#caffbf"];
 
-  // ---- 初始化起始平台 ----
+  // 
   function initPlatforms() {
     platforms = [
       { x: 40,  y: 210, w: 90,  h: 12, type: "home",    visited: false },
       { x: 170, y: 205, w: 80,  h: 12, type: "plain",   visited: false },
-      { x: 290, y: 200, w: 80,  h: 12, type: "cup",     visited: false }
+      { x: 290, y: 200, w: 80,  h: 12, type: "paper",   visited: false } 
     ];
   }
 
   initPlatforms();
 
-  // ---- 可爱小博士帽团子 ----
+  // 
+  function showTip(msg, frames) {
+    tipMessage = msg;
+    tipTimer = frames || 180; 
+  }
+
+  //-
   function drawCapCharacter(x, y, size) {
     ctx.save();
     ctx.translate(x + size / 2, y + size / 2);
 
-    // 身体团子
+    // 
     ctx.fillStyle = "#ffe0f0";
     ctx.beginPath();
     ctx.arc(0, 0, size * 0.55, 0, Math.PI * 2);
     ctx.fill();
 
-    // 脸
+    // 
     ctx.fillStyle = "#000";
     ctx.beginPath();
     ctx.arc(-size * 0.2, -size * 0.1, 2.2, 0, Math.PI * 2);
@@ -60,7 +69,7 @@
     ctx.arc(0, size * 0.12, 4, 0, Math.PI, false);
     ctx.stroke();
 
-    // 小博士帽
+    //
     ctx.translate(0, -size * 0.6);
     ctx.fillStyle = "#343a40";
     ctx.beginPath();
@@ -74,7 +83,7 @@
     ctx.fillStyle = "#495057";
     ctx.fillRect(-size * 0.22, 0, size * 0.44, size * 0.18);
 
-    // 流苏
+    // 
     ctx.strokeStyle = "#ffd43b";
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -90,7 +99,7 @@
     ctx.restore();
   }
 
-  // ---- 键盘控制 ----
+  //
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
       e.preventDefault();
@@ -112,7 +121,7 @@
     }
   });
 
-  // ---- 重开 ----
+  // 
   function resetGame() {
     player.x = 80;
     player.y = 190;
@@ -123,23 +132,28 @@
     gameOver = false;
     score = 0;
     cameraX = 0;
+    tipMessage = "";
+    tipTimer = 0;
+    maxMilestone = 0;
     initPlatforms();
   }
 
-  // ---- 随机平台类型 ----
+  // 
   function randomPlatformType() {
     const r = Math.random();
-    if (r < 0.2) return "record"; // 唱片机
-    if (r < 0.4) return "cup";    // 杯子
-    if (r < 0.55) return "cloud"; // 云朵平台
-    return "plain";               // 普通
+    if (r < 0.18) return "record"; 
+    if (r < 0.36) return "cup";    
+    if (r < 0.5)  return "cloud";  
+    if (r < 0.65) return "paper";  
+    if (r < 0.8)  return "coffee"; // Coffee bonus
+    return "plain";               
   }
 
-  // ---- 生成新平台 ----
+  // 
   function generatePlatform() {
     const last = platforms[platforms.length - 1];
-    const distance = 110 + Math.random() * 90;       // 横向距离
-    const yVariation = (Math.random() - 0.5) * 45;   // 高度变化
+    const distance = 110 + Math.random() * 90;      
+    const yVariation = (Math.random() - 0.5) * 45;  
     const newY = Math.max(150, Math.min(220, last.y + yVariation));
     const newW = 60 + Math.random() * 60;
 
@@ -153,7 +167,21 @@
     });
   }
 
-  // ---- 物理更新 ----
+  // 
+  function checkMilestones() {
+    if (score >= 10 && maxMilestone < 10) {
+      maxMilestone = 10;
+      showTip("Time for coding! 💻", 220);
+    } else if (score >= 6 && maxMilestone < 6) {
+      maxMilestone = 6;
+      showTip("Time for paper! 📄", 220);
+    } else if (score >= 3 && maxMilestone < 3) {
+      maxMilestone = 3;
+      showTip("Nice warm-up jump ✨", 200);
+    }
+  }
+
+  // 
   function update() {
     if (gameOver) return;
 
@@ -175,9 +203,18 @@
 
     if (player.y > canvas.height) {
       gameOver = true;
+      // 
+      if (score >= 10) {
+        showTip("Amazing run – now really time for coding! 💻", 260);
+      } else if (score >= 5) {
+        showTip("Good job – maybe open that paper draft? 📄", 260);
+      } else {
+        showTip("Short break over – back to work 😉", 260);
+      }
+      return;
     }
 
-    // 落在平台上
+    // 
     platforms.forEach((p) => {
       const onTop =
         player.y + player.size >= p.y &&
@@ -191,10 +228,20 @@
         player.vy = 0;
         player.jumping = false;
 
-        // 计分：第一次踩到这个平台才 +1
+        // 
         if (!p.visited && p.type !== "home") {
           p.visited = true;
           score += 1;
+
+          // Coffee bonus
+          if (p.type === "coffee") {
+            score += 2;
+            showTip("Coffee bonus +2! ☕️", 180);
+          } else if (p.type === "paper") {
+            showTip("Careful, that’s a stack of papers… 📚", 180);
+          }
+
+          checkMilestones();
         }
       }
     });
@@ -206,19 +253,17 @@
     platforms = platforms.filter(p => p.x > cameraX - 220);
   }
 
-  // ---- 背景：星露谷系傍晚+远山 ----
+  // 
   function drawBackground() {
-    // 渐变天空
     const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    g.addColorStop(0, "#ffb5a7"); // 粉橘天空
+    g.addColorStop(0, "#ffb5a7");
     g.addColorStop(0.5, "#fcd5ce");
     g.addColorStop(1, "#f8edeb");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 远山
     ctx.save();
-    ctx.translate(-cameraX * 0.2, 0); // 视差
+    ctx.translate(-cameraX * 0.2, 0); 
     drawHill(-80, 210, 220, "#b5838d");
     drawHill(120, 215, 260, "#6d6875");
     drawHill(320, 205, 240, "#9d8189");
@@ -236,7 +281,7 @@
     ctx.fill();
   }
 
-  // ---- 云朵 ----
+  // 
   function drawCloud(x, y, r) {
     ctx.beginPath();
     ctx.arc(x, y, r, Math.PI * 0.5, Math.PI * 1.5);
@@ -258,7 +303,7 @@
     ctx.restore();
   }
 
-  // ---- 糖块风平台 + 不同装饰 ----
+  // 
   function drawRoundedRect(x, y, w, h, r, fillColor, strokeColor) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
@@ -280,7 +325,7 @@
   }
 
   function drawSpeakerAndTurntable(x, y) {
-    // 小音响
+    // 
     ctx.fillStyle = "#343a40";
     ctx.fillRect(x, y, 26, 22);
     ctx.fillStyle = "#adb5bd";
@@ -288,7 +333,7 @@
     ctx.arc(x + 13, y + 13, 7, 0, Math.PI * 2);
     ctx.fill();
 
-    // 唱片机
+    // 
     const wobble = Math.sin(t * 0.12) * 2;
     const tx = x + 32;
     const ty = y + wobble;
@@ -305,7 +350,7 @@
   }
 
   function drawCup(x, y) {
-    // 杯子（可可 / 咖啡）
+    //
     ctx.fillStyle = "#fff";
     ctx.fillRect(x, y, 18, 16);
     ctx.fillStyle = "#e5989b";
@@ -315,6 +360,33 @@
     ctx.beginPath();
     ctx.arc(x + 18, y + 8, 4, -Math.PI * 0.5, Math.PI * 0.5);
     ctx.stroke();
+  }
+
+  function drawCoffeeBonus(x, y) {
+    // 
+    drawCup(x, y);
+    ctx.strokeStyle = "rgba(255,255,255,0.9)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x + 6, y - 2);
+    ctx.quadraticCurveTo(x + 4, y - 8, x + 8, y - 12);
+    ctx.moveTo(x + 12, y - 2);
+    ctx.quadraticCurveTo(x + 10, y - 10, x + 14, y - 14);
+    ctx.stroke();
+  }
+
+  function drawPaperStack(x, y) {
+    // 
+    const w = 26;
+    const h = 6;
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = "#e0e0e0";
+    ctx.fillRect(x + 2, y - 6, w, h);
+    ctx.fillStyle = "#cddafd";
+    ctx.fillRect(x + 4, y - 12, w, h);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(x + 4, y - 9, w - 8, 1);
   }
 
   function drawCloudPlatform(x, y, w) {
@@ -337,7 +409,7 @@
       }
 
       if (p.type === "home") {
-        // 起点平台上画个小灯 / 小房子
+        // 
         ctx.fillStyle = "#fff3b0";
         ctx.fillRect(p.x + 10, p.y - 22, 18, 18);
         ctx.fillStyle = "#ffb703";
@@ -346,11 +418,15 @@
         drawSpeakerAndTurntable(p.x + p.w / 2 - 30, p.y - 28);
       } else if (p.type === "cup") {
         drawCup(p.x + p.w / 2 - 10, p.y - 18);
+      } else if (p.type === "coffee") {
+        drawCoffeeBonus(p.x + p.w / 2 - 10, p.y - 20);
+      } else if (p.type === "paper") {
+        drawPaperStack(p.x + p.w / 2 - 13, p.y - 16);
       }
     });
   }
 
-  // ---- 绘制整个场景 ----
+  // 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -359,14 +435,11 @@
 
     ctx.save();
     ctx.translate(-cameraX, 0);
-
     drawPlatforms();
     drawCapCharacter(player.x, player.y, player.size);
-
     ctx.restore();
 
-    // UI：得分 + 提示
-    // 大号得分（右上角，类似星露谷）
+    //
     const scoreText = score.toString().padStart(3, "0");
     ctx.fillStyle = "#6d6875";
     ctx.font = "18px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
@@ -382,22 +455,98 @@
       ctx.fillStyle = "#6d6875";
       ctx.fillText("Hold Space to charge, release to jump", 10, 24);
 
-      // 蓄力条
+      //
       ctx.strokeStyle = "#adb5bd";
       ctx.strokeRect(10, 46, 120, 10);
       ctx.fillStyle = "#ffadad";
       ctx.fillRect(10, 46, (chargePower / maxCharge) * 120, 10);
     } else {
-      ctx.fillStyle = "#6d6875";
-      ctx.fillText("Game Over. Press Space to restart ♻️", 10, 28);
+      // 
+      drawGameOverOverlay();
+    }
+
+    // 
+    if (tipTimer > 0 && tipMessage) {
+      drawTipBubble(tipMessage);
     }
 
     ctx.textAlign = "left";
   }
 
-  // ---- 主循环 ----
+  function drawGameOverOverlay() {
+    const w = 260;
+    const h = 90;
+    const x = (canvas.width - w) / 2;
+    const y = (canvas.height - h) / 2;
+
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = "#f7ede2";
+    ctx.strokeStyle = "#e0afa0";
+    ctx.lineWidth = 2;
+    roundRectPath(x, y, w, h, 10);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = "#6d6875";
+    ctx.font = "15px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("Final Score: " + score.toString().padStart(3, "0"), canvas.width / 2, y + 30);
+
+    ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    let line = "Press Space to try again ♻️";
+    if (score >= 10) {
+      line = "Amazing run – time for coding! 💻";
+    } else if (score >= 5) {
+      line = "Nice jumps – time for paper! 📄";
+    }
+    ctx.fillText(line, canvas.width / 2, y + 54);
+
+    ctx.textAlign = "left";
+  }
+
+  function roundRectPath(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function drawTipBubble(text) {
+    const w = canvas.width - 40;
+    const h = 32;
+    const x = 20;
+    const y = canvas.height - h - 10;
+
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#e0afa0";
+    ctx.lineWidth = 1.5;
+    roundRectPath(x, y, w, h, 8);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = "#6d6875";
+    ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(text, canvas.width / 2, y + 21);
+    ctx.textAlign = "left";
+  }
+
+  // 
   function loop() {
     t += 1;
+    if (tipTimer > 0) tipTimer--;
     update();
     draw();
     requestAnimationFrame(loop);
