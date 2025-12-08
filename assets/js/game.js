@@ -16,28 +16,19 @@
   let score = 0;
   let cameraX = 0;
 
+  const cloudImage = new Image();
+  cloudImage.src = 'https://i.imgur.com/S7Q0eWD.png';
+
   function drawCap(x, y, size) {
     ctx.save();
     ctx.translate(x + size / 2, y + size / 2);
-    ctx.fillStyle = "#20222a";
+    ctx.fillStyle = "#ffb6c1";
     ctx.beginPath();
-    ctx.moveTo(-size, 0);
-    ctx.lineTo(0, -size * 0.5);
-    ctx.lineTo(size, 0);
-    ctx.lineTo(0, size * 0.5);
-    ctx.closePath();
+    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#2c2f39";
-    ctx.fillRect(-size * 0.5, 0, size, size * 0.4);
-    ctx.strokeStyle = "#ffeb3b";
-    ctx.lineWidth = 2;
+    ctx.fillStyle = "#fff";
     ctx.beginPath();
-    ctx.moveTo(size * 0.35, -size * 0.05);
-    ctx.lineTo(size * 0.35, size * 0.8);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(size * 0.35, size * 0.8, 3, 0, Math.PI * 2);
-    ctx.fillStyle = "#ffeb3b";
+    ctx.arc(0, 0, size / 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -126,13 +117,11 @@
   }
 
   function drawBackground() {
-    ctx.fillStyle = "#10121d";
+    ctx.fillStyle = "#bde0fe";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "rgba(255,255,255,0.35)";
-    for (let i = 0; i < 30; i++) {
-      const sx = (i * 37) % canvas.width;
-      const sy = ((i * 53) % canvas.height) * 0.6;
-      ctx.fillRect(sx, sy, 1, 1);
+    if (cloudImage.complete) {
+      ctx.drawImage(cloudImage, -cameraX % canvas.width, 0, canvas.width, 60);
+      ctx.drawImage(cloudImage, canvas.width - (cameraX % canvas.width), 0, canvas.width, 60);
     }
   }
 
@@ -141,21 +130,21 @@
     drawBackground();
     ctx.save();
     ctx.translate(-cameraX, 0);
-    ctx.fillStyle = "#4caf50";
+    ctx.fillStyle = "#ffd166";
     platforms.forEach(p => ctx.fillRect(p.x, p.y, p.w, p.h));
     drawCap(player.x, player.y, player.size);
     ctx.restore();
     if (!gameOver) {
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#333";
       ctx.font = "14px sans-serif";
       ctx.fillText("Hold Space to charge, release to jump.", 10, 20);
       ctx.fillText("Score: " + score, 10, 250);
-      ctx.strokeStyle = "#ffffff";
+      ctx.strokeStyle = "#333";
       ctx.strokeRect(10, 30, 100, 10);
-      ctx.fillStyle = "#ff9800";
+      ctx.fillStyle = "#ff69b4";
       ctx.fillRect(10, 30, (chargePower / 20) * 100, 10);
     } else {
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#d62828";
       ctx.font = "20px sans-serif";
       ctx.fillText("Game Over! Score: " + score, 70, 120);
       ctx.font = "14px sans-serif";
