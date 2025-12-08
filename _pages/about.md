@@ -41,14 +41,18 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 
 <hr>
 
-<h2>🎮 A tiny “Jump to the Next Chapter” game</h2>
+<h2>🎮 Posterior not mixing? Let the cap jump instead 😄</h2>
 
 <p style="font-size:1.02rem;">
-  Thesis writing can be intense, so here’s a tiny break: 
-  help the little <strong>graduation-cap dumpling</strong> jump from platform to platform 🌈<br>
-  <strong>How to play:</strong> 
-  <span style="white-space:nowrap;">press &amp; hold <code>Space</code> to charge</span>, 
-  release to jump. Don’t fall — or it’s <em>“back to revise the draft”</em> 😄
+  When the <strong>posterior stalls</strong> and your MCMC trace feels emotionally flat,  
+  take a micro-break and let the <strong>little graduation cap dumpling</strong>  
+  do some converging for you.
+</p>
+
+<p style="font-size:0.95rem;color:#666;">
+  ✨ How to play: click the game area, then  
+  <code>hold Space to charge → release to jump</code>.  
+  If you fall, just restart — kind of like writing a paper.
 </p>
 
 <div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin:14px auto 0;">
@@ -56,7 +60,8 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 </div>
 
 <p style="font-size:0.9rem;color:#777;margin-top:8px;text-align:center;">
-  Tip: click inside the box once, then use <code>Space</code> to play ✨
+  🍵 Tip: landing on a coffee bonus means you probably need a refill.  
+  If the posterior refuses to move, at least you did.
 </p>
 
 <script src="/assets/js/game.js"></script>
