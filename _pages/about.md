@@ -41,19 +41,8 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 
 <hr>
 
-<h2>🎮 Posterior not mixing? Let the cap jump instead 😄</h2>
-
-<p style="font-size:1.02rem;">
-  When the <strong>posterior stalls</strong> and your MCMC trace feels emotionally flat,  
-  take a micro-break and let the <strong>little graduation cap dumpling</strong>  
-  do some converging for you.
-</p>
-
-<p style="font-size:0.95rem;color:#666;">
-  ✨ How to play: click the game area, then  
-  <code>hold Space to charge → release to jump</code>.  
-  If you fall, just restart — kind of like writing a paper.
-</p>
+<h2>🎮 Posterior not mixing? Let the cap jump instead </h2>
+<p style="color:#666;">Click → hold Space → jump. A tiny academic break.</p>
 
 <div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin:14px auto 0;">
   <canvas id="mini-game" width="400" height="260" style="display:block;margin:0 auto;border-radius:10px;background:#cce0ff;"></canvas>
@@ -61,7 +50,6 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 
 <p style="font-size:0.9rem;color:#777;margin-top:8px;text-align:center;">
   🍵 Tip: landing on a coffee bonus means you probably need a refill.  
-  If the posterior refuses to move, at least you did.
 </p>
 
 <script src="/assets/js/game.js"></script>
