@@ -5,49 +5,50 @@ const TILE_SIZE = 32;
 const ROWS = 15;
 const COLS = 15;
 
-// Map legend:
-// # = solid wall (indestructible)
-// * = cracked wall (bomb can destroy)
-// . = floor
-// P = player spawn
-// E = exit
-// X = trap
-const levels = [
-  [
-    "###############",
-    "#P....#....*..#",
-    "###.#.#.#####.#",
-    "#...#.#.....#.#",
-    "#.###.###.#.#.#",
-    "#.....#...#.#.#",
-    "#####.#.###.#.#",
-    "#.....#...#.#.#",
-    "#.###.###.#.#.#",
-    "#.#...#.*.#.#.#",
-    "#.#.###.###.#.#",
-    "#.#.....#...#.#",
-    "#.#####.#.###.#",
-    "#.....X...E...#",
-    "###############",
-  ],
-  [
-    "###############",
-    "#P....#...X..*#",
-    "#.###.#.#####.#",
-    "#...#.#.....#.#",
-    "###.#.###.#.#.#",
-    "#...#.....#.#.#",
-    "#.#.#####.#.#.#",
-    "#.#..*..#.#...#",
-    "#.#.###.#.###.#",
-    "#.#.#...#...#.#",
-    "#.#.#.#####.#.#",
-    "#.#.#.....#.#.#",
-    "#.#.#####.#.#.#",
-    "#...X...E.*...#",
-    "###############",
+// --- LEVEL DATA (easy to move to JSON later) ---
+// If you want JSON later, you can copy this structure
+// into a file like /assets/levels/maze-levels.json as:
+// { "levels": [ [ "###############", ... ], [ ... ] ] }
+const LEVEL_DATA = {
+  levels: [
+    [
+      "###############",
+      "#P....#....*..#",
+      "###.#.#.#####.#",
+      "#...#.#.....#.#",
+      "#.###.###.#.#.#",
+      "#.....#...#.#.#",
+      "#####.#.###.#.#",
+      "#.....#...#.#.#",
+      "#.###.###.#.#.#",
+      "#.#...#.*.#.#.#",
+      "#.#.###.###.#.#",
+      "#.#.....#...#.#",
+      "#.#####.#.###.#",
+      "#.....X...E...#",
+      "###############",
+    ],
+    [
+      "###############",
+      "#P....#...X..*#",
+      "#.###.#.#####.#",
+      "#...#.#.....#.#",
+      "###.#.###.#.#.#",
+      "#...#.....#.#.#",
+      "#.#.#####.#.#.#",
+      "#.#..*..#.#...#",
+      "#.#.###.#.###.#",
+      "#.#.#...#...#.#",
+      "#.#.#.#####.#.#",
+      "#.#.#.....#.#.#",
+      "#.#.#####.#.#.#",
+      "#...X...E.*...#",
+      "###############",
+    ]
   ]
-];
+};
+
+let levels = LEVEL_DATA.levels;
 
 let currentLevelIndex = 0;
 
@@ -60,12 +61,13 @@ const player = {
 
 let exitCell = { row: 0, col: 0 };
 let traps = [];  // {row, col}
-const VISION_RADIUS = 3;
+const VISION_RADIUS = 3.5; // slightly larger spotlight
 
 let discovered = [];        // tiles that have been seen at least once
 let gameState = "playing";  // "playing" | "dead" | "levelComplete" | "allComplete"
 let message = "";
 let bombs = [];             // active bubble bombs
+let explosions = [];        // active explosion rings
 let frameCount = 0;
 
 // Timer & steps
@@ -117,7 +119,6 @@ function renderScoreboard() {
     return;
   }
 
-  // Sort by time first, then by steps
   data.sort((a, b) => {
     if (a.time !== b.time) return a.time - b.time;
     return a.steps - b.steps;
@@ -140,6 +141,7 @@ function loadLevel(index) {
   traps = [];
   discovered = [];
   bombs = [];
+  explosions = [];
   steps = 0;
   elapsedSeconds = 0;
   levelStartTime = performance.now();
@@ -163,7 +165,7 @@ function loadLevel(index) {
     }
   }
   gameState = "playing";
-  message = `Level ${index + 1}`;
+  message = "";
   renderScoreboard();
 }
 
@@ -263,17 +265,17 @@ function handleMoveInput(key) {
 
   if (isTrap(newRow, newCol)) {
     gameState = "dead";
-    message = "💀 You stepped on a trap! Press Space to retry.";
+    message = "You stepped on a trap! Press Space to retry.";
   } else if (isExit(newRow, newCol)) {
     const levelNumber = currentLevelIndex + 1;
     recordRun(levelNumber, elapsedSeconds, steps);
 
     if (currentLevelIndex < levels.length - 1) {
       gameState = "levelComplete";
-      message = "✅ Level cleared! Press Space for the next level.";
+      message = "Level cleared! Press Space for the next level.";
     } else {
       gameState = "allComplete";
-      message = "🏆 All levels cleared! Press Space to restart.";
+      message = "All levels cleared! Press Space to restart.";
     }
   }
 }
@@ -285,7 +287,7 @@ function goNext() {
     currentLevelIndex++;
     if (currentLevelIndex >= levels.length) {
       gameState = "allComplete";
-      message = "🏆 All levels cleared!";
+      message = "All levels cleared!";
     } else {
       loadLevel(currentLevelIndex);
     }
@@ -314,8 +316,13 @@ function shootBomb() {
   });
 }
 
-function explode(row, col) {
-  // 3×3 explosion area centered on (row, col)
+function spawnExplosion(row, col) {
+  explosions.push({
+    row,
+    col,
+    life: 12 // frames
+  });
+  // 3×3 blast area
   for (let dr = -1; dr <= 1; dr++) {
     for (let dc = -1; dc <= 1; dc++) {
       const rr = row + dr;
@@ -347,13 +354,16 @@ function updateBombs() {
     const ch = map[newRow][newCol];
 
     if (ch === "#") {
+      // solid wall: vanish
       b.active = false;
       return;
     } else if (ch === "*") {
-      explode(newRow, newCol);
+      // cracked wall: explode with 3×3 blast
+      spawnExplosion(newRow, newCol);
       b.active = false;
       return;
     } else {
+      // fly through floor, traps, etc.
       b.row = newRow;
       b.col = newCol;
     }
@@ -362,41 +372,45 @@ function updateBombs() {
   bombs = bombs.filter(b => b.active);
 }
 
-// ---------- Drawing ----------
+function updateExplosions() {
+  explosions.forEach(ex => {
+    ex.life--;
+  });
+  explosions = explosions.filter(ex => ex.life > 0);
+}
+
+// ---------- Drawing tiles (Mario-ish-ish colors) ----------
 function drawTile(row, col, visible, seenBefore) {
   const map = levels[currentLevelIndex];
   const ch = map[row][col];
   const x = col * TILE_SIZE;
   const y = row * TILE_SIZE;
 
-  if (!visible && !seenBefore) {
-    ctx.fillStyle = "#02030a";
-    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-    return;
-  }
-
+  // background
   if (visible) {
-    ctx.fillStyle = "#1d1d24";
+    ctx.fillStyle = "#1c2430"; // dark blue floor
   } else {
-    ctx.fillStyle = "#111116";
+    ctx.fillStyle = "#0d1117";
   }
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-  // Solid wall
+  // Solid wall (brick-like)
   if (ch === "#") {
-    ctx.fillStyle = visible ? "#555b77" : "#2a2f40";
+    ctx.fillStyle = visible ? "#8d4b32" : "#3f2015";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
-    ctx.fillRect(x + 4, y + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+    ctx.fillStyle = "rgba(0,0,0,0.35)";
+    ctx.fillRect(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6);
+    ctx.fillStyle = "rgba(255, 220, 180, 0.2)";
+    ctx.fillRect(x + 5, y + 5, TILE_SIZE - 10, 4);
   }
 
   // Cracked wall
   if (ch === "*") {
-    ctx.fillStyle = visible ? "#786c4f" : "#3a3424";
+    ctx.fillStyle = visible ? "#b05a3c" : "#4d2920";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-    ctx.fillStyle = "rgba(0,0,0,0.35)";
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
     ctx.fillRect(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6);
-    ctx.strokeStyle = visible ? "#d7ccc8" : "#6d4c41";
+    ctx.strokeStyle = visible ? "#ffd7b3" : "#7a4b34";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(x + 6, y + 8);
@@ -409,11 +423,11 @@ function drawTile(row, col, visible, seenBefore) {
   // Trap
   if (ch === "X") {
     if (visible || seenBefore) {
-      ctx.fillStyle = visible ? "#d32f2f" : "#5b1d1d";
+      ctx.fillStyle = visible ? "#ff5252" : "#5b1d1d";
       ctx.beginPath();
       ctx.arc(x + TILE_SIZE/2, y + TILE_SIZE/2, TILE_SIZE/3, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "rgba(0,0,0,0.6)";
+      ctx.strokeStyle = "rgba(0,0,0,0.7)";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(x+8, y+8);
@@ -427,7 +441,7 @@ function drawTile(row, col, visible, seenBefore) {
   // Exit
   if (ch === "E") {
     if (visible || seenBefore) {
-      ctx.fillStyle = visible ? "#ffeb3b" : "#5a5220";
+      ctx.fillStyle = visible ? "#ffd54f" : "#5a4a1f";
       ctx.fillRect(x + 6, y + 6, TILE_SIZE - 12, TILE_SIZE - 12);
       ctx.fillStyle = visible ? "#333" : "#111";
       ctx.fillRect(x + 10, y + 10, TILE_SIZE - 20, TILE_SIZE - 20);
@@ -435,20 +449,33 @@ function drawTile(row, col, visible, seenBefore) {
   }
 }
 
+// ---------- Player (Mario-ish colors) ----------
 function drawPlayer() {
   const x = player.col * TILE_SIZE;
   const y = player.row * TILE_SIZE;
 
-  ctx.fillStyle = "#4fc3f7";
-  ctx.fillRect(x + 8, y + 12, TILE_SIZE - 16, TILE_SIZE - 12);
+  // legs
+  ctx.fillStyle = "#1565c0";
+  ctx.fillRect(x + 10, y + 18, TILE_SIZE - 20, TILE_SIZE - 6);
 
-  ctx.fillStyle = "#ffe082";
-  ctx.fillRect(x + 10, y + 2, TILE_SIZE - 20, TILE_SIZE - 16);
+  // body
+  ctx.fillStyle = "#e53935"; // red shirt
+  ctx.fillRect(x + 8, y + 10, TILE_SIZE - 16, 10);
 
+  // head
+  ctx.fillStyle = "#ffcc80";
+  ctx.fillRect(x + 9, y + 2, TILE_SIZE - 18, 10);
+
+  // hat
+  ctx.fillStyle = "#c62828";
+  ctx.fillRect(x + 8, y + 0, TILE_SIZE - 16, 4);
+
+  // eyes
   ctx.fillStyle = "#000";
-  ctx.fillRect(x + 13, y + 6, 3, 4);
-  ctx.fillRect(x + TILE_SIZE - 16, y + 6, 3, 4);
+  ctx.fillRect(x + 13, y + 5, 2, 3);
+  ctx.fillRect(x + TILE_SIZE - 17, y + 5, 2, 3);
 
+  // shadow
   ctx.fillStyle = "rgba(0,0,0,0.4)";
   ctx.fillRect(x + 8, y + TILE_SIZE - 4, TILE_SIZE - 16, 3);
 }
@@ -459,26 +486,48 @@ function drawBomb(bomb) {
   const y = bomb.row * TILE_SIZE + TILE_SIZE / 2;
 
   const age = frameCount - bomb.spawnFrame;
-  const phase = age % 20;
+  const phase = age % 16;
   const radiusBase = TILE_SIZE / 4;
-  const radius = radiusBase + (phase < 10 ? 2 : -2);
+  const radius = radiusBase + (phase < 8 ? 2 : -2);
 
   // Outer glow
   ctx.beginPath();
   ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
-  ctx.fillStyle = phase < 10 ? "rgba(129,212,250,0.35)" : "rgba(0,150,136,0.4)";
+  ctx.fillStyle = phase < 8 ? "rgba(129,212,250,0.45)" : "rgba(0,150,136,0.5)";
   ctx.fill();
 
   // Inner bubble
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.fillStyle = phase < 10 ? "#80deea" : "#b3e5fc";
+  ctx.fillStyle = phase < 8 ? "#80deea" : "#b3e5fc";
   ctx.fill();
 
-  // Highlight
+  // highlight
   ctx.beginPath();
   ctx.arc(x - 4, y - 4, radius / 3, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(255,255,255,0.8)";
+  ctx.fill();
+}
+
+// Explosion fire ring
+function drawExplosion(ex) {
+  const cx = (ex.col + 0.5) * TILE_SIZE;
+  const cy = (ex.row + 0.5) * TILE_SIZE;
+  const progress = 1 - ex.life / 12; // 0 -> 1
+  const maxRadius = TILE_SIZE * 2;
+  const radius = maxRadius * progress;
+
+  const gradient = ctx.createRadialGradient(
+    cx, cy, radius * 0.2,
+    cx, cy, radius
+  );
+  gradient.addColorStop(0, "rgba(255, 255, 200, 0.9)");
+  gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.7)");
+  gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
   ctx.fill();
 }
 
@@ -499,12 +548,14 @@ function update() {
       updateBombs();
     }
   }
+  updateExplosions();
 }
 
+// ---------- Fog-of-war: spotlight style ----------
 function drawScene() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Fog of war + tiles
+  // 1) draw tiles with discovered info
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const dx = c - player.col;
@@ -513,18 +564,35 @@ function drawScene() {
       const visible = dist <= VISION_RADIUS;
       if (visible) discovered[r][c] = true;
       const seenBefore = discovered[r][c];
-
       drawTile(r, c, visible, seenBefore);
     }
   }
 
-  // Player
+  // 2) player and bombs
   drawPlayer();
-
-  // Bombs
   bombs.forEach(drawBomb);
 
-  // HUD
+  // 3) explosion effects on top
+  explosions.forEach(drawExplosion);
+
+  // 4) fog overlay (spotlight)
+  const cx = (player.col + 0.5) * TILE_SIZE;
+  const cy = (player.row + 0.5) * TILE_SIZE;
+  const maxR = TILE_SIZE * (VISION_RADIUS + 1.5);
+
+  const fogGradient = ctx.createRadialGradient(
+    cx, cy, TILE_SIZE * 1.0,
+    cx, cy, maxR
+  );
+  fogGradient.addColorStop(0, "rgba(0,0,0,0)");
+  fogGradient.addColorStop(0.6, "rgba(0,0,0,0.4)");
+  fogGradient.addColorStop(1, "rgba(0,0,0,0.95)");
+
+  ctx.fillStyle = fogGradient;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // 5) HUD
   ctx.fillStyle = "rgba(0,0,0,0.7)";
   ctx.fillRect(0, 0, canvas.width, 40);
   ctx.fillStyle = "#fff";
@@ -535,10 +603,22 @@ function drawScene() {
   ctx.fillText(`Time: ${elapsedSeconds}s`, 150, 12);
   ctx.fillText(`Steps: ${steps}`, 270, 12);
 
-  if (message) {
-    ctx.textAlign = "right";
-    ctx.fillText(message, canvas.width - 12, 12);
-    ctx.textAlign = "left";
+  // 6) big center message when not playing
+  if (gameState !== "playing" && message) {
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillRect(40, canvas.height / 2 - 40, canvas.width - 80, 80);
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.strokeRect(40, canvas.height / 2 - 40, canvas.width - 80, 80);
+
+    ctx.fillStyle = "#fff";
+    ctx.font = "18px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(message, canvas.width / 2, canvas.height / 2 - 8);
+
+    ctx.font = "12px sans-serif";
+    ctx.fillStyle = "#ddd";
+    ctx.fillText("Press Space to continue", canvas.width / 2, canvas.height / 2 + 18);
   }
 }
 
