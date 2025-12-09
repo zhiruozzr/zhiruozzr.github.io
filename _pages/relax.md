@@ -81,6 +81,7 @@ author_profile: true
     flex: 1;
     display: flex;
     justify-content: center;
+    position: relative; /* ⭐ 让弹窗只在游戏区域居中 */
   }
 
   #game {
@@ -95,14 +96,18 @@ author_profile: true
     height: auto;
   }
 
-  /* —— 排行榜弹窗样式 —— */
+  /* 不再使用常驻 scoreboard，所以直接隐藏 */
+  #scoreboard {
+    display: none;
+  }
 
+  /* ========= 只覆盖在游戏区域上的排行榜弹窗 ========= */
   .modal {
     display: none;
-    position: fixed;
+    position: absolute;   /* ⭐ 相对 .relax-game 居中 */
     inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 999;
+    background: rgba(0,0,0,0.75);
+    z-index: 20;
     align-items: center;
     justify-content: center;
   }
@@ -115,8 +120,8 @@ author_profile: true
     background: #020617;
     border-radius: 14px;
     padding: 1.1rem 1.3rem;
-    max-width: 420px;
-    width: 90%;
+    max-width: 360px;
+    width: 85%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.9);
     color: #e5e7eb;
     font-size: 0.85rem;
@@ -231,20 +236,20 @@ author_profile: true
 
     <section class="relax-game">
       <canvas id="game" width="480" height="480"></canvas>
-    </section>
-  </div>
-</div>
 
-<!-- 关卡结束后才出现的中间排行榜弹窗 -->
-<div class="modal" id="leaderboard-modal">
-  <div class="modal-content">
-    <h2>🏆 Level Cleared! 🏆</h2>
-    <ul class="leaderboard-list" id="leaderboard-list">
-      <!-- Filled by JS -->
-    </ul>
-    <button class="continue-btn" onclick="closeLeaderboard()">
-      Next Level
-    </button>
+      <!-- ⭐ 弹窗现在放在 .relax-game 里面，只覆盖游戏区域 -->
+      <div class="modal" id="leaderboard-modal">
+        <div class="modal-content">
+          <h2>🏆 Level Cleared! 🏆</h2>
+          <ul class="leaderboard-list" id="leaderboard-list">
+            <!-- Filled by JS -->
+          </ul>
+          <button class="continue-btn" onclick="closeLeaderboard()">
+            Next Level
+          </button>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
