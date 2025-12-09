@@ -17,7 +17,6 @@ author_profile: true
     align-items: flex-start;
   }
 
-  /* 左：信息面板 */
   .relax-info {
     flex: 0 0 260px;
     max-width: 280px;
@@ -236,19 +235,6 @@ author_profile: true
     <section class="relax-game">
       <canvas id="game" width="480" height="480"></canvas>
     </section>
-  </div>
-</div>
-
-
-<div class="modal" id="leaderboard-modal">
-  <div class="modal-content">
-    <h2>🏆 Level Cleared! 🏆</h2>
-    <ul class="leaderboard-list" id="leaderboard-list">
-      <!-- Filled by JS -->
-    </ul>
-    <button class="continue-btn" onclick="closeLeaderboard()">
-      Next Level
-    </button>
   </div>
 </div>
 
