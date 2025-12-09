@@ -535,59 +535,85 @@ function updateExplosions() {
 }
 
 
+// ============================================================
+// 替换版：drawTile（草地 + 小路 + 亮一点的墙）
+// ============================================================
 function drawTile(row, col, visible, seenBefore) {
   const ch = levelMap[row][col];
   const x = col * TILE_SIZE;
   const y = row * TILE_SIZE;
 
-  ctx.fillStyle = visible ? "#1f2933" : "#111827";
+  const season = getSeasonPalette(currentLevel);
+
+  // --- 1. 底层：草地 ---
+  // 明亮一点的草坪，不再是纯深色
+  ctx.fillStyle = visible ? season.groundTop : season.groundBottom;
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-  // solid wall
-  if (ch === "#") {
-    ctx.fillStyle = visible ? "#8B4513" : "#3d2210";
+  // 做一点棋盘纹理，让草地更像像素
+  if ((row + col) % 2 === 0) {
+    ctx.fillStyle = visible
+      ? "rgba(255,255,255,0.08)"
+      : "rgba(0,0,0,0.08)";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
-    ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-
-    ctx.fillStyle = visible ? "#A0522D" : "#4a2915";
-    ctx.fillRect(x + 4, y + 4, 8, 8);
-    ctx.fillRect(x + 14, y + 4, 8, 8);
-    ctx.fillRect(x + 24, y + 4, 4, 8);
-
-    ctx.fillRect(x + 9, y + 14, 8, 8);
-    ctx.fillRect(x + 19, y + 14, 8, 8);
-    ctx.fillRect(x + 4, y + 24, 8, 4);
-    ctx.fillRect(x + 14, y + 24, 8, 4);
-    ctx.fillRect(x + 24, y + 24, 4, 4);
   }
 
-  // cracked wall
-  if (ch === "*") {
-    ctx.fillStyle = visible ? "#CD853F" : "#5a3d1f";
+  // 如果完全没见过、又不在视野里，就盖一层柔和的迷雾
+  if (!visible && !seenBefore) {
+    ctx.fillStyle = "rgba(0,0,0,0.35)";
+    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+    return;
+  }
+
+  // --- 2. 小路：可走格子（包括起点/终点/陷阱下的地面） ---
+  if (ch === "." || ch === "P" || ch === "E" || ch === "X") {
+    // 土路：比草地稍微偏黄一点
+    ctx.fillStyle = visible ? "#e3c28f" : "#b89b6e";
+    ctx.fillRect(x + 4, y + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+
+    // 小路边缘加一点阴影
+    ctx.strokeStyle = visible ? "rgba(128,90,50,0.6)" : "rgba(55,40,20,0.6)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x + 4.5, y + 4.5, TILE_SIZE - 9, TILE_SIZE - 9);
+  }
+
+  // --- 3. 墙体：更偏“砖墙/树篱”，不再是下水道 ---
+  if (ch === "#") {
+    ctx.fillStyle = visible ? "#d49a6a" : "#915c35";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
+    // 砖块纹理
+    ctx.fillStyle = visible ? "#f0c49b" : "#b47b4c";
     ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 
-    ctx.strokeStyle = visible ? "#8B4513" : "#3d2210";
+    ctx.fillStyle = "rgba(120,72,40,0.45)";
+    ctx.fillRect(x + 2, y + TILE_SIZE / 2, TILE_SIZE - 4, TILE_SIZE / 2 - 4);
+  }
+
+  // --- 4. 可炸的裂墙：颜色更浅，像石块 ---
+  if (ch === "*") {
+    ctx.fillStyle = visible ? "#e0b58b" : "#a77a4f";
+    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+
+    ctx.fillStyle = visible ? "#f5dec0" : "#c59863";
+    ctx.fillRect(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6);
+
+    ctx.strokeStyle = visible ? "#8b5a2b" : "#5a3818";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(x + 5, y + 8);
-    ctx.lineTo(x + 15, y + 18);
-    ctx.lineTo(x + 12, y + 28);
-    ctx.moveTo(x + 20, y + 10);
-    ctx.lineTo(x + 28, y + 20);
+    ctx.moveTo(x + 5, y + 7);
+    ctx.lineTo(x + 14, y + 18);
+    ctx.lineTo(x + 10, y + 27);
+    ctx.moveTo(x + 19, y + 9);
+    ctx.lineTo(x + 26, y + 19);
     ctx.stroke();
   }
 
-  // trap
+  // --- 5. 陷阱：依然亮红色，但是在小路上 ---
   if (ch === "X" && (visible || seenBefore)) {
-    const color = visible ? "#ff0000" : "#5a0000";
-    ctx.fillStyle = color;
+    ctx.fillStyle = visible ? "#f97373" : "#b54545";
     ctx.beginPath();
-    ctx.arc(x + TILE_SIZE / 2, y + TILE_SIZE / 2, 10, 0, Math.PI * 2);
+    ctx.arc(x + TILE_SIZE / 2, y + TILE_SIZE / 2, 9, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = "#000";
@@ -604,53 +630,66 @@ function drawTile(row, col, visible, seenBefore) {
     ctx.stroke();
   }
 
-  // exit
+  // --- 6. 出口：更亮一点的金色门 ---
   if (ch === "E" && (visible || seenBefore)) {
-    ctx.fillStyle = visible ? "#FFD700" : "#5a4810";
+    ctx.fillStyle = visible ? "#ffe27a" : "#c7a94c";
     ctx.fillRect(x + 6, y + 4, TILE_SIZE - 12, TILE_SIZE - 8);
 
-    ctx.fillStyle = visible ? "#FFA500" : "#3d2e08";
+    ctx.fillStyle = visible ? "#fbbf24" : "#b3741b";
     ctx.fillRect(x + 8, y + 6, TILE_SIZE - 16, TILE_SIZE - 12);
 
-    ctx.fillStyle = "#8B4513";
+    ctx.fillStyle = "#8b5a2b";
     ctx.fillRect(x + 20, y + 16, 3, 6);
   }
 }
 
+
+// ============================================================
+// 替换版：drawPlayer（保持你原来的像素人，只是背景变亮）
+// ============================================================
 function drawPlayer() {
   const x = player.col * TILE_SIZE;
   const y = player.row * TILE_SIZE;
 
-  ctx.fillStyle = "rgba(0,0,0,0.3)";
+  // 影子
+  ctx.fillStyle = "rgba(0,0,0,0.25)";
   ctx.fillRect(x + 6, y + 28, 20, 3);
 
+  // 腿（蓝）
   ctx.fillStyle = "#1E88E5";
   ctx.fillRect(x + 9, y + 18, 6, 10);
   ctx.fillRect(x + 17, y + 18, 6, 10);
 
+  // 身体（红）
   ctx.fillStyle = "#E53935";
   ctx.fillRect(x + 8, y + 10, 16, 10);
 
+  // 手臂
   ctx.fillStyle = "#FFAB91";
   ctx.fillRect(x + 5, y + 12, 4, 8);
   ctx.fillRect(x + 23, y + 12, 4, 8);
 
+  // 头
   ctx.fillStyle = "#FFCC80";
   ctx.fillRect(x + 10, y + 2, 12, 10);
 
+  // 帽子
   ctx.fillStyle = "#D32F2F";
   ctx.fillRect(x + 8, y + 0, 16, 4);
 
+  // 眼睛
   ctx.fillStyle = "#000";
   ctx.fillRect(x + 12, y + 5, 2, 2);
   ctx.fillRect(x + 18, y + 5, 2, 2);
 
+  // 微笑
   ctx.strokeStyle = "#000";
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.arc(x + 16, y + 8, 3, 0, Math.PI);
   ctx.stroke();
 }
+
 
 function drawBomb(bomb) {
   const x = bomb.col * TILE_SIZE + TILE_SIZE / 2;
@@ -703,6 +742,7 @@ function drawExplosion(ex) {
   ctx.arc(cx, cy, radius * 0.8, 0, Math.PI * 2);
   ctx.stroke();
 }
+
 
 // ============================================================
 // LEADERBOARD POPUP
@@ -809,7 +849,11 @@ function update() {
   updateParticles();
 }
 
+// ============================================================
+// 替换版：drawScene（季节背景 + 更柔和的迷雾）
+// ============================================================
 function drawScene() {
+  // --- 背景：季节渐变，尽量亮 ---
   const palette = getSeasonPalette(currentLevel);
   const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
   bgGrad.addColorStop(0, palette.skyTop);
@@ -819,6 +863,7 @@ function drawScene() {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // --- 地图 + 角色 + 特效 ---
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const dx = c - player.col;
@@ -838,30 +883,32 @@ function drawScene() {
   explosions.forEach(drawExplosion);
   drawParticles();
 
+  // --- 迷雾：中心亮、边缘半透明，不再是全黑下水道 ---
   const cx = (player.col + 0.5) * TILE_SIZE;
   const cy = (player.row + 0.5) * TILE_SIZE;
-  const maxR = TILE_SIZE * (VISION_RADIUS + 2);
+  const maxR = TILE_SIZE * (VISION_RADIUS + 3);
 
   const fogGradient = ctx.createRadialGradient(
     cx,
     cy,
-    TILE_SIZE * 1.5,
+    TILE_SIZE * 1.2,
     cx,
     cy,
     maxR
   );
-  fogGradient.addColorStop(0, "rgba(0,0,0,0)");
-  fogGradient.addColorStop(0.5, "rgba(0,0,0,0.45)");
-  fogGradient.addColorStop(1, "rgba(0,0,0,0.85)");
+  fogGradient.addColorStop(0, "rgba(0,0,0,0)");      // 脚下完全不遮
+  fogGradient.addColorStop(0.55, "rgba(0,0,0,0.25)"); // 中环轻微暗
+  fogGradient.addColorStop(1, "rgba(0,0,0,0.55)");    // 边缘半透明，不是纯黑
 
   ctx.fillStyle = fogGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // --- 死亡提示 ---
   if (gameState === "dead" && message) {
-    ctx.fillStyle = "rgba(0,0,0,0.8)";
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
     ctx.fillRect(50, 200, 380, 80);
 
-    ctx.fillStyle = "#ff0000";
+    ctx.fillStyle = "#ef4444";
     ctx.font = "16px sans-serif";
     ctx.textAlign = "center";
     ctx.fillText(message, 240, 235);
@@ -871,6 +918,7 @@ function drawScene() {
     ctx.fillText("Press SPACE to retry", 240, 260);
   }
 }
+
 
 // ============================================================
 // START
