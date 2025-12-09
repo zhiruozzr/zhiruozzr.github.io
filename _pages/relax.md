@@ -7,18 +7,20 @@ author_profile: true
 
 <style>
   .relax-shell {
-    max-width: 780px;          
+    max-width: 720px;             
     margin: 1.2rem auto 2rem auto;
   }
 
-  .relax-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1.1fr 0.9fr;  
-    gap: 16px;
+  .relax-row {
+    display: flex;
+    gap: 18px;
     align-items: flex-start;
   }
 
-  .relax-panel {
+  /* 左：信息面板 */
+  .relax-info {
+    flex: 0 0 260px;
+    max-width: 280px;
     background: #020617;
     color: #e5e7eb;
     border-radius: 14px;
@@ -27,17 +29,17 @@ author_profile: true
     font-size: 0.85rem;
   }
 
-  .relax-panel h2 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
+  .relax-info h2 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1.05rem;
   }
 
-  .relax-panel small {
+  .relax-info small {
     color: #9ca3af;
   }
 
   .relax-controls {
-    margin-top: 0.9rem;
+    margin-top: 0.8rem;
     padding: 0.6rem 0.7rem;
     border-radius: 10px;
     background: #020617;
@@ -75,7 +77,9 @@ author_profile: true
     margin-top: 0.15rem;
     color: #fbbf24;
   }
+
   .relax-game {
+    flex: 1;
     display: flex;
     justify-content: center;
   }
@@ -88,40 +92,13 @@ author_profile: true
     image-rendering: crisp-edges;
     background: #000;
 
-    max-width: 320px;
+    max-width: 420px;
     width: 100%;
     height: auto;
   }
 
-  .relax-board {
-    font-size: 0.8rem;
-  }
-
   #scoreboard {
-    background: #020617;
-    color: #e5e7eb;
-    border-radius: 14px;
-    padding: 0.7rem 0.8rem;
-    border: 1px solid #1f2937;
-    box-shadow: 0 10px 30px rgba(15,23,42,0.8);
-  }
-
-  #scoreboard h3 {
-    margin: 0 0 0.4rem 0;
-    font-size: 0.85rem;
-  }
-
-  #scoreboard p {
-    margin: 0;
-  }
-
-  #scoreboard ol {
-    margin: 0.25rem 0 0 1.1rem;
-    padding: 0;
-  }
-
-  #scoreboard li {
-    margin-bottom: 0.15rem;
+    display: none;
   }
 
   .modal {
@@ -216,30 +193,20 @@ author_profile: true
     filter: brightness(1.06);
   }
 
-  @media (max-width: 900px) {
-    .relax-grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+  @media (max-width: 800px) {
+    .relax-row {
+      flex-direction: column;
     }
-    .relax-board {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .relax-grid {
-      grid-template-columns: 1fr;
-    }
-    .relax-board {
-      grid-column: auto;
+    .relax-info {
+      max-width: 100%;
     }
   }
 </style>
 
 <div class="relax-shell">
-  <div class="relax-grid">
-    <section class="relax-panel">
-      <h2>🎮 TIME TO RELAX</h2>
+  <div class="relax-row">
+    <section class="relax-info">
+      <h2>🎮 TIME TO RELAX · Pixel Maze PRO</h2>
       <small>Little pixel maze with fog-of-war and bubble bombs.</small>
 
       <div class="relax-controls">
@@ -269,15 +236,9 @@ author_profile: true
     <section class="relax-game">
       <canvas id="game" width="480" height="480"></canvas>
     </section>
-
-    <section class="relax-board">
-      <div id="scoreboard">
-        <h3>Best Records for This Level</h3>
-        <p>No records yet. Play a round!</p>
-      </div>
-    </section>
   </div>
 </div>
+
 
 <div class="modal" id="leaderboard-modal">
   <div class="modal-content">
