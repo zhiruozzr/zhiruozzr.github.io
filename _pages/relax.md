@@ -7,7 +7,7 @@ author_profile: true
 
 <style>
   .relax-shell {
-    max-width: 720px;             
+    max-width: 720px;
     margin: 1.2rem auto 2rem auto;
   }
 
@@ -90,15 +90,12 @@ author_profile: true
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     background: #000;
-
     max-width: 420px;
     width: 100%;
     height: auto;
   }
 
-  #scoreboard {
-    display: none;
-  }
+  /* —— 排行榜弹窗样式 —— */
 
   .modal {
     display: none;
@@ -130,6 +127,51 @@ author_profile: true
     text-align: center;
     font-size: 1rem;
     color: #facc15;
+  }
+
+  .leaderboard-list {
+    list-style: none;
+    margin: 0 0 0.8rem 0;
+    padding: 0;
+  }
+
+  .leaderboard-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    background: #020617;
+    border: 1px solid #111827;
+    margin-bottom: 0.3rem;
+  }
+
+  .leaderboard-item.current {
+    border-color: #facc15;
+    background: rgba(250,204,21,0.10);
+  }
+
+  .leaderboard-rank {
+    width: 2rem;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+
+  .leaderboard-rank.gold { color: #facc15; }
+  .leaderboard-rank.silver { color: #e5e7eb; }
+  .leaderboard-rank.bronze { color: #f97316; }
+
+  .leaderboard-score {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .leaderboard-you {
+    color: #facc15;
+    font-size: 0.75rem;
   }
 
   .continue-btn {
@@ -190,6 +232,19 @@ author_profile: true
     <section class="relax-game">
       <canvas id="game" width="480" height="480"></canvas>
     </section>
+  </div>
+</div>
+
+<!-- 关卡结束后才出现的中间排行榜弹窗 -->
+<div class="modal" id="leaderboard-modal">
+  <div class="modal-content">
+    <h2>🏆 Level Cleared! 🏆</h2>
+    <ul class="leaderboard-list" id="leaderboard-list">
+      <!-- Filled by JS -->
+    </ul>
+    <button class="continue-btn" onclick="closeLeaderboard()">
+      Next Level
+    </button>
   </div>
 </div>
 
