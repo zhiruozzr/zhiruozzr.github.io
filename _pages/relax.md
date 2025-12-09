@@ -132,51 +132,6 @@ author_profile: true
     color: #facc15;
   }
 
-  .leaderboard-list {
-    list-style: none;
-    margin: 0 0 0.8rem 0;
-    padding: 0;
-  }
-
-  .leaderboard-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding: 0.45rem 0.6rem;
-    border-radius: 8px;
-    background: #020617;
-    border: 1px solid #111827;
-    margin-bottom: 0.3rem;
-  }
-
-  .leaderboard-item.current {
-    border-color: #facc15;
-    background: rgba(250,204,21,0.10);
-  }
-
-  .leaderboard-rank {
-    width: 2rem;
-    text-align: center;
-    font-size: 1.05rem;
-  }
-
-  .leaderboard-rank.gold { color: #facc15; }
-  .leaderboard-rank.silver { color: #e5e7eb; }
-  .leaderboard-rank.bronze { color: #f97316; }
-
-  .leaderboard-score {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-
-  .leaderboard-you {
-    color: #facc15;
-    font-size: 0.75rem;
-  }
-
   .continue-btn {
     width: 100%;
     padding: 0.6rem 1rem;
