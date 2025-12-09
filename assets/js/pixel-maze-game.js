@@ -1,5 +1,5 @@
 // ============================================================
-// PIXEL MAZE ADVENTURE - Clean Version (center leaderboard)
+// PIXEL MAZE ADVENTURE - Path-safe + Stardew-ish background
 // ============================================================
 
 const canvas = document.getElementById("game");
@@ -9,15 +9,52 @@ const TILE_SIZE = 32;
 const ROWS = 15;
 const COLS = 15;
 
-// ============================================================
-// PROCEDURAL LEVEL GENERATOR
-// ============================================================
+function getSeasonPalette(level) {
+  const idx = (level - 1) % 4;
+  switch (idx) {
+    // Spring
+    case 0:
+      return {
+        skyTop: "#9ad0ff",
+        skyBottom: "#cfe9ff",
+        groundTop: "#7cd37f",
+        groundBottom: "#3b6e3f",
+      };
+    // Summer
+    case 1:
+      return {
+        skyTop: "#71bfff",
+        skyBottom: "#a9ddff",
+        groundTop: "#5fb94f",
+        groundBottom: "#2f6a33",
+      };
+    // Autumn
+    case 2:
+      return {
+        skyTop: "#ffcf9a",
+        skyBottom: "#ffd8b5",
+        groundTop: "#f4a259",
+        groundBottom: "#8c4c2e",
+      };
+    // Winter
+    case 3:
+    default:
+      return {
+        skyTop: "#dbeafe",
+        skyBottom: "#e5f0ff",
+        groundTop: "#c4d7f5",
+        groundBottom: "#5b6f96",
+      };
+  }
+}
+
 
 function generateMaze(difficulty) {
   const maze = Array(ROWS)
     .fill(null)
     .map(() => Array(COLS).fill("#"));
 
+  // 1. 挖迷宫（递归回溯）
   function carve(row, col) {
     maze[row][col] = ".";
 
@@ -45,13 +82,74 @@ function generateMaze(difficulty) {
     }
   }
 
-  carve(1, 1);
+  const startR = 1;
+  const startC = 1;
+  carve(startR, startC);
 
-  // start & exit
-  maze[1][1] = "P";
-  maze[ROWS - 2][COLS - 2] = "E";
+  // 2. BFS 找到“离起点最远”的可走格子，当作出口；同时记录 parent 链
+  const dist = Array(ROWS)
+    .fill(null)
+    .map(() => Array(COLS).fill(Infinity));
+  const visited = Array(ROWS)
+    .fill(null)
+    .map(() => Array(COLS).fill(false));
+  const parent = {}; // key: "r,c" -> "pr,pc"
 
-  // cracked walls
+  const q = [];
+  q.push([startR, startC]);
+  visited[startR][startC] = true;
+  dist[startR][startC] = 0;
+  parent[`${startR},${startC}`] = null;
+
+  let farthest = { row: startR, col: startC, d: 0 };
+
+  const dirs4 = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+  ];
+
+  while (q.length) {
+    const [r, c] = q.shift();
+    const curD = dist[r][c];
+
+    if (curD > farthest.d) {
+      farthest = { row: r, col: c, d: curD };
+    }
+
+    for (const [dr, dc] of dirs4) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (
+        nr >= 0 &&
+        nr < ROWS &&
+        nc >= 0 &&
+        nc < COLS &&
+        !visited[nr][nc] &&
+        maze[nr][nc] === "."
+      ) {
+        visited[nr][nc] = true;
+        dist[nr][nc] = curD + 1;
+        parent[`${nr},${nc}`] = `${r},${c}`;
+        q.push([nr, nc]);
+      }
+    }
+  }
+
+  const exitR = farthest.row;
+  const exitC = farthest.col;
+
+  maze[startR][startC] = "P";
+  maze[exitR][exitC] = "E";
+
+  const safePath = new Set();
+  let curKey = `${exitR},${exitC}`;
+  while (curKey) {
+    safePath.add(curKey);
+    curKey = parent[curKey];
+  }
+
   for (let r = 1; r < ROWS - 1; r++) {
     for (let c = 1; c < COLS - 1; c++) {
       if (maze[r][c] === "#" && Math.random() < 0.18) {
@@ -60,20 +158,33 @@ function generateMaze(difficulty) {
     }
   }
 
-  // traps
   const trapCount = 6 + Math.floor(difficulty / 2);
   let placed = 0;
-  while (placed < trapCount) {
-    const r = 2 + Math.floor(Math.random() * (ROWS - 4));
-    const c = 2 + Math.floor(Math.random() * (COLS - 4));
-    if (
-      maze[r][c] === "." &&
-      !(r === 1 && c === 1) &&
-      !(r === ROWS - 2 && c === COLS - 2)
-    ) {
-      maze[r][c] = "X";
-      placed++;
+  const candidates = [];
+
+  for (let r = 1; r < ROWS - 1; r++) {
+    for (let c = 1; c < COLS - 1; c++) {
+      if (maze[r][c] === ".") {
+        const key = `${r},${c}`;
+        const manStart = Math.abs(r - startR) + Math.abs(c - startC);
+        const manExit = Math.abs(r - exitR) + Math.abs(c - exitC);
+        if (
+          !safePath.has(key) && // 不破坏至少一条通路
+          manStart > 2 && // 起点附近留点安全区
+          !(r === exitR && c === exitC) &&
+          manExit > 0
+        ) {
+          candidates.push({ r, c });
+        }
+      }
     }
+  }
+
+  while (placed < trapCount && candidates.length > 0) {
+    const idx = Math.floor(Math.random() * candidates.length);
+    const { r, c } = candidates.splice(idx, 1)[0];
+    maze[r][c] = "X";
+    placed++;
   }
 
   return maze.map((row) => row.join(""));
@@ -158,9 +269,6 @@ function drawParticles() {
   ctx.globalAlpha = 1;
 }
 
-// ============================================================
-// SCORES (only for popup leaderboard)
-// ============================================================
 
 function getScores() {
   if (typeof localStorage === "undefined") return [];
@@ -188,7 +296,6 @@ function updateUI() {
   if (stepsEl) stepsEl.textContent = steps;
 }
 
-// 不再有右边的常驻 scoreboard，这个函数直接 return
 function renderScoreboard() {
   return;
 }
@@ -287,16 +394,13 @@ window.addEventListener("keydown", (e) => {
 
   if (e.code === "Space") {
     if (gameState === "playing") {
-      // 正常游戏中：发射泡泡
       shootBomb();
     } else if (gameState === "dead") {
-      // 掉坑：重开当前关
       loadLevel(currentLevel);
     } else if (gameState === "levelComplete") {
-      // 通关：Space 关闭中间排行榜并进入下一关
       const modal = document.getElementById("leaderboard-modal");
       if (modal && modal.classList.contains("show")) {
-        closeLeaderboard(); // 里面会 currentLevel++ & loadLevel(...)
+        closeLeaderboard(); 
       } else {
         currentLevel++;
         loadLevel(currentLevel);
@@ -430,17 +534,13 @@ function updateExplosions() {
   explosions = explosions.filter((ex) => ex.life > 0);
 }
 
-// ============================================================
-// RENDERING
-// ============================================================
 
 function drawTile(row, col, visible, seenBefore) {
   const ch = levelMap[row][col];
   const x = col * TILE_SIZE;
   const y = row * TILE_SIZE;
 
-  // background
-  ctx.fillStyle = visible ? "#1c2430" : "#0a0e14";
+  ctx.fillStyle = visible ? "#1f2933" : "#111827";
   ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
   // solid wall
@@ -680,7 +780,6 @@ function closeLeaderboard() {
   loadLevel(currentLevel);
 }
 
-// 暴露给 HTML 按钮用
 window.closeLeaderboard = closeLeaderboard;
 
 // ============================================================
@@ -711,7 +810,14 @@ function update() {
 }
 
 function drawScene() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const palette = getSeasonPalette(currentLevel);
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  bgGrad.addColorStop(0, palette.skyTop);
+  bgGrad.addColorStop(0.35, palette.skyBottom);
+  bgGrad.addColorStop(0.55, palette.groundTop);
+  bgGrad.addColorStop(1, palette.groundBottom);
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
@@ -739,14 +845,14 @@ function drawScene() {
   const fogGradient = ctx.createRadialGradient(
     cx,
     cy,
-    TILE_SIZE * 2,
+    TILE_SIZE * 1.5,
     cx,
     cy,
     maxR
   );
   fogGradient.addColorStop(0, "rgba(0,0,0,0)");
-  fogGradient.addColorStop(0.5, "rgba(0,0,0,0.5)");
-  fogGradient.addColorStop(1, "rgba(0,0,0,0.95)");
+  fogGradient.addColorStop(0.5, "rgba(0,0,0,0.45)");
+  fogGradient.addColorStop(1, "rgba(0,0,0,0.85)");
 
   ctx.fillStyle = fogGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
