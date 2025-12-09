@@ -81,7 +81,7 @@ author_profile: true
     flex: 1;
     display: flex;
     justify-content: center;
-    position: relative; /* ⭐ 让弹窗只在游戏区域居中 */
+    position: relative; 
   }
 
   #game {
@@ -96,15 +96,15 @@ author_profile: true
     height: auto;
   }
 
-  /* 不再使用常驻 scoreboard，所以直接隐藏 */
+ 
   #scoreboard {
     display: none;
   }
 
-  /* ========= 只覆盖在游戏区域上的排行榜弹窗 ========= */
+
   .modal {
     display: none;
-    position: absolute;   /* ⭐ 相对 .relax-game 居中 */
+    position: absolute;  
     inset: 0;
     background: rgba(0,0,0,0.75);
     z-index: 20;
@@ -237,7 +237,6 @@ author_profile: true
     <section class="relax-game">
       <canvas id="game" width="480" height="480"></canvas>
 
-      <!-- ⭐ 弹窗现在放在 .relax-game 里面，只覆盖游戏区域 -->
       <div class="modal" id="leaderboard-modal">
         <div class="modal-content">
           <h2>🏆 Level Cleared! 🏆</h2>
