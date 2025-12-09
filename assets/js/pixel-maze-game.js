@@ -433,16 +433,26 @@ window.addEventListener("keydown", (e) => {
     e.preventDefault();
   }
 
-  if (e.code === "Space") {
-    if (gameState === "playing") {
-      shootBomb();
-    } else if (gameState === "dead") {
+if (e.code === "Space") {
+  if (gameState === "playing") {
+    // 
+    shootBomb();
+  } else if (gameState === "dead") {
+    // 
+    loadLevel(currentLevel);
+  } else if (gameState === "levelComplete") {
+   
+    const modal = document.getElementById("leaderboard-modal");
+    if (modal && modal.classList.contains("show")) {
+      closeLeaderboard(); 
+    } else {
+      currentLevel++;
       loadLevel(currentLevel);
-    } else if (gameState === "levelComplete") {
-      // 下一关通过弹窗按钮走
     }
-    return;
   }
+  return;
+}
+
 
   handleMoveInput(e.key);
 });
