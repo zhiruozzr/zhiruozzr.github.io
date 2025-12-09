@@ -1,5 +1,5 @@
 // ============================================================
-// PIXEL MAZE ADVENTURE - Full Revised Version
+// PIXEL MAZE ADVENTURE - Season & Weather Edition
 // ============================================================
 
 const canvas = document.getElementById("game");
@@ -9,12 +9,84 @@ const TILE_SIZE = 32;
 const ROWS = 15;
 const COLS = 15;
 
+// ------------------------------------------------------------
+// SEASONS & WEATHER
+// ------------------------------------------------------------
+
+const SEASONS = [
+  {
+    name: "Spring",
+    sky: "#bde0fe",
+    groundLight: "#d9f99d",
+    groundDark: "#84cc16",
+    fogMid: "rgba(15,23,42,0.35)",
+    fogOuter: "rgba(15,23,42,0.9)",
+    weather: "clear",
+  },
+  {
+    name: "Summer",
+    sky: "#7dd3fc",
+    groundLight: "#bbf7d0",
+    groundDark: "#22c55e",
+    fogMid: "rgba(15,23,42,0.4)",
+    fogOuter: "rgba(15,23,42,0.95)",
+    weather: "clear",
+  },
+  {
+    name: "Autumn",
+    sky: "#fed7aa",
+    groundLight: "#fed7aa",
+    groundDark: "#ea580c",
+    fogMid: "rgba(30,64,175,0.45)",
+    fogOuter: "rgba(15,23,42,0.95)",
+    weather: "rain",
+  },
+  {
+    name: "Winter",
+    sky: "#e0f2fe",
+    groundLight: "#e5e7eb",
+    groundDark: "#9ca3af",
+    fogMid: "rgba(30,64,175,0.4)",
+    fogOuter: "rgba(15,23,42,0.9)",
+    weather: "snow", // 先当成 clear，用蓝白雾
+  },
+];
+
+let currentSeason = SEASONS[0];
+let currentWeather = "clear"; // "clear" | "rain" | "snow"
+
+// 雨滴粒子
+let rainDrops = [];
+
+// ------------------------------------------------------------
+// SIMPLE SOUND SYSTEM (可选：你可以先不放音频文件，也不会报错)
+// ------------------------------------------------------------
+
+const sounds = {
+  move: new Audio("/assets/sfx/move.wav"),
+  bomb: new Audio("/assets/sfx/bomb.wav"),
+  explosion: new Audio("/assets/sfx/explosion.wav"),
+  trap: new Audio("/assets/sfx/trap.wav"),
+  levelComplete: new Audio("/assets/sfx/level-complete.wav"),
+};
+
+function playSound(name) {
+  const s = sounds[name];
+  if (!s) return;
+  try {
+    // 重置到开头，避免连续播放很奇怪
+    s.currentTime = 0;
+    s.play();
+  } catch (e) {
+    // 浏览器没允许自动播放就忽略，不影响游戏
+  }
+}
+
 // ============================================================
 // PROCEDURAL LEVEL GENERATOR
 // ============================================================
 
 function generateMaze(difficulty) {
-  // Start from all walls
   const maze = Array(ROWS)
     .fill(null)
     .map(() => Array(COLS).fill("#"));
@@ -48,10 +120,8 @@ function generateMaze(difficulty) {
 
   carve(1, 1);
 
-  // Player start
+  // Start / Exit
   maze[1][1] = "P";
-
-  // Exit (bottom right-ish)
   maze[ROWS - 2][COLS - 2] = "E";
 
   // Cracked walls
@@ -115,7 +185,7 @@ const VISION_RADIUS = 4;
 const SCORE_KEY = "pixel_maze_scores";
 
 // ============================================================
-// PARTICLE SYSTEM
+// PARTICLE SYSTEM (爆炸火花)
 // ============================================================
 
 function createExplosionParticles(row, col, count = 30) {
@@ -134,7 +204,7 @@ function createExplosionParticles(row, col, count = 30) {
       life: 30 + Math.random() * 20,
       maxLife: 30 + Math.random() * 20,
       size: 2 + Math.random() * 3,
-      color: ["#ff6b35", "#f7931e", "#ffd700", "#ff4d4d"][
+      color: ["#ff6b35", "#f97316", "#ffd700", "#fb7185"][
         Math.floor(Math.random() * 4)
       ],
     });
@@ -160,6 +230,48 @@ function drawParticles() {
     ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
   });
   ctx.globalAlpha = 1;
+}
+
+// ============================================================
+// RAIN / WEATHER
+// ============================================================
+
+function initWeather() {
+  rainDrops = [];
+  if (currentWeather === "rain") {
+    const count = 80;
+    for (let i = 0; i < count; i++) {
+      rainDrops.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vy: 4 + Math.random() * 3,
+        len: 8 + Math.random() * 4,
+      });
+    }
+  }
+}
+
+function updateRain() {
+  if (currentWeather !== "rain") return;
+  rainDrops.forEach((d) => {
+    d.y += d.vy;
+    if (d.y > canvas.height) {
+      d.y = -10;
+      d.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+function drawRain() {
+  if (currentWeather !== "rain") return;
+  ctx.strokeStyle = "rgba(148, 163, 184, 0.7)";
+  ctx.lineWidth = 1;
+  rainDrops.forEach((d) => {
+    ctx.beginPath();
+    ctx.moveTo(d.x, d.y);
+    ctx.lineTo(d.x + 2, d.y + d.len);
+    ctx.stroke();
+  });
 }
 
 // ============================================================
@@ -224,7 +336,15 @@ function renderScoreboard() {
 // LEVEL MANAGEMENT
 // ============================================================
 
+function pickSeason(level) {
+  // 简单的：关卡号循环四季
+  const idx = (level - 1) % SEASONS.length;
+  currentSeason = SEASONS[idx];
+  currentWeather = currentSeason.weather === "snow" ? "clear" : currentSeason.weather;
+}
+
 function loadLevel(level) {
+  pickSeason(level);
   levelMap = generateMaze(level);
 
   traps = [];
@@ -255,6 +375,7 @@ function loadLevel(level) {
     }
   }
 
+  initWeather();
   gameState = "playing";
   message = "";
   updateUI();
@@ -318,7 +439,7 @@ window.addEventListener("keydown", (e) => {
     } else if (gameState === "dead") {
       loadLevel(currentLevel);
     } else if (gameState === "levelComplete") {
-      // ignore here, we go to next level via button
+      // 下一关通过弹窗按钮走
     }
     return;
   }
@@ -354,14 +475,17 @@ function handleMoveInput(key) {
   player.facingRow = dRow;
   player.facingCol = dCol;
   steps++;
+  playSound("move");
 
   if (isTrap(newRow, newCol)) {
     gameState = "dead";
     message = "💀 TRAPPED! Press Space to retry.";
+    playSound("trap");
   } else if (isExit(newRow, newCol)) {
     gameState = "levelComplete";
     saveScore(currentLevel, elapsedSeconds, steps);
     renderScoreboard();
+    playSound("levelComplete");
     showLeaderboard();
   }
 
@@ -391,6 +515,8 @@ function shootBomb() {
     active: true,
     spawnFrame: frameCount,
   });
+
+  playSound("bomb");
 }
 
 function spawnExplosion(row, col) {
@@ -412,6 +538,8 @@ function spawnExplosion(row, col) {
       }
     }
   }
+
+  playSound("explosion");
 }
 
 function updateBombs() {
@@ -458,16 +586,24 @@ function drawTile(row, col, visible, seenBefore) {
   const x = col * TILE_SIZE;
   const y = row * TILE_SIZE;
 
-  // background
-  ctx.fillStyle = visible ? "#1c2430" : "#0a0e14";
-  ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+  // ground background for non-wall
+  if (ch !== "#" && ch !== "*") {
+    ctx.fillStyle = visible
+      ? currentSeason.groundLight
+      : currentSeason.groundDark;
+    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+  } else {
+    // darker ground under walls
+    ctx.fillStyle = currentSeason.groundDark;
+    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+  }
 
   // solid wall
   if (ch === "#") {
     ctx.fillStyle = visible ? "#8B4513" : "#3d2210";
     ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
+    ctx.fillStyle = "rgba(0,0,0,0.25)";
     ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 
     ctx.fillStyle = visible ? "#A0522D" : "#4a2915";
@@ -503,7 +639,7 @@ function drawTile(row, col, visible, seenBefore) {
 
   // trap
   if (ch === "X" && (visible || seenBefore)) {
-    const color = visible ? "#ff0000" : "#5a0000";
+    const color = visible ? "#ef4444" : "#7f1d1d";
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x + TILE_SIZE / 2, y + TILE_SIZE / 2, 10, 0, Math.PI * 2);
@@ -525,10 +661,10 @@ function drawTile(row, col, visible, seenBefore) {
 
   // exit
   if (ch === "E" && (visible || seenBefore)) {
-    ctx.fillStyle = visible ? "#FFD700" : "#5a4810";
+    ctx.fillStyle = visible ? "#FACC15" : "#5a4810";
     ctx.fillRect(x + 6, y + 4, TILE_SIZE - 12, TILE_SIZE - 8);
 
-    ctx.fillStyle = visible ? "#FFA500" : "#3d2e08";
+    ctx.fillStyle = visible ? "#F97316" : "#3d2e08";
     ctx.fillRect(x + 8, y + 6, TILE_SIZE - 16, TILE_SIZE - 12);
 
     ctx.fillStyle = "#8B4513";
@@ -540,30 +676,38 @@ function drawPlayer() {
   const x = player.col * TILE_SIZE;
   const y = player.row * TILE_SIZE;
 
-  ctx.fillStyle = "rgba(0,0,0,0.3)";
+  // shadow
+  ctx.fillStyle = "rgba(0,0,0,0.25)";
   ctx.fillRect(x + 6, y + 28, 20, 3);
 
-  ctx.fillStyle = "#1E88E5";
+  // legs
+  ctx.fillStyle = "#1D4ED8";
   ctx.fillRect(x + 9, y + 18, 6, 10);
   ctx.fillRect(x + 17, y + 18, 6, 10);
 
-  ctx.fillStyle = "#E53935";
+  // body
+  ctx.fillStyle = "#E11D48";
   ctx.fillRect(x + 8, y + 10, 16, 10);
 
-  ctx.fillStyle = "#FFAB91";
+  // arms
+  ctx.fillStyle = "#F9A8D4";
   ctx.fillRect(x + 5, y + 12, 4, 8);
   ctx.fillRect(x + 23, y + 12, 4, 8);
 
-  ctx.fillStyle = "#FFCC80";
+  // head
+  ctx.fillStyle = "#FCD34D";
   ctx.fillRect(x + 10, y + 2, 12, 10);
 
-  ctx.fillStyle = "#D32F2F";
+  // cap
+  ctx.fillStyle = "#EC4899";
   ctx.fillRect(x + 8, y + 0, 16, 4);
 
+  // eyes
   ctx.fillStyle = "#000";
   ctx.fillRect(x + 12, y + 5, 2, 2);
   ctx.fillRect(x + 18, y + 5, 2, 2);
 
+  // smile
   ctx.strokeStyle = "#000";
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -698,8 +842,6 @@ function closeLeaderboard() {
   currentLevel++;
   loadLevel(currentLevel);
 }
-
-// 把 closeLeaderboard 暴露到全局（给 HTML onclick 用）
 window.closeLeaderboard = closeLeaderboard;
 
 // ============================================================
@@ -727,11 +869,15 @@ function update() {
   }
   updateExplosions();
   updateParticles();
+  updateRain();
 }
 
 function drawScene() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // sky background
+  ctx.fillStyle = currentSeason.sky;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // tiles
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const dx = c - player.col;
@@ -750,7 +896,9 @@ function drawScene() {
   bombs.forEach(drawBomb);
   explosions.forEach(drawExplosion);
   drawParticles();
+  drawRain();
 
+  // fog of war "spotlight"
   const cx = (player.col + 0.5) * TILE_SIZE;
   const cy = (player.row + 0.5) * TILE_SIZE;
   const maxR = TILE_SIZE * (VISION_RADIUS + 2);
@@ -764,22 +912,23 @@ function drawScene() {
     maxR
   );
   fogGradient.addColorStop(0, "rgba(0,0,0,0)");
-  fogGradient.addColorStop(0.5, "rgba(0,0,0,0.5)");
-  fogGradient.addColorStop(1, "rgba(0,0,0,0.95)");
+  fogGradient.addColorStop(0.5, currentSeason.fogMid);
+  fogGradient.addColorStop(1, currentSeason.fogOuter);
 
   ctx.fillStyle = fogGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // death message
   if (gameState === "dead" && message) {
     ctx.fillStyle = "rgba(0,0,0,0.8)";
     ctx.fillRect(50, 200, 380, 80);
 
-    ctx.fillStyle = "#ff0000";
+    ctx.fillStyle = "#ef4444";
     ctx.font = "16px sans-serif";
     ctx.textAlign = "center";
     ctx.fillText(message, 240, 235);
 
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#e5e7eb";
     ctx.font = "12px sans-serif";
     ctx.fillText("Press SPACE to retry", 240, 260);
   }
