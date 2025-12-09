@@ -1,100 +1,124 @@
 ---
 layout: single
-title: "Pixel Maze Adventure"
+title: "TIME TO RELAX · Pixel Maze"
 permalink: /relax/
 author_profile: true
 ---
 
-## Pixel Maze Adventure
-
-Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
-
-**Controls**
-
-- ⬆ ⬇ ⬅ ⮕ or **WASD** – move  
-- **Space** (while playing) – shoot a bubble bomb in the facing direction  
-- Cracked walls `*` can be destroyed (blast radius: **3×3**)  
-- Avoid ❌ traps  
-- Reach the 🚪 exit to clear the level  
-- After death / clear, press **Space** to retry / keep playing  
-
----
-
 <style>
-  .game-container {
-    max-width: 640px;
-    margin: 1.5rem auto 2rem auto;
-    padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    background: #0f172a;
-    color: #e5e7eb;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.4);
-  }
-
-  .game-container h1 {
-    font-size: 1.4rem;
-    margin: 0 0 0.75rem 0;
-    text-align: center;
-  }
-
-  .controls-info {
-    background: rgba(15, 23, 42, 0.9);
-    border-radius: 8px;
-    padding: 0.75rem 0.9rem;
-    font-size: 0.8rem;
-    line-height: 1.6;
-    margin-bottom: 0.9rem;
-  }
-
-  .controls-info strong {
-    color: #facc15;
-  }
-
-  #game {
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    max-width: 100%;
-  }
-
-  .stats {
+  .relax-wrapper {
     display: flex;
-    justify-content: space-around;
-    margin-top: 0.9rem;
-    font-size: 0.8rem;
-    text-align: center;
-    gap: 0.5rem;
-  }
-
-  .stat-item {
-    flex: 1;
-    background: rgba(15, 23, 42, 0.9);
-    border-radius: 8px;
-    padding: 0.4rem 0.6rem;
-  }
-
-  .stat-value {
-    color: #fbbf24;
-    font-size: 1.1rem;
-    margin-top: 0.2rem;
-  }
-
-  /* Scoreboard box under the game */
-  #scoreboard {
+    flex-wrap: wrap;
+    gap: 20px;
     margin-top: 1rem;
-    font-size: 0.8rem;
-    padding: 0.75rem 0.9rem;
-    border-radius: 8px;
-    background: rgba(15, 23, 42, 0.9);
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+
+  .relax-left,
+  .relax-right {
+    box-sizing: border-box;
+  }
+
+  .relax-left {
+    flex: 0 0 320px;
+    max-width: 360px;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    background: #020617;
+    color: #e5e7eb;
+    box-shadow: 0 14px 40px rgba(15,23,42,0.7);
+  }
+
+  .relax-right {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .relax-title {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.25rem;
+  }
+
+  .relax-subtitle {
+    margin: 0 0 0.8rem 0;
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+
+  .relax-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 0.8rem;
+  }
+
+  .relax-chip {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #111827;
+    color: #e5e7eb;
     border: 1px solid #1f2937;
   }
 
+  .relax-controls {
+    background: #020617;
+    border-radius: 10px;
+    padding: 0.7rem 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    border: 1px solid #1f2937;
+    margin-bottom: 0.8rem;
+  }
+
+  .relax-controls b {
+    color: #facc15;
+  }
+
+  .relax-stats-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .relax-stat {
+    flex: 1;
+    background: #020617;
+    border-radius: 10px;
+    padding: 0.4rem 0.55rem;
+    border: 1px solid #1f2937;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .relax-stat-label {
+    color: #9ca3af;
+    font-size: 0.7rem;
+  }
+
+  .relax-stat-value {
+    font-size: 1.05rem;
+    margin-top: 0.15rem;
+    color: #fbbf24;
+  }
+
+  /* Scoreboard */
+  #scoreboard {
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+    padding: 0.6rem 0.7rem;
+    border-radius: 10px;
+    background: #020617;
+    border: 1px solid #1f2937;
+    color: #e5e7eb;
+  }
+
   #scoreboard h3 {
-    margin: 0 0 0.4rem 0;
-    font-size: 0.9rem;
+    margin: 0 0 0.35rem 0;
+    font-size: 0.85rem;
   }
 
   #scoreboard p {
@@ -102,12 +126,22 @@ Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
   }
 
   #scoreboard ol {
-    margin: 0.25rem 0 0 1.1rem;
+    margin: 0.2rem 0 0 1rem;
     padding: 0;
   }
 
   #scoreboard li {
     margin-bottom: 0.15rem;
+  }
+
+  #game {
+    display: block;
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(15,23,42,0.95);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    max-width: 100%;
+    background: #000;
   }
 
   /* Leaderboard modal */
@@ -126,24 +160,25 @@ Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
   }
 
   .modal-content {
-    background: #0f172a;
-    border-radius: 12px;
+    background: #020617;
+    border-radius: 14px;
     padding: 1.25rem 1.5rem;
     max-width: 480px;
     width: 90%;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.8);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+    color: #e5e7eb;
   }
 
   .modal-content h2 {
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.9rem 0;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #facc15;
   }
 
   .leaderboard-list {
     list-style: none;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.9rem 0;
     padding: 0;
   }
 
@@ -152,16 +187,17 @@ Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    padding: 0.55rem 0.7rem;
+    padding: 0.5rem 0.6rem;
     border-radius: 8px;
-    background: rgba(15, 23, 42, 0.9);
+    background: #020617;
+    border: 1px solid #111827;
     font-size: 0.8rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .leaderboard-item.current {
-    border: 1px solid #facc15;
-    background: rgba(250, 204, 21, 0.15);
+    border-color: #facc15;
+    background: rgba(250, 204, 21, 0.1);
   }
 
   .leaderboard-rank {
@@ -188,8 +224,8 @@ Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
 
   .continue-btn {
     width: 100%;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    border-radius: 9px;
     border: none;
     background: linear-gradient(135deg, #22c55e, #16a34a);
     color: #ecfdf5;
@@ -198,40 +234,65 @@ Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
   }
 
   .continue-btn:hover {
-    filter: brightness(1.05);
+    filter: brightness(1.06);
+  }
+
+  @media (max-width: 720px) {
+    .relax-wrapper {
+      flex-direction: column;
+    }
+    .relax-left {
+      max-width: 100%;
+    }
   }
 </style>
 
-<div class="game-container">
-  <h1>🎮 TIME TO RELAX · Pixel Maze</h1>
+<div class="relax-wrapper">
+  <div class="relax-left">
+    <h2 class="relax-title">🎮 TIME TO RELAX · Pixel Maze PRO</h2>
+    <p class="relax-subtitle">
+      Tiny pixel maze with fog-of-war, bubble bombs, and a tiny local leaderboard.
+    </p>
 
-  <div class="controls-info">
-    <strong>Controls</strong><br>
-    ⬆ ⬇ ⬅ ⮕ or <strong>WASD</strong>: move<br>
-    <strong>Space</strong>: shoot a bubble bomb in the facing direction<br>
-    Avoid traps, find the exit, and beat your own records.
+    <div class="relax-chip-row">
+      <span class="relax-chip">Pixel Art</span>
+      <span class="relax-chip">Maze</span>
+      <span class="relax-chip">Fog of War</span>
+      <span class="relax-chip">Bubble Bomb</span>
+      <span class="relax-chip">Timer & Steps</span>
+    </div>
+
+    <div class="relax-controls">
+      <strong>Controls</strong><br>
+      ⬆ ⬇ ⬅ ⮕ or <b>WASD</b>: move<br>
+      <b>Space</b> (while playing): shoot a bubble bomb in the facing direction<br>
+      Cracked walls (<code>*</code>) can be destroyed (blast radius: <b>3×3</b>)<br>
+      Avoid ❌ traps, reach the 🚪 exit, and beat your own records.
+    </div>
+
+    <div class="relax-stats-row">
+      <div class="relax-stat">
+        <div class="relax-stat-label">Level</div>
+        <div class="relax-stat-value" id="level-display">1</div>
+      </div>
+      <div class="relax-stat">
+        <div class="relax-stat-label">Time</div>
+        <div class="relax-stat-value" id="time-display">0s</div>
+      </div>
+      <div class="relax-stat">
+        <div class="relax-stat-label">Steps</div>
+        <div class="relax-stat-value" id="steps-display">0</div>
+      </div>
+    </div>
+
+    <div id="scoreboard">
+      <h3>Best Records for This Level</h3>
+      <p>No records yet. Play a round!</p>
+    </div>
   </div>
 
-  <canvas id="game" width="480" height="480"></canvas>
-
-  <div class="stats">
-    <div class="stat-item">
-      <div>Level</div>
-      <div class="stat-value" id="level-display">1</div>
-    </div>
-    <div class="stat-item">
-      <div>Time</div>
-      <div class="stat-value" id="time-display">0s</div>
-    </div>
-    <div class="stat-item">
-      <div>Steps</div>
-      <div class="stat-value" id="steps-display">0</div>
-    </div>
-  </div>
-
-  <div id="scoreboard">
-    <h3>Best Records for This Level</h3>
-    <p>No records yet. Play a round!</p>
+  <div class="relax-right">
+    <canvas id="game" width="480" height="480"></canvas>
   </div>
 </div>
 
