@@ -9,15 +9,14 @@ redirect_from:
 ---
 
 <div style="font-size:1.15rem; line-height:1.65;">
-Hi! I'm <strong>Zhiruo (Rachel) Zhang (张芷若)</strong>, a final-year Ph.D. candidate in Economics and Econometrics at 
-<strong>The University of Adelaide</strong>, supervised by 
-<a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank"><strong>Prof. Firmin Doko Tchatoka</strong></a> 
+Hi! I'm Zhiruo (Rachel) Zhang (张芷若), a final-year Ph.D. candidate in Economics and Econometrics at The University of Adelaide, supervised by 
+<a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a> 
 and 
-<a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank"><strong>Dr. Qazi Haque</strong></a>.
+<a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
 </div>
 
 <div style="font-size:1.1rem; line-height:1.6; margin-top:14px;">
-My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
+My research primarily focuses on Bayesian econometrics, time-series analysis, panel data methods, and their intersections with machine learning.
 </div>
 
 <div style="background:#f7f7f7; padding:14px 18px; border-left:4px solid #1f628d; margin:22px 0; font-size:1.1rem;">
@@ -27,7 +26,7 @@ My research primarily focuses on <strong>Bayesian econometrics</strong>, <strong
 
 ## 🔥 News
 
-- <em>2025.11</em>: 🎉 Presented at the Ph.D. Conference in Economics at UNSW.
+- <em>2026.11</em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, 24–27 November, Adelaide University, City East Campus.
 
 <div style="text-align:center; margin-top:36px; font-size:1.2rem; color:#444;">
   <em>
