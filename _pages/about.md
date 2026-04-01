@@ -9,7 +9,7 @@ redirect_from:
 ---
 
 <div style="font-size:1.15rem; line-height:1.65;">
-Hi! I'm Zhiruo (Rachel) Zhang (张芷若), a final-year Ph.D. candidate in Economics and Econometrics at The University of Adelaide, supervised by 
+Hi! I'm Zhiruo (Rachel) Zhang (张芷若), a final-year Ph.D. candidate in Economics and Econometrics at Adelaide University, supervised by 
 <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a> 
 and 
 <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
@@ -26,7 +26,7 @@ My research primarily focuses on Bayesian econometrics, time-series analysis, pa
 
 ## 🔥 News
 
-- <em>2026.11</em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, 24–27 November, Adelaide University, City East Campus.
+- <em> 24–27 November 2026 </em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.
 
 <div style="text-align:center; margin-top:36px; font-size:1.2rem; color:#444;">
   <em>
