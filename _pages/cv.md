@@ -18,7 +18,7 @@ redirect_from:
 
 ## Graduate Studies
 
-**The University of Adelaide**  
+**Adelaide University**  
 Ph.D. Candidate in Economics and Econometrics, *2022–present*  
 Expected completion: **June 2026**
 
@@ -74,6 +74,11 @@ With Firmin Doko Tchatoka and Qazi Haque.
 
 ## Teaching Experience
 
+**Tutor, Adelaide University**
+
+- *ECON 1012 – Data Analytics*  
+  - Semester 1, 2026 
+ 
 **Tutor, The University of Adelaide**
 
 - *ECON 3530 – Applied Econometrics III*  
