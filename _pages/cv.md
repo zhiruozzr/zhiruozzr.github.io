@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-<p style="text-align: right; margin-top: -10px;">
+<p style="text-align: left; margin-top: -5px;">
   <a href="{{ '/files/zzr_CV.pdf' | relative_url }}" class="btn btn--primary btn--small">
     <i class="fa fa-download"></i> Download CV (PDF)
   </a>
