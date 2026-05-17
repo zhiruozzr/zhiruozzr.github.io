@@ -83,7 +83,9 @@
 .author__avatar {
   display: table-cell;
   vertical-align: top;
-  width: 110px;              // mobile: small thumbnail next to text
+  width: 36px;
+  // set width only, for non-square avatars
+  // height: 36px;
 
   @include breakpoint($large) {
     display: block;
@@ -92,14 +94,12 @@
   }
 
   img {
-    max-width: 100%;         // fill the sidebar width on desktop
-    aspect-ratio: 1 / 1;     // force square
-    object-fit: cover;       // crop to fill the square (no distortion)
-    border-radius: 0;        // square corners (use 50% for circle, 8px for rounded)
+    max-width: 175px;
+    border-radius: 50%;
 
     @include breakpoint($large) {
       padding: 5px;
-      border: 1px solid $border-color;
+      border: 1px solid var(--global-border-color);
     }
   }
 }
