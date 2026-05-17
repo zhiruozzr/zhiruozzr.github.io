@@ -83,7 +83,7 @@
 .author__avatar {
   display: table-cell;
   vertical-align: top;
-  width: 360px;          // was 180px
+  width: 110px;              // mobile: small thumbnail next to text
 
   @include breakpoint($large) {
     display: block;
@@ -91,9 +91,11 @@
     height: auto;
   }
 
-img {
-    max-width: 100%;           // 占满整个侧边栏宽度
-    border-radius: 0;          // 方形
+  img {
+    max-width: 100%;         // fill the sidebar width on desktop
+    aspect-ratio: 1 / 1;     // force square
+    object-fit: cover;       // crop to fill the square (no distortion)
+    border-radius: 0;        // square corners (use 50% for circle, 8px for rounded)
 
     @include breakpoint($large) {
       padding: 5px;
