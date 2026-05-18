@@ -8,27 +8,51 @@ redirect_from:
   - /about.html
 ---
 
-<div style="font-size:1.15rem; line-height:1.65;">
-Hi! I'm Zhiruo (Rachel) Zhang (张芷若), a final-year Ph.D. candidate in Economics and Econometrics at Adelaide University, supervised by 
-<a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a> 
-and 
+# Zhiruo (Rachel) Zhang
+
+Ph.D. Candidate in Economics and Econometrics at the University of Adelaide
+
+<div style="font-size:1.1rem; line-height:1.7; margin-top:18px;">
+Welcome to my site! I am a final-year Ph.D. candidate supervised by
+<a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a>
+and
 <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
+My research focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, and <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
 </div>
 
-<div style="font-size:1.1rem; line-height:1.6; margin-top:14px;">
-My research primarily focuses on Bayesian econometrics, time-series analysis, panel data methods, and their intersections with machine learning.
+<div style="font-size:1.1rem; line-height:1.7; margin-top:14px;">
+I am on the <strong>2025–2026 job market</strong>.
 </div>
 
-<div style="background:#f7f7f7; padding:14px 18px; border-left:4px solid #1f628d; margin:22px 0; font-size:1.1rem;">
-  <strong>Job Market Status:</strong> Available for interviews in 2025–2026.<br>
-  <em>CV and working papers can be found in the menu above.</em>
+<div style="font-size:1.05rem; line-height:1.8; margin-top:18px;">
+Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a><br>
+<a href="/files/CV_ZhiruoZhang.pdf" target="_blank"><strong>Download my CV</strong></a>
 </div>
+
+<hr style="margin-top:30px; margin-bottom:30px;">
+
+## Job Market Paper
+
+<p style="font-size:1.05rem; line-height:1.7;">
+<strong>[Paper Title Here]</strong> &nbsp;[<a href="#" target="_blank">download</a>]
+</p>
+
+<p style="font-size:1rem; line-height:1.7;">
+<strong>Abstract:</strong> [Paste your abstract here. A short paragraph (150–250 words) describing the question, method, and main finding works well — see how Ken Jung opens with the policy setting, then states what he shows, then closes with the magnitude of the main result.]
+</p>
+
+## Working Papers
+
+- [Working paper title] (with [coauthor])
+- [Working paper title]
+
+<hr style="margin-top:30px; margin-bottom:20px;">
 
 ## 🔥 News
 
-- <em> 24–27 November 2026 </em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.
+- <em>24–27 November 2026</em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.
 
-<div style="text-align:center; margin-top:36px; font-size:1.2rem; color:#444;">
+<div style="text-align:center; margin-top:40px; margin-bottom:10px; font-size:1.15rem; color:#444;">
   <em>
     <span style="color:#c8a951; font-weight:650;">E</span>arth 
     <span style="color:#c8a951; font-weight:650;">N</span>eeds 
@@ -37,8 +61,6 @@ My research primarily focuses on Bayesian econometrics, time-series analysis, pa
   </em><br>
   <em>人生到处知何似？应似飞鸿踏雪泥。</em>
 </div>
-
-<hr>
 
 
 <!--<h2>🎮 Posterior not mixing? Let the cap jump instead </h2>
