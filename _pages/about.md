@@ -20,7 +20,7 @@ redirect_from:
 <h1 style="margin-top:0; margin-bottom:6px; font-size:2rem;">Zhiruo (Rachel) Zhang</h1>
 
 <p style="font-size:1.1rem; color:#555; margin-top:0; margin-bottom:18px;">
-Ph.D. Candidate in Economics and Econometrics at the University of Adelaide
+Ph.D. Candidate in Economics and Econometrics at Adelaide University
 </p>
 
 <p style="font-size:1.05rem; line-height:1.7; margin-bottom:14px;">
