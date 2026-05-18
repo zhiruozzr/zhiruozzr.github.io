@@ -82,6 +82,12 @@ I am on the <strong>2025–2026 job market</strong>.
 <strong>Abstract:</strong> International spillovers operate through specific bilateral relationships and different macroeconomic channels. Standard panel VAR regularization approaches, however, usually only work at one level of aggregation. Country-level shrinkage is too broad to uncover transmission channels, while elementwise selection fragments bilateral spillovers and hides their economic interpretation. This paper proposes a bi-level spike-and-slab framework for high-dimensional panel VARs that jointly selects spillovers at the country-pair level and variables within active spillover blocks. The approach delivers an interpretable bilateral spillover network together with a decomposition of transmission channels. An EM-based algorithm enables efficient estimation even with the nonconvex prior structure. Monte Carlo experiments demonstrate improved spillover detection relative to existing methods. An application to OECD macroeconomic data reveals a sparse but structured global network dominated by a small set of hub countries and real-side transmission channels.
 </p>
 
+<h2 id="work-in-progress">Work in Progress</h2>
+
+<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
+<strong>Structural Transformation, Green Technology, and Labor Reallocation</strong> (with <a href="https://researchers.adelaide.edu.au/profile/xiyu.ni" target="_blank">Xiyu Ni</a>)
+</p>
+
 <hr style="margin-top:30px; margin-bottom:20px;">
 
 ## 🔥 News
