@@ -28,7 +28,16 @@ Welcome to my site! I am a final-year Ph.D. candidate supervised by
 <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a>
 and
 <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
-My research focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, and <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
+<p>
+  I am a macroeconometrician working on Bayesian methods for time-series and panel data. 
+  My research focuses on modelling and forecasting macroeconomic and financial data, 
+  with particular interests in Bayesian VARs, panel VARs, and nonlinear time-series models.
+</p>
+
+<p>
+  I also study how machine-learning methods can be combined with econometric models 
+  to improve inference and forecasting in macroeconomic and financial applications.
+</p>
 </p>
 
 <p style="font-size:1.05rem; line-height:1.7; margin-bottom:18px;">
