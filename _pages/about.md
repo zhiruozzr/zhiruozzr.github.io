@@ -29,14 +29,15 @@ Welcome to my site! I am a final-year Ph.D. candidate supervised by
 and
 <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
 <p>
-  I am a macroeconometrician working on Bayesian methods for time-series and panel data. 
-  My research focuses on modelling and forecasting macroeconomic and financial data, 
-  with particular interests in Bayesian VARs, panel VARs, and nonlinear time-series models.
+  I am a <strong>macroeconometrician</strong> working in 
+  <strong>Bayesian econometrics</strong>, <strong>time-series econometrics</strong>, 
+  and <strong>panel data econometrics</strong>.
 </p>
 
 <p>
-  I also study how machine-learning methods can be combined with econometric models 
-  to improve inference and forecasting in macroeconomic and financial applications.
+  My research focuses on <strong>macroeconomic and financial forecasting</strong>, 
+  with particular emphasis on <strong>Bayesian learning</strong>, 
+  <strong>machine learning methods</strong>, and <strong>high-dimensional economic data</strong>.
 </p>
 </p>
 
