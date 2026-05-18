@@ -34,16 +34,22 @@ Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelai
 ## Job Market Paper
 
 <p style="font-size:1.05rem; line-height:1.7;">
-<strong>[Paper Title Here]</strong> &nbsp;[<a href="#" target="_blank">download</a>]
+<strong>[Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs] (with [Firmin Doko Tchatoka, and Qazi Haque])</strong> &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
 </p>
 
 <p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> [Paste your abstract here. A short paragraph (150–250 words) describing the question, method, and main finding works well — see how Ken Jung opens with the policy setting, then states what he shows, then closes with the magnitude of the main result.]
+<strong>Abstract:</strong> [This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.]
 </p>
 
 ## Working Papers
 
-- [Working paper title] (with [coauthor])
+- <p style="font-size:1.05rem; line-height:1.7;">
+<strong>[Bayesian Network Estimation for High-Dimensional Panel VARs] (with [Firmin Doko Tchatoka, and Qazi Haque])</strong>
+</p>
+
+<p style="font-size:1rem; line-height:1.7;">
+<strong>Abstract:</strong> [This paper develops a Bayesian Graphical Network Lasso to estimate sparse precision matrices in high-dimensional panel VAR models with exogenous variables (PVARX). By directly targeting the inverse error covariance matrix, the method identifies contemporaneous conditional dependencies across macroeconomic units in a structure-aware and order-invariant way. We incorporate both adaptive and non-adaptive shrinkage priors, offering flexibility in modeling heterogeneous sparsity patterns. Monte Carlo simulations show strong performance in recovering the underlying graphical structure. In an empirical application, we analyze the global transmission of natural disaster shocks across high-income economies, uncovering a sparse but economically meaningful network of international macroeconomic spillovers.]
+</p>
 - [Working paper title]
 
 <hr style="margin-top:30px; margin-bottom:20px;">
