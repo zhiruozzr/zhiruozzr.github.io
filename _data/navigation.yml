@@ -6,14 +6,11 @@
 #
 # NOTE that only one of the CV options should be selected, the first is for the
 #      Markdown formatted page while the second is generated using JSON.
-
 main:
   - title: "Research"
-    url: /publications/
-
+    url: /#job-market-paper
   - title: "Talks and Conference"
     url: /talks/    
-
   - title: "Teaching"
     url: /teaching/    
     
@@ -22,5 +19,3 @@ main:
     
   - title: "Pixel Maze Adventure"
     url: /relax/
-
-    
