@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: ""
+title: "About"
 layout: single
 author_profile: true
 redirect_from: 
@@ -20,7 +20,7 @@ redirect_from:
 <h1 style="margin-top:0; margin-bottom:6px; font-size:2rem;">Zhiruo (Rachel) Zhang</h1>
 
 <p style="font-size:1.1rem; color:#555; margin-top:0; margin-bottom:18px;">
-Ph.D. Candidate in Economics and Econometrics at Adelaide University
+Ph.D. Candidate in Economics and Econometrics at the University of Adelaide
 </p>
 
 <p style="font-size:1.05rem; line-height:1.7; margin-bottom:14px;">
@@ -54,7 +54,7 @@ I am on the <strong>2025–2026 job market</strong>.
 
 </div>
 
-## Job Market Paper
+<h2 id="job-market-paper">Job Market Paper</h2>
 
 <p style="font-size:1.05rem; line-height:1.7;">
 <strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque) &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
@@ -64,7 +64,7 @@ I am on the <strong>2025–2026 job market</strong>.
 <strong>Abstract:</strong> This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.
 </p>
 
-## Working Papers
+<h2 id="working-papers">Working Papers</h2>
 
 <p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
 <strong>Bayesian Network Estimation for High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque)
@@ -87,6 +87,116 @@ I am on the <strong>2025–2026 job market</strong>.
 ## 🔥 News
 
 - <em>24–27 November 2026</em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.
+
+<hr style="margin-top:40px; margin-bottom:20px;">
+
+<h2 id="contact">Contact</h2>
+
+<div style="
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+">
+
+<p style="font-size:1rem; color:#555; margin-top:0; margin-bottom:20px;">
+Feel free to send me a message. Filling out this form will open your email client with the message pre-filled.
+</p>
+
+<form onsubmit="sendContactEmail(event)" style="display:flex; flex-direction:column; gap:14px;">
+
+  <div>
+    <label for="contact-name" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Name</label>
+    <input type="text" id="contact-name" required style="
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 0.95rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    " />
+  </div>
+
+  <div>
+    <label for="contact-email" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Your Email</label>
+    <input type="email" id="contact-email" required style="
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 0.95rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    " />
+  </div>
+
+  <div>
+    <label for="contact-subject" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Subject</label>
+    <input type="text" id="contact-subject" placeholder="(optional)" style="
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 0.95rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    " />
+  </div>
+
+  <div>
+    <label for="contact-message" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Message</label>
+    <textarea id="contact-message" rows="5" required style="
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 0.95rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+      resize: vertical;
+    "></textarea>
+  </div>
+
+  <button type="submit" style="
+    background: #1f628d;
+    color: #ffffff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+  ">✉️ Send</button>
+
+</form>
+
+<div style="margin-top:24px; padding-top:18px; border-top:1px solid #eee; font-size:0.95rem; color:#555; line-height:1.7;">
+  📧 <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a><br>
+  📍 Adelaide, Australia
+</div>
+
+</div>
+
+<script>
+function sendContactEmail(event) {
+  event.preventDefault();
+  var name = document.getElementById('contact-name').value;
+  var email = document.getElementById('contact-email').value;
+  var subject = document.getElementById('contact-subject').value || 'Message from your website';
+  var message = document.getElementById('contact-message').value;
+
+  var body = 'From: ' + name + ' (' + email + ')%0D%0A%0D%0A' + encodeURIComponent(message);
+  var mailto = 'mailto:zhiruo.zhang@adelaide.edu.au'
+             + '?subject=' + encodeURIComponent(subject)
+             + '&body=' + body;
+
+  window.location.href = mailto;
+}
+</script>
 
 <div style="text-align:center; margin-top:40px; margin-bottom:10px; font-size:1.15rem; color:#444;">
   <em>
