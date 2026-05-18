@@ -34,7 +34,7 @@ Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelai
 ## Job Market Paper
 
 <p style="font-size:1.05rem; line-height:1.7;">
-<strong>[Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs] (with [Firmin Doko Tchatoka, and Qazi Haque])</strong> &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
+<strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs (with Firmin Doko Tchatoka, and Qazi Haque)</strong> &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
 </p>
 
 <p style="font-size:1rem; line-height:1.7;">
