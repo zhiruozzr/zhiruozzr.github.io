@@ -67,7 +67,11 @@ I am on the <strong>2025–2026 job market</strong>.
 <h2 id="job-market-paper">Job Market Paper</h2>
 
 <p style="font-size:1.05rem; line-height:1.7;">
-<strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque) &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
+  <strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</strong> 
+  (with Firmin Doko Tchatoka and Qazi Haque)
+  <br>
+  [<a href="/files/Adaptive.pdf" target="_blank">Paper</a>]
+  [<a href="/files/Adaptive_Slides.pdf" target="_blank">Slides</a>]
 </p>
 
 <p style="font-size:1rem; line-height:1.7;">
