@@ -10,7 +10,7 @@ redirect_from:
 
 # Zhiruo (Rachel) Zhang
 
-Ph.D. Candidate in Economics and Econometrics at the University of Adelaide
+Ph.D. Candidate in Economics and Econometrics at Adelaide University
 
 <div style="font-size:1.1rem; line-height:1.7; margin-top:18px;">
 Welcome to my site! I am a final-year Ph.D. candidate supervised by
@@ -34,23 +34,30 @@ Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelai
 ## Job Market Paper
 
 <p style="font-size:1.05rem; line-height:1.7;">
-<strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs (with Firmin Doko Tchatoka, and Qazi Haque)</strong> &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
+<strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque) &nbsp;[<a href="/files/Adaptive.pdf" target="_blank">download</a>]
 </p>
 
 <p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> [This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.]
+<strong>Abstract:</strong> This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.
 </p>
 
 ## Working Papers
 
-- <p style="font-size:1.05rem; line-height:1.7;">
-<strong>[Bayesian Network Estimation for High-Dimensional Panel VARs] (with [Firmin Doko Tchatoka, and Qazi Haque])</strong>
+<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
+<strong>Bayesian Network Estimation for High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque)
 </p>
 
 <p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> [This paper develops a Bayesian Graphical Network Lasso to estimate sparse precision matrices in high-dimensional panel VAR models with exogenous variables (PVARX). By directly targeting the inverse error covariance matrix, the method identifies contemporaneous conditional dependencies across macroeconomic units in a structure-aware and order-invariant way. We incorporate both adaptive and non-adaptive shrinkage priors, offering flexibility in modeling heterogeneous sparsity patterns. Monte Carlo simulations show strong performance in recovering the underlying graphical structure. In an empirical application, we analyze the global transmission of natural disaster shocks across high-income economies, uncovering a sparse but economically meaningful network of international macroeconomic spillovers.]
+<strong>Abstract:</strong> This paper develops a Bayesian Graphical Network Lasso to estimate sparse precision matrices in high-dimensional panel VAR models with exogenous variables (PVARX). By directly targeting the inverse error covariance matrix, the method identifies contemporaneous conditional dependencies across macroeconomic units in a structure-aware and order-invariant way. We incorporate both adaptive and non-adaptive shrinkage priors, offering flexibility in modeling heterogeneous sparsity patterns. Monte Carlo simulations show strong performance in recovering the underlying graphical structure. In an empirical application, we analyze the global transmission of natural disaster shocks across high-income economies, uncovering a sparse but economically meaningful network of international macroeconomic spillovers.
 </p>
-- [Working paper title]
+
+<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
+<strong>Disentangling Spillover Networks and Transmission Channels in Panel VARs</strong>
+</p>
+
+<p style="font-size:1rem; line-height:1.7;">
+<strong>Abstract:</strong> International spillovers operate through specific bilateral relationships and different macroeconomic channels. Standard panel VAR regularization approaches, however, usually only work at one level of aggregation. Country-level shrinkage is too broad to uncover transmission channels, while elementwise selection fragments bilateral spillovers and hides their economic interpretation. This paper proposes a bi-level spike-and-slab framework for high-dimensional panel VARs that jointly selects spillovers at the country-pair level and variables within active spillover blocks. The approach delivers an interpretable bilateral spillover network together with a decomposition of transmission channels. An EM-based algorithm enables efficient estimation even with the nonconvex prior structure. Monte Carlo experiments demonstrate improved spillover detection relative to existing methods. An application to OECD macroeconomic data reveals a sparse but structured global network dominated by a small set of hub countries and real-side transmission channels.
+</p>
 
 <hr style="margin-top:30px; margin-bottom:20px;">
 
@@ -67,17 +74,3 @@ Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelai
   </em><br>
   <em>人生到处知何似？应似飞鸿踏雪泥。</em>
 </div>
-
-
-<!--<h2>🎮 Posterior not mixing? Let the cap jump instead </h2>
-<p style="color:#666;">Click → hold Space → jump. A tiny academic break.</p>
-
-<div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin:14px auto 0;">
-  <canvas id="mini-game" width="400" height="260" style="display:block;margin:0 auto;border-radius:10px;background:#cce0ff;"></canvas>
-</div>
-
-<p style="font-size:0.9rem;color:#777;margin-top:8px;text-align:center;">
-  🍵 Tip: landing on a coffee bonus means you probably need a refill.  
-</p>
-
-<script src="/assets/js/game.js"></script> -->
