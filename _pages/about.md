@@ -8,28 +8,51 @@ redirect_from:
   - /about.html
 ---
 
-# Zhiruo (Rachel) Zhang
+<div style="
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin: 10px 0 30px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+">
 
+<h1 style="margin-top:0; margin-bottom:6px; font-size:2rem;">Zhiruo (Rachel) Zhang</h1>
+
+<p style="font-size:1.1rem; color:#555; margin-top:0; margin-bottom:18px;">
 Ph.D. Candidate in Economics and Econometrics at Adelaide University
+</p>
 
-<div style="font-size:1.1rem; line-height:1.7; margin-top:18px;">
+<p style="font-size:1.05rem; line-height:1.7; margin-bottom:14px;">
 Welcome to my site! I am a final-year Ph.D. candidate supervised by
 <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a>
 and
 <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
 My research focuses on <strong>Bayesian econometrics</strong>, <strong>time-series analysis</strong>, and <strong>panel data methods</strong>, and their intersections with <strong>machine learning</strong>.
-</div>
+</p>
 
-<div style="font-size:1.1rem; line-height:1.7; margin-top:14px;">
+<p style="font-size:1.05rem; line-height:1.7; margin-bottom:18px;">
 I am on the <strong>2025–2026 job market</strong>.
+</p>
+
+<div style="font-size:1rem; line-height:1.8;">
+📧 <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a>
 </div>
 
-<div style="font-size:1.05rem; line-height:1.8; margin-top:18px;">
-Email me here: <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a><br>
-<a href="/files/CV_ZhiruoZhang.pdf" target="_blank"><strong>Download my CV</strong></a>
+<div style="margin-top:14px;">
+<a href="/files/CV_ZhiruoZhang.pdf" target="_blank" style="
+  display: inline-block;
+  background: #1f628d;
+  color: #ffffff;
+  padding: 9px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.98rem;
+">📄 Download CV</a>
 </div>
 
-<hr style="margin-top:30px; margin-bottom:30px;">
+</div>
 
 ## Job Market Paper
 
