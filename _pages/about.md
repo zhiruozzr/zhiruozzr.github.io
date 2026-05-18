@@ -40,7 +40,8 @@ My research primarily focuses on Bayesian econometrics, time-series analysis, pa
 
 <hr>
 
-<h2>🎮 Posterior not mixing? Let the cap jump instead </h2>
+
+<!--<h2>🎮 Posterior not mixing? Let the cap jump instead </h2>
 <p style="color:#666;">Click → hold Space → jump. A tiny academic break.</p>
 
 <div style="max-width:480px;padding:16px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin:14px auto 0;">
@@ -51,4 +52,4 @@ My research primarily focuses on Bayesian econometrics, time-series analysis, pa
   🍵 Tip: landing on a coffee bonus means you probably need a refill.  
 </p>
 
-<script src="/assets/js/game.js"></script>
+<script src="/assets/js/game.js"></script> -->
