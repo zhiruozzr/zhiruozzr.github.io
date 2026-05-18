@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "About"
+title: ""
 layout: single
 author_profile: true
 redirect_from: 
@@ -173,11 +173,6 @@ Feel free to send me a message. Filling out this form will open your email clien
   ">✉️ Send</button>
 
 </form>
-
-<div style="margin-top:24px; padding-top:18px; border-top:1px solid #eee; font-size:0.95rem; color:#555; line-height:1.7;">
-  📧 <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a><br>
-  📍 Adelaide, Australia
-</div>
 
 </div>
 
