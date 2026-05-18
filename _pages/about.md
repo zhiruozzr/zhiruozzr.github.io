@@ -27,7 +27,7 @@ Ph.D. Candidate in Economics and Econometrics at Adelaide University
 Welcome to my site! I am a final-year Ph.D. candidate supervised by
 <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a>
 and
-<a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">Dr. Qazi Haque</a>.
+<a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">APrf. Qazi Haque</a>.
 <p>
   I am a <strong>macroeconometrician</strong> working in 
   <strong>Bayesian econometrics</strong>, <strong>time-series econometrics</strong>, 
