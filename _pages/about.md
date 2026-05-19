@@ -50,7 +50,7 @@ I am on the <strong>2025–2026 job market</strong>.
 </div>
 
 <div style="margin-top:14px;">
-<a href="/files/CV_ZhiruoZhang.pdf" target="_blank" style="
+<a href="/files/CV_ZhiruoZHANG.pdf" target="_blank" style="
   display: inline-block;
   background: #1f628d;
   color: #ffffff;
