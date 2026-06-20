@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 <div style="margin-top: 10px; margin-bottom: 14px;">
-  <a href="/files/CV_ZhiruoZHANG.pdf" target="_blank" style="
+  <a href="/files/CV_JM.pdf" target="_blank" style="
     display: inline-block;
     background: #1f628d;
     color: #ffffff;
@@ -29,7 +29,7 @@ redirect_from:
   box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 ">
   <iframe 
-    src="/files/CV_ZhiruoZHANG.pdf#view=FitH" 
+    src="/files/CV_JM.pdf#view=FitH" 
     width="100%" 
     height="100%" 
     style="border: none;"
@@ -40,5 +40,5 @@ redirect_from:
 </div>
 
 <p style="font-size: 0.9rem; color: #888; margin-top: 12px; text-align: center;">
-  Can't see the CV? <a href="/files/CV_ZhiruoZHANG.pdf" target="_blank">Open it in a new tab</a>.
+  Can't see the CV? <a href="/files/CV_JM.pdf" target="_blank">Open it in a new tab</a>.
 </p>
