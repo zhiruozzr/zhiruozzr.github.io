@@ -1,7 +1,7 @@
 ---
 permalink: /
 title: ""
-excerpt: "Ph.D. in Economics and Econometrics from the University of Adelaide; joining the Reserve Bank of New Zealand in September 2026."
+excerpt: "Ph.D. in Economics and Econometrics from the Adelaide University; joining the Reserve Bank of New Zealand as a Senior Analyst in September 2026."
 author_profile: false
 sitemap: true
 redirect_from:
@@ -104,14 +104,16 @@ redirect_from:
 <img class="profile-pic" src="/images/IMG_5869.jpeg" alt="Zhiruo Zhang" />
 
 <div class="profile-name">Zhiruo (Rachel) Zhang 张芷若</div>
-<div class="profile-role">Ph.D. in Economics and Econometrics · University of Adelaide</div>
-<div class="profile-next">Joining the Reserve Bank of New Zealand · 21 September 2026</div>
+<div class="profile-role">Ph.D. in Economics and Econometrics · Adelaide University</div>
+<div class="profile-next">Joining the Reserve Bank of New Zealand · September 2026</div>
 
 <div class="about-text" markdown="1">
 
-I received my **Ph.D. in Economics and Econometrics** from the **University of Adelaide** in August 2026, supervised by [Prof. Firmin Doko Tchatoka](https://sites.google.com/view/firmindokotchatoka/home) and [A/Prof. Qazi Haque](https://sites.google.com/site/qazigmziaulhaque/).
+I received my **Ph.D. in Economics and Econometrics** from the **Adelaide University** in August 2026, supervised by [Prof. Firmin Doko Tchatoka](https://sites.google.com/view/firmindokotchatoka/home) and [A/Prof. Qazi Haque](https://sites.google.com/site/qazigmziaulhaque/).
 
 I am a **macroeconometrician** working in Bayesian econometrics, time-series econometrics, and panel data econometrics. My research focuses on macroeconomic and financial forecasting, Bayesian learning, machine learning methods, and high-dimensional economic data.
+
+I serve as **Secretary of the Local Organizing Committee** for the **2026 Econometric Society Australasia Meeting (ESAM)**.
 
 </div>
 
@@ -128,8 +130,8 @@ I am a **macroeconometrician** working in Bayesian econometrics, time-series eco
 # 📰 News
 
 <div class="timeline">
-<div class="timeline-item"><div class="timeline-year news">Sep 2026</div><div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong> on 21 September 2026.</div></div>
-<div class="timeline-item"><div class="timeline-year news">Aug 2026</div><div class="timeline-body">Received my <strong>Ph.D. in Economics and Econometrics</strong> from the University of Adelaide.</div></div>
+<div class="timeline-item"><div class="timeline-year news">Sep 2026</div><div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong> in September 2026.</div></div>
+<div class="timeline-item"><div class="timeline-year news">Aug 2026</div><div class="timeline-body">Received my <strong>Ph.D. in Economics and Econometrics</strong> from the Adelaide University.</div></div>
 <div class="timeline-item"><div class="timeline-year news">Nov 2026</div><div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, University of Adelaide.</div></div>
 </div>
 
