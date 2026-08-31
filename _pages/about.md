@@ -130,7 +130,7 @@ I serve as **Secretary of the Local Organizing Committee** for the **2026 Econom
 # 📰 News
 
 <div class="timeline">
-<div class="timeline-item"><div class="timeline-year news">Sep 2026</div><div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong> in September 2026.</div></div>
+<div class="timeline-item"><div class="timeline-year news">Sep 2026</div><div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong> as Senior Analyst in September 2026.</div></div>
 <div class="timeline-item"><div class="timeline-year news">Aug 2026</div><div class="timeline-body">Received my <strong>Ph.D. in Economics and Econometrics</strong> from the Adelaide University.</div></div>
 <div class="timeline-item"><div class="timeline-year news">Nov 2026</div><div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University.</div></div>
 </div>
@@ -175,3 +175,30 @@ I serve as **Secretary of the Local Organizing Committee** for the **2026 Econom
 </div>
 
 </div>
+
+<span class='anchor' id='contact'></span>
+
+# 📬 Contact
+
+<div class="timeline">
+
+<div class="timeline-item">
+  <div class="timeline-year">Email</div>
+  <div class="timeline-body">
+    <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a>
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-year">Profiles</div>
+  <div class="timeline-body">
+    <a href="https://www.linkedin.com/in/zhiruo-zhang-016b86179/">LinkedIn</a>
+    &nbsp;·&nbsp;
+    <a href="https://orcid.org/0000-0002-4887-3068">ORCID</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/zhiruozzr">GitHub</a>
+  </div>
+</div>
+
+</div>
+
