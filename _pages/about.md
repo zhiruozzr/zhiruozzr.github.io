@@ -1,12 +1,11 @@
 ---
 permalink: /
 title: ""
-excerpt: "Ph.D. in Economics and Econometrics; joining the Reserve Bank of New Zealand in September 2026."
 layout: single
 author_profile: false
 sitemap: true
-redirect_from: ["/about/", "/about.html"]
 ---
+
 <style>
 /* ===== RBNZ-inspired palette: black + rich red =====
    Based on the Reserve Bank of New Zealand — Te Pūtea Matua
@@ -270,16 +269,26 @@ redirect_from: ["/about/", "/about.html"]
     text-align: left;
   }
 }
+</style>
+
 <span class='anchor' id='about-me'></span>
+
 <div class="profile-header">
+
 <img class="profile-pic" src="/images/IMG_5869.jpeg" alt="Zhiruo Zhang" />
+
 <div class="profile-name">Zhiruo (Rachel) Zhang <span class="profile-cn">张芷若</span></div>
 <div class="profile-role">Ph.D. in Economics and Econometrics · University of Adelaide</div>
 <div class="profile-next">Joining the Reserve Bank of New Zealand · 21 September 2026</div>
+
 <div class="about-text" markdown="1">
-I received my Ph.D. in Economics and Econometrics from the University of Adelaide in August 2026, supervised by Prof. Firmin Doko Tchatoka and A/Prof. Qazi Haque.
-I am a macroeconometrician working in Bayesian econometrics, time-series econometrics, and panel data econometrics. My research focuses on macroeconomic and financial forecasting, Bayesian learning, machine learning methods, and high-dimensional economic data.
+
+I received my **Ph.D. in Economics and Econometrics** from the **University of Adelaide** in August 2026, supervised by [Prof. Firmin Doko Tchatoka](https://sites.google.com/view/firmindokotchatoka/home) and [A/Prof. Qazi Haque](https://sites.google.com/site/qazigmziaulhaque/).
+
+I am a **macroeconometrician** working in Bayesian econometrics, time-series econometrics, and panel data econometrics. My research focuses on macroeconomic and financial forecasting, Bayesian learning, machine learning methods, and high-dimensional economic data.
+
 </div>
+
 <div class="social-row">
 <a class="social-chip" href="mailto:zhiruo.zhang@adelaide.edu.au">✉ Email</a>
 <a class="social-chip" href="https://www.linkedin.com/in/zhiruo-zhang-016b86179/" target="_blank">in LinkedIn</a>
@@ -287,21 +296,29 @@ I am a macroeconometrician working in Bayesian econometrics, time-series econome
 <a class="social-chip" href="https://github.com/zhiruozzr" target="_blank">⌘ GitHub</a>
 <a class="cv-button" href="/files/CV_JM.pdf" target="_blank">CV</a>
 </div>
+
 </div>
-News
+
+# News
+
 <div class="timeline">
 <div class="timeline-item">
   <div class="timeline-year news">21 Sep 2026</div>
   <div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong>.</div>
 </div>
+
 <div class="timeline-item">
   <div class="timeline-year news">24–27 Nov 2026</div>
   <div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, University of Adelaide, City East Campus.</div>
 </div>
 </div>
+
 <span class='anchor' id='research'></span>
-Research
+
+# Research
+
 <div class="pub-list">
+
 <div class="pub-item">
   <div class="pub-title">Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</div>
   <div class="pub-authors"><strong>Zhiruo Zhang</strong>, Firmin Doko Tchatoka, and Qazi Haque</div>
@@ -309,26 +326,36 @@ Research
   <a class="pub-link" href="/files/Adaptive.pdf" target="_blank">Paper</a>
   <a class="pub-link" href="/files/Adaptive_Slides.pdf" target="_blank">Slides</a>
 </div>
+
 <div class="pub-item">
   <div class="pub-title">Bayesian Network Estimation for High-Dimensional Panel VARs</div>
   <div class="pub-authors"><strong>Zhiruo Zhang</strong>, Firmin Doko Tchatoka, and Qazi Haque</div>
   <div class="pub-desc">Develops a Bayesian Graphical Network Lasso for sparse precision-matrix estimation in high-dimensional PVARX models, identifying contemporaneous conditional dependencies in an order-invariant way and studying international transmission of natural-disaster shocks across high-income economies.</div>
 </div>
+
 <div class="pub-item">
   <div class="pub-title">Disentangling Spillover Networks and Transmission Channels in Panel VARs</div>
   <div class="pub-authors"><strong>Zhiruo Zhang</strong></div>
   <div class="pub-desc">Proposes a bi-level spike-and-slab framework that selects both bilateral country-pair spillovers and the variables operating within active links, revealing a sparse and interpretable global macroeconomic network.</div>
 </div>
+
 </div>
-Work in Progress
+
+# Work in Progress
+
 <div class="pub-list">
+
 <div class="pub-item">
   <div class="pub-title">Structural Transformation, Green Technology, and Labor Reallocation</div>
   <div class="pub-authors"><strong>Zhiruo Zhang</strong> and <a href="https://researchers.adelaide.edu.au/profile/xiyu.ni" target="_blank">Xiyu Ni</a></div>
 </div>
+
 </div>
+
 <span class='anchor' id='contact'></span>
-Contact
+
+# Contact
+
 <div class="timeline">
 <div class="timeline-item">
   <div class="timeline-year">Email</div>
