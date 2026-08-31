@@ -132,7 +132,7 @@ I serve as **Secretary of the Local Organizing Committee** for the **2026 Econom
 <div class="timeline">
 <div class="timeline-item"><div class="timeline-year news">Sep 2026</div><div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong> in September 2026.</div></div>
 <div class="timeline-item"><div class="timeline-year news">Aug 2026</div><div class="timeline-body">Received my <strong>Ph.D. in Economics and Econometrics</strong> from the Adelaide University.</div></div>
-<div class="timeline-item"><div class="timeline-year news">Nov 2026</div><div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, University of Adelaide.</div></div>
+<div class="timeline-item"><div class="timeline-year news">Nov 2026</div><div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University.</div></div>
 </div>
 
 <span class='anchor' id='research'></span>
