@@ -5,9 +5,7 @@ excerpt: "Ph.D. in Economics and Econometrics; joining the Reserve Bank of New Z
 layout: single
 author_profile: false
 sitemap: true
-redirect_from:
-/about/
-/about.html
+redirect_from: ["/about/", "/about.html"]
 ---
 <style>
 /* ===== RBNZ-inspired palette: black + rich red =====
