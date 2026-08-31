@@ -1,224 +1,285 @@
 ---
 permalink: /
 title: ""
+excerpt: "I received my Ph.D. in Economics and Econometrics from Adelaide University in August 2026.; joining the Reserve Bank of New Zealand in September 2026."
 layout: single
-author_profile: true
-redirect_from: 
-  - /about/
-  - /about.html
+author_profile: false
+sitemap: true
+redirect_from:
+/about/
+/about.html
 ---
-
-<div style="
-  background: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin: 10px 0 30px 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-">
-
-<h1 style="margin-top:0; margin-bottom:6px; font-size:2rem;">Zhiruo (Rachel) Zhang</h1>
-
-<p style="font-size:1.1rem; color:#555; margin-top:0; margin-bottom:18px;">
-Ph.D. Candidate in Economics and Econometrics at Adelaide University
-</p>
-
-<p style="font-size:1.05rem; line-height:1.7; margin-bottom:14px;">
-Welcome to my site! I am a final-year Ph.D. candidate supervised by
-<a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a>
-and
-<a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">APrf. Qazi Haque</a>.
-<p>
-  I am a <strong>macroeconometrician</strong> working in 
-  <strong>Bayesian econometrics</strong>, <strong>time-series econometrics</strong>, 
-  and <strong>panel data econometrics</strong>.
-</p>
-
-<p>
-  My research focuses on <strong>macroeconomic and financial forecasting</strong>, 
-  with particular emphasis on <strong>Bayesian learning</strong>, 
-  <strong>machine learning methods</strong>, and <strong>high-dimensional economic data</strong>.
-</p>
-</p>
-
-<p style="font-size:1.05rem; line-height:1.7; margin-bottom:18px;">
-I am on the <strong>2025–2026 job market</strong>.
-</p>
-
-<div style="font-size:1rem; line-height:1.8;">
-📧 <a href="mailto:zhiruo.zhang@adelaide.edu.au">zhiruo.zhang@adelaide.edu.au</a>
-</div>
-
-<div style="margin-top:14px;">
-<a href="/files/CV_JM.pdf" target="_blank" style="
-  display: inline-block;
-  background: #1f628d;
-  color: #ffffff;
-  padding: 9px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.98rem;
-">📄 Download CV</a>
-</div>
-
-</div>
-
-<h2 id="job-market-paper">Job Market Paper</h2>
-
-<p style="font-size:1.05rem; line-height:1.7;">
-  <strong>Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</strong> 
-  (with Firmin Doko Tchatoka and Qazi Haque)
-  <br>
-  [<a href="/files/Adaptive.pdf" target="_blank">Paper</a>]
-  [<a href="/files/Adaptive_Slides.pdf" target="_blank">Slides</a>]
-</p>
-
-<p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions (PVARs). We propose a novel approach that combines Bayesian shrinkage with adaptive variable selection to effectively tackle over-parameterization and sparsity common in high-dimensional panels. By employing Laplace-based spike-and-slab priors on model coefficients, the framework flexibly captures both cross-sectional inter-dependencies and unit-specific heterogeneity, offering a powerful and robust tool for structured inference. Monte Carlo simulations demonstrate that our method outperforms existing regularization techniques in terms of estimation accuracy and forecasting performance. Empirically, the framework uncovers asymmetric financial contagion within euro area sovereign bond markets and produces stable, reliable forecasts across a multi-country macroeconomic panel. These findings highlight the effectiveness of adaptive shrinkage in modeling heterogeneous and evolving linkages within complex panel data systems.
-</p>
-
-<h2 id="working-papers">Working Papers</h2>
-
-<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
-<strong>Bayesian Network Estimation for High-Dimensional Panel VARs</strong> (with Firmin Doko Tchatoka and Qazi Haque)
-</p>
-
-<p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> This paper develops a Bayesian Graphical Network Lasso to estimate sparse precision matrices in high-dimensional panel VAR models with exogenous variables (PVARX). By directly targeting the inverse error covariance matrix, the method identifies contemporaneous conditional dependencies across macroeconomic units in a structure-aware and order-invariant way. We incorporate both adaptive and non-adaptive shrinkage priors, offering flexibility in modeling heterogeneous sparsity patterns. Monte Carlo simulations show strong performance in recovering the underlying graphical structure. In an empirical application, we analyze the global transmission of natural disaster shocks across high-income economies, uncovering a sparse but economically meaningful network of international macroeconomic spillovers.
-</p>
-
-<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
-<strong>Disentangling Spillover Networks and Transmission Channels in Panel VARs</strong>
-</p>
-
-<p style="font-size:1rem; line-height:1.7;">
-<strong>Abstract:</strong> International spillovers operate through specific bilateral relationships and different macroeconomic channels. Standard panel VAR regularization approaches, however, usually only work at one level of aggregation. Country-level shrinkage is too broad to uncover transmission channels, while elementwise selection fragments bilateral spillovers and hides their economic interpretation. This paper proposes a bi-level spike-and-slab framework for high-dimensional panel VARs that jointly selects spillovers at the country-pair level and variables within active spillover blocks. The approach delivers an interpretable bilateral spillover network together with a decomposition of transmission channels. An EM-based algorithm enables efficient estimation even with the nonconvex prior structure. Monte Carlo experiments demonstrate improved spillover detection relative to existing methods. An application to OECD macroeconomic data reveals a sparse but structured global network dominated by a small set of hub countries and real-side transmission channels.
-</p>
-
-<h2 id="work-in-progress">Work in Progress</h2>
-
-<p style="font-size:1.05rem; line-height:1.7; margin-top:20px;">
-<strong>Structural Transformation, Green Technology, and Labor Reallocation</strong> (with <a href="https://researchers.adelaide.edu.au/profile/xiyu.ni" target="_blank">Xiyu Ni</a>)
-</p>
-
-<hr style="margin-top:30px; margin-bottom:20px;">
-
-## 🔥 News
-
-- <em>24–27 November 2026</em>: <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.
-
-<hr style="margin-top:40px; margin-bottom:20px;">
-
-<h2 id="contact">Contact</h2>
-
-<div style="
-  background: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin: 20px 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-">
-
-<p style="font-size:1rem; color:#555; margin-top:0; margin-bottom:20px;">
-Feel free to send me a message. Filling out this form will open your email client with the message pre-filled.
-</p>
-
-<form onsubmit="sendContactEmail(event)" style="display:flex; flex-direction:column; gap:14px;">
-
-  <div>
-    <label for="contact-name" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Name</label>
-    <input type="text" id="contact-name" required style="
-      width: 100%;
-      padding: 9px 12px;
-      font-size: 0.95rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: inherit;
-    " />
-  </div>
-
-  <div>
-    <label for="contact-email" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Your Email</label>
-    <input type="email" id="contact-email" required style="
-      width: 100%;
-      padding: 9px 12px;
-      font-size: 0.95rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: inherit;
-    " />
-  </div>
-
-  <div>
-    <label for="contact-subject" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Subject</label>
-    <input type="text" id="contact-subject" placeholder="(optional)" style="
-      width: 100%;
-      padding: 9px 12px;
-      font-size: 0.95rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: inherit;
-    " />
-  </div>
-
-  <div>
-    <label for="contact-message" style="display:block; font-size:0.9rem; color:#555; margin-bottom:4px; font-weight:500;">Message</label>
-    <textarea id="contact-message" rows="5" required style="
-      width: 100%;
-      padding: 9px 12px;
-      font-size: 0.95rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: inherit;
-      resize: vertical;
-    "></textarea>
-  </div>
-
-  <button type="submit" style="
-    background: #1f628d;
-    color: #ffffff;
-    border: none;
-    padding: 11px 24px;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    align-self: flex-start;
-  ">✉️ Send</button>
-
-</form>
-
-</div>
-
-<script>
-function sendContactEmail(event) {
-  event.preventDefault();
-  var name = document.getElementById('contact-name').value;
-  var email = document.getElementById('contact-email').value;
-  var subject = document.getElementById('contact-subject').value || 'Message from your website';
-  var message = document.getElementById('contact-message').value;
-
-  var body = 'From: ' + name + ' (' + email + ')%0D%0A%0D%0A' + encodeURIComponent(message);
-  var mailto = 'mailto:zhiruo.zhang@adelaide.edu.au'
-             + '?subject=' + encodeURIComponent(subject)
-             + '&body=' + body;
-
-  window.location.href = mailto;
+<style>
+:root {
+  --zz-ink: #20272d;
+  --zz-muted: #68737d;
+  --zz-accent: #1d5967;
+  --zz-accent-dark: #154550;
+  --zz-warm: #8a4a52;
+  --zz-line: #e8ecef;
+  --zz-soft: #f7f9fa;
 }
-</script>
 
-<div style="text-align:center; margin-top:40px; margin-bottom:10px; font-size:1.15rem; color:#444;">
-  <em>
-    <span style="color:#c8a951; font-weight:650;">E</span>arth 
-    <span style="color:#c8a951; font-weight:650;">N</span>eeds 
-    <span style="color:#c8a951; font-weight:650;">T</span>alented 
-    <span style="color:#c8a951; font-weight:650;">P</span>eople.
-  </em><br>
-  <em>人生到处知何似？应似飞鸿踏雪泥。</em>
+/* Wider, cleaner single-column homepage */
+.page { float: none !important; width: 100% !important; padding-right: 0 !important; }
+.page__inner-wrap { max-width: 900px; margin: 0 auto; }
+.page__content { font-size: 0.96rem; color: var(--zz-ink); }
+.page__content p { line-height: 1.72; }
+.page__content a { color: var(--zz-accent); }
+.page__content a:hover { color: var(--zz-accent-dark); }
+
+/* Profile header inspired by the reference site, but kept more editorial/minimal */
+.profile-header { margin: .25rem 0 2.4rem; }
+.profile-header::after { content: ""; display: block; clear: both; }
+.profile-pic {
+  float: right;
+  width: 205px;
+  max-width: 34%;
+  margin: .15rem 0 1.1rem 2rem;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 5px 20px rgba(24, 38, 48, .10);
+}
+.profile-name {
+  margin: 0 0 .2rem;
+  font-size: 2rem;
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  color: var(--zz-ink);
+}
+.profile-cn {
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--zz-muted);
+  letter-spacing: .02em;
+}
+.profile-role {
+  margin: .35rem 0 .9rem;
+  color: var(--zz-accent);
+  font-size: 1rem;
+  font-weight: 650;
+}
+.profile-next {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: .33rem .7rem;
+  border-radius: 999px;
+  background: #eef5f6;
+  color: var(--zz-accent-dark);
+  font-size: .79rem;
+  font-weight: 650;
+  letter-spacing: .01em;
+}
+.about-text { max-width: 620px; }
+.about-text p { margin: 0 0 .72rem; }
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .48rem;
+  margin-top: 1.1rem;
+}
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  padding: .31rem .72rem;
+  border: 1px solid #cbd5da;
+  border-radius: 999px;
+  color: var(--zz-ink) !important;
+  font-size: .78rem;
+  font-weight: 650;
+  text-decoration: none !important;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.profile-link:hover {
+  border-color: var(--zz-accent);
+  background: var(--zz-accent);
+  color: #fff !important;
+}
+.profile-link.cv {
+  border-color: var(--zz-warm);
+  color: var(--zz-warm) !important;
+}
+.profile-link.cv:hover { background: var(--zz-warm); color: #fff !important; }
+
+/* Section system */
+.section-anchor { scroll-margin-top: 90px; }
+.section-title {
+  margin: 2.75rem 0 1rem;
+  padding-bottom: .42rem;
+  border-bottom: 1px solid var(--zz-line);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  color: var(--zz-ink);
+}
+.section-kicker {
+  display: block;
+  margin-bottom: .18rem;
+  color: var(--zz-accent);
+  font-size: .68rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+/* Research cards */
+.research-card {
+  margin: 0 0 1rem;
+  padding: 1rem 1.15rem 1.05rem;
+  border: 1px solid var(--zz-line);
+  border-left: 3px solid var(--zz-accent);
+  border-radius: 7px;
+  background: #fff;
+}
+.research-card.featured { background: var(--zz-soft); }
+.paper-label {
+  margin-bottom: .22rem;
+  color: var(--zz-warm);
+  font-size: .67rem;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.paper-title {
+  margin: 0 0 .18rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.38;
+  color: var(--zz-ink);
+}
+.paper-meta {
+  margin-bottom: .55rem;
+  color: var(--zz-muted);
+  font-size: .82rem;
+}
+.paper-abstract {
+  margin: 0;
+  color: #48525a;
+  font-size: .88rem;
+  line-height: 1.62;
+}
+.paper-links { margin-top: .68rem; }
+.paper-link {
+  display: inline-block;
+  margin-right: .38rem;
+  padding: .16rem .55rem;
+  border: 1px solid #cbd5da;
+  border-radius: 5px;
+  color: var(--zz-accent) !important;
+  font-size: .72rem;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+.paper-link:hover { border-color: var(--zz-accent); background: var(--zz-accent); color: #fff !important; }
+
+/* Timeline */
+.timeline { margin-top: .2rem; }
+.timeline-item {
+  display: flex;
+  gap: 1.1rem;
+  padding: .62rem 0;
+  border-bottom: 1px solid #eff1f2;
+}
+.timeline-item:last-child { border-bottom: 0; }
+.timeline-date {
+  flex: 0 0 118px;
+  color: var(--zz-accent);
+  font-size: .78rem;
+  font-weight: 700;
+}
+.timeline-body {
+  flex: 1;
+  color: #46515a;
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
+/* Contact */
+.contact-box {
+  margin-top: .6rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--zz-line);
+  border-radius: 7px;
+  background: var(--zz-soft);
+}
+.contact-box p { margin: 0 0 .4rem; }
+.contact-box p:last-child { margin-bottom: 0; }
+
+@media (max-width: 700px) {
+  .page__inner-wrap { max-width: 100%; }
+  .profile-pic {
+    float: none;
+    display: block;
+    width: 175px;
+    max-width: 58%;
+    margin: 0 0 1.25rem;
+  }
+  .profile-name { font-size: 1.75rem; }
+  .about-text { max-width: none; }
+  .timeline-item { display: block; }
+  .timeline-date { margin-bottom: .22rem; }
+}
+<span class="section-anchor" id="about"></span>
+<div class="profile-header">
+  <img class="profile-pic" src="/images/IMG_5869.jpeg" alt="Zhiruo Zhang" />
+<div class="profile-name">Zhiruo (Rachel) Zhang <span class="profile-cn">张芷若</span></div>
+  <div class="profile-role">Ph.D. Candidate in Economics and Econometrics · Adelaide University</div>
+  <div class="profile-next">Joining the Reserve Bank of New Zealand · 21 September 2026</div>
+<div class="about-text">
+    <p>I am a final-year Ph.D. candidate in Economics and Econometrics at Adelaide University, supervised by <a href="https://sites.google.com/view/firmindokotchatoka/home" target="_blank">Prof. Firmin Doko Tchatoka</a> and <a href="https://sites.google.com/site/qazigmziaulhaque/" target="_blank">A/Prof. Qazi Haque</a>.</p>
+    <p>I am a <strong>macroeconometrician</strong> working in Bayesian econometrics, time-series econometrics, and panel data econometrics. My research focuses on macroeconomic and financial forecasting, Bayesian learning, machine learning methods, and high-dimensional economic data.</p>
+  </div>
+<div class="link-row">
+    <a class="profile-link" href="mailto:zhiruo.zhang@adelaide.edu.au">Email</a>
+    <a class="profile-link" href="https://www.linkedin.com/in/zhiruo-zhang-016b86179/" target="_blank">LinkedIn</a>
+    <a class="profile-link" href="https://orcid.org/0000-0002-4887-3068" target="_blank">ORCID</a>
+    <a class="profile-link" href="https://github.com/zhiruozzr" target="_blank">GitHub</a>
+    <a class="profile-link cv" href="/files/CV_JM.pdf" target="_blank">CV</a>
+  </div>
+</div>
+<span class="section-anchor" id="news"></span>
+<div class="section-title"><span class="section-kicker">Updates</span>News</div>
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">21 Sep 2026</div>
+    <div class="timeline-body">Joining the <strong>Reserve Bank of New Zealand</strong>.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">24–27 Nov 2026</div>
+    <div class="timeline-body">Presenting at the <a href="https://adelaide.edu.au/about/events/2026/2026-econometric-society-australasia-meeting-esam/" target="_blank"><strong>2026 Econometric Society Australasia Meeting (ESAM)</strong></a>, Adelaide University, City East Campus.</div>
+  </div>
+</div>
+<span class="section-anchor" id="research"></span>
+<div class="section-title"><span class="section-kicker">Selected work</span>Research</div>
+<div class="research-card featured">
+  <div class="paper-label">Featured paper</div>
+  <div class="paper-title">Adaptive Bayesian Shrinkage of High-Dimensional Panel VARs</div>
+  <div class="paper-meta">with Firmin Doko Tchatoka and Qazi Haque</div>
+  <p class="paper-abstract">This paper develops a Bayesian framework for estimating high-dimensional panel vector autoregressions using adaptive shrinkage and variable selection. The approach accommodates cross-sectional interdependence and unit-specific heterogeneity, performs well in Monte Carlo experiments, and delivers stable forecasts and economically interpretable evidence on financial contagion in euro-area sovereign bond markets.</p>
+  <div class="paper-links">
+    <a class="paper-link" href="/files/Adaptive.pdf" target="_blank">Paper</a>
+    <a class="paper-link" href="/files/Adaptive_Slides.pdf" target="_blank">Slides</a>
+  </div>
+</div>
+<div class="research-card">
+  <div class="paper-title">Bayesian Network Estimation for High-Dimensional Panel VARs</div>
+  <div class="paper-meta">with Firmin Doko Tchatoka and Qazi Haque</div>
+  <p class="paper-abstract">This project develops a Bayesian Graphical Network Lasso for sparse precision-matrix estimation in high-dimensional PVARX models. The framework identifies contemporaneous conditional dependencies in an order-invariant way and is applied to international transmission of natural-disaster shocks across high-income economies.</p>
+</div>
+<div class="research-card">
+  <div class="paper-title">Disentangling Spillover Networks and Transmission Channels in Panel VARs</div>
+  <p class="paper-abstract">This paper proposes a bi-level spike-and-slab framework that selects both bilateral country-pair spillovers and the variables operating within active links. An EM-based algorithm makes the non-convex model practical in high dimensions and reveals a sparse, structured global macroeconomic network with interpretable transmission channels.</p>
+</div>
+<div class="section-title"><span class="section-kicker">Ongoing</span>Work in Progress</div>
+<div class="research-card">
+  <div class="paper-title">Structural Transformation, Green Technology, and Labor Reallocation</div>
+  <div class="paper-meta">with <a href="https://researchers.adelaide.edu.au/profile/xiyu.ni" target="_blank">Xiyu Ni</a></div>
+</div>
+<span class="section-anchor" id="contact"></span>
+<div class="section-title"><span class="section-kicker">Get in touch</span>Contact</div>
+<div class="contact-box">
+  <p>Email is the best way to reach me: <a href="mailto:zhiruo.zhang@adelaide.edu.au"><strong>zhiruo.zhang@adelaide.edu.au</strong></a>.</p>
+  <p>You can also find me on <a href="https://www.linkedin.com/in/zhiruo-zhang-016b86179/" target="_blank">LinkedIn</a>, <a href="https://orcid.org/0000-0002-4887-3068" target="_blank">ORCID</a>, and <a href="https://github.com/zhiruozzr" target="_blank">GitHub</a>.</p>
 </div>
