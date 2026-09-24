@@ -325,24 +325,6 @@ High-Dimensional Econometrics
 <div class="timeline">
 <div class="timeline-item">
   <div class="timeline-year news">
-    Sep 2026
-  </div>
-  <div class="timeline-body">
-    Joined the <strong>Reserve Bank of New Zealand</strong> as a
-    <strong>Senior Analyst in the Modelling Team</strong>.
-  </div>
-</div>
-<div class="timeline-item">
-  <div class="timeline-year news">
-    Sep 2026
-  </div>
-  <div class="timeline-body">
-    Received my <strong>Ph.D. in Economics and Econometrics</strong>
-    from Adelaide University.
-  </div>
-</div>
-<div class="timeline-item">
-  <div class="timeline-year news">
     Nov 2026
   </div>
   <div class="timeline-body">
@@ -431,6 +413,22 @@ High-Dimensional Econometrics
       rel="noopener noreferrer">
       Xiyu Ni
     </a>
+  </div>
+</div>
+  <div class="pub-item">
+  <div class="pub-title">
+    Clean Up or Move Out? Environmental Regulation and Firm Responses under the “Two Mountains” Theory
+  </div>
+  <div class="pub-authors">
+    <strong>Zhiruo Zhang</strong>
+    &amp;
+    <a href="https://researchers.adelaide.edu.au/profile/xiyu.ni" target="_blank" rel="noopener noreferrer">Xiyu Ni</a>
+  </div>
+  <div class="pub-desc">
+    This project builds an economic model inspired by the “Two Mountains” theory
+    (“lucid waters and lush mountains are invaluable assets”) to study a central
+    question: after environmental regulation tightens, do firms actually become
+    cleaner, or do they simply relocate?
   </div>
 </div>
 </div>
