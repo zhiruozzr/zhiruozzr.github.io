@@ -281,7 +281,7 @@ redirect_from:
 </style>
 
 <div class="profile-header">
-<img class="profile-pic" src="/images/profile.png" alt="Zhiruo (Rachel) Zhang">
+<img class="profile-pic" src="/images/IMG_5869.jpeg" alt="Zhiruo Zhang" />
 <div class="profile-name">
 Zhiruo (Rachel) Zhang 张芷若
 </div>
@@ -443,9 +443,13 @@ High-Dimensional Econometrics
     Email
   </div>
   <div class="timeline-body">
-    <a href="mailto:zhiruo.zhang@adelaide.edu.au">
-      zhiruo.zhang@adelaide.edu.au
-    </a>
+<a href="mailto:Rachel.Zhang2@rbnz.govt.nz">
+  Rachel.Zhang2@rbnz.govt.nz
+</a>
+&nbsp;·&nbsp;
+<a href="mailto:zhiruo.zhang@adelaide.edu.au">
+  zhiruo.zhang@adelaide.edu.au
+</a>
   </div>
 </div>
 <div class="timeline-item">
@@ -484,7 +488,7 @@ High-Dimensional Econometrics
       href="https://jaydenhyj.github.io/"
       target="_blank"
       rel="noopener noreferrer">
-      Yaojia Han
+      Dr. Yaojia Han
     </a>
   </div>
 </div>
