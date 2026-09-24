@@ -286,14 +286,14 @@ redirect_from:
 Zhiruo (Rachel) Zhang 张芷若
 </div>
 <div class="profile-role">
-Senior Analyst · Modelling Team · Reserve Bank of New Zealand
+Senior Analyst · Reserve Bank of New Zealand
 </div>
 <div class="profile-degree">
 Ph.D. in Economics and Econometrics · Adelaide University
 </div>
 <div class="about-text" markdown="1">
 
-I am a Senior Analyst in the Modelling Team at the Reserve Bank of New Zealand.
+I am a Senior Analyst at the Reserve Bank of New Zealand.
 
 I received my Ph.D. in Economics and Econometrics from Adelaide University in September 2026, under the supervision of Prof. Firmin Doko Tchatoka and A/Prof. Qazi Haque.
 
