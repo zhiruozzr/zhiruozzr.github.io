@@ -1,16 +1,13 @@
-⸻
-
+---
 permalink: /
-title: “”
-excerpt: “Senior Analyst at the Reserve Bank of New Zealand; Ph.D. in Economics and Econometrics from Adelaide University.”
+title: ""
+excerpt: "Senior Analyst at the Reserve Bank of New Zealand; Ph.D. in Economics and Econometrics from Adelaide University."
 author_profile: false
 sitemap: true
 redirect_from:
-
-* /about/
-* /about.html
-
-⸻
+  - /about/
+  - /about.html
+---
 
 <style>
 /* =========================================================
@@ -282,7 +279,9 @@ redirect_from:
   }
 }
 </style>
+
 <div class="profile-header">
+<img class="profile-pic" src="/images/profile.png" alt="Zhiruo (Rachel) Zhang">
 <div class="profile-name">
 Zhiruo (Rachel) Zhang 张芷若
 </div>
@@ -313,16 +312,15 @@ Machine Learning ·
 High-Dimensional Econometrics
 </div>
 <div class="social-row">
-
-✉ Email
-in LinkedIn
-🆔 ORCID
-💻 GitHub
-📄 CV
+<a class="social-chip" href="mailto:zhiruo.zhang@adelaide.edu.au">✉ Email</a>
+<a class="social-chip" href="https://www.linkedin.com/in/zhiruo-zhang-016b86179/" target="_blank" rel="noopener noreferrer">in LinkedIn</a>
+<a class="social-chip orcid" href="https://orcid.org/0000-0002-4887-3068" target="_blank" rel="noopener noreferrer">🆔 ORCID</a>
+<a class="social-chip" href="https://github.com/zhiruozzr" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+<a class="cv-button" href="/files/CV.pdf" target="_blank" rel="noopener noreferrer">📄 CV</a>
 </div>
 </div>
 
-📰 News
+# 📰 News
 
 <div class="timeline">
 <div class="timeline-item">
@@ -360,7 +358,7 @@ in LinkedIn
 </div>
 </div>
 
-📝 Research
+# 📝 Research
 
 <div class="pub-list">
 <div class="pub-item">
@@ -380,9 +378,8 @@ in LinkedIn
     forecasts and economically interpretable evidence on financial contagion in
     euro-area sovereign bond markets.
   </div>
-
-Paper
-Slides
+  <a class="pub-pdf" href="/files/paper.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+  <a class="pub-pdf" href="/files/slides.pdf" target="_blank" rel="noopener noreferrer">Slides</a>
 </div>
 <div class="pub-item">
   <div class="pub-title">
@@ -418,7 +415,7 @@ Slides
 </div>
 </div>
 
-🔬 Work in Progress
+# 🔬 Work in Progress
 
 <div class="pub-list">
 <div class="pub-item">
@@ -438,7 +435,7 @@ Slides
 </div>
 </div>
 
-📬 Contact
+# 📬 Contact
 
 <div class="timeline">
 <div class="timeline-item">
